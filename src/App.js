@@ -14,7 +14,6 @@ import Navigation from "./parts/Navigation/Navigation";
 function App() {
   const [input, setInput] = useState();
   const [form] = Form.useForm();
-  const [theme, setTheme] = useState("dark");
   const [data, setData] = useState({});
   const [errorMess, setError] = useState("");
   const [imgSrc, setImgSrc] = useState([]);
@@ -57,30 +56,17 @@ function App() {
     });
   }, [input]);
 
-  
-
-  // fetch(
-  //   `${BASE_URL}/search/basic?country=us&service=netflix&type=movie&genre=18&page=1&output_language=en&language=en`,
-  //   option
-  // )
-  //   .then((response) => response.json())
-  //   .then((response) => {
-  //     console.log(response);
-  //     setData(response.results);
-  //   })
-  //   .catch((err) => console.error(err));
-
-  const changeTheme = (value) => {
-    setTheme(value ? "dark" : "light");
-  };
-
   return (
     <div className="App">
       <Navigation/>
 
       <div id="banner" className="position-relative">
-      <Form form={form} onFinish={onFinish} id="searchForm" className="position-absolute">
-          <Form.Item
+      <div id="bannerHeading">
+        <h2><b>Welcome.</b></h2>
+        <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
+      
+      <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3">
+          <Form.Item className="col-10"
             name="search"
             rules={[
               {
@@ -99,7 +85,8 @@ function App() {
             />
           </Tooltip>
         </Form>
-        <Carousel autoplay>
+        </div>
+        <Carousel autoplay id="carousel">
           {
             data?.results?.map((item, index) => (
               <div>
@@ -108,6 +95,7 @@ function App() {
             ))
           }
         </Carousel>
+        <div id="bannerColor"></div>
       </div>
 
       <div className="p-3 row">
@@ -122,27 +110,6 @@ function App() {
             </div>
           ))
         }       
-        {/* <div className="film col">
-          <Image           
-            src="https://marketplace.canva.com/EAE_E8rjFrI/1/0/1131w/canva-minimal-mystery-of-forest-movie-poster-ggHwd_WiPcI.jpg" className="rounded-4"
-          />
-          <h3>Title</h3>
-          <p>Year</p>
-        </div>
-        <div className="film col">
-          <Image           
-            src="https://marketplace.canva.com/EAE_E8rjFrI/1/0/1131w/canva-minimal-mystery-of-forest-movie-poster-ggHwd_WiPcI.jpg" className="rounded-4"
-          />
-          <h3>Title</h3>
-          <p>Year</p>
-        </div>
-        <div className="film col">
-          <Image           
-            src="https://marketplace.canva.com/EAE_E8rjFrI/1/0/1131w/canva-minimal-mystery-of-forest-movie-poster-ggHwd_WiPcI.jpg" className="rounded-4"
-          />
-          <h3>Title</h3>
-          <p>Year</p>
-        </div> */}
       </div>
     </div>
   );
