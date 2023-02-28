@@ -1,0 +1,9 @@
+.navLink a{
+    text-decoration: none !important;
+    padding: 10px;
+}
+
+.darkTheme{
+    background-color: black;
+    color: white;
+}
