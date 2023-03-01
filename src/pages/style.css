@@ -3,3 +3,34 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.detailInfo{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: space-around;
+    height: fit-content;
+}
+
+.bg-color{
+    width: 100%;
+    height: 100%;
+    background-color: #21045f;
+    opacity: 0.6;
+    top: 0px;
+    left: 0px;
+}
+
+img.posterImg {
+    position: relative;
+    z-index: 1 !important;
+    height: 450px !important;
+    width: 280px !important;
+}
+
+.filmInfo{
+    position: relative;
+    z-index: 1 !important;
+    text-align: justify;
+}

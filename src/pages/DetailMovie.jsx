@@ -24,6 +24,8 @@ const DetailMovie = (id) => {
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
       let backgroundSrc = `${BG_SRC}`+ json?.backdrop_path;
       setImgSrc(imageSrc);
+      setBgSrc(backgroundSrc);
+      console.log(bgSrc);
     }
   };
   useEffect(() => {
@@ -36,13 +38,35 @@ const DetailMovie = (id) => {
   }, []);
   return (
     <>
-      <div id="popular">
-      <h2 className="title pt-3 px-3 fw-bolder">Detail</h2>
-      <div className="p-3 row trending-film" style="background-img: {}">
-            <Image           
-                src={imgSrc} className="rounded-4"
-              />     
+      <div className="detail-film position-relative">
+      <div className="detailInfo" style={{ backgroundImage: `url(${bgSrc})` }}>
+        <div className=" py-4 ps-4 me-3">
+        <Image           
+                src={imgSrc} className="posterImg rounded-4"
+              />
+        </div>
+            
+        <div className="py-4 pe-4 filmInfo text-white">
+            <h1>{data?.title}</h1>
+            <p>{data?.release_date} .&nbsp;
+                <span>
+                    {
+                        data?.genres?.map(item => (
+                            <>
+                                {item.name}&nbsp;
+                            </>
+                        ))
+                    }
+                </span>
+                .&nbsp;{data?.runtime} mins
+            </p>
+            <p><i>{data?.tagline}</i></p>
+            <h5>Overview</h5>
+            <p>{data?.overview}</p>
+        </div>         
       </div>
+
+      <div className="position-absolute bg-color">a</div>
     </div>
     </>
   );
