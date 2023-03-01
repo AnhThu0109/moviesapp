@@ -67,7 +67,7 @@ function Navigation() {
                   Movies
                 </a>
                 <ul
-                  className="dropdown-menu dropdown-menu-dark"
+                  className="dropdown-menu"
                   aria-labelledby="navbarDarkDropdownMenuLink"
                 >
                   <li key="2">

@@ -10,9 +10,9 @@ function Popular() {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [bgSrc, setBgSrc] = useState([]);
-  const fetchData = async (p = "/trending/all/day?") => {
+  const fetchData = async (page=1) => {
     const data = await fetch(
-      `${BASE_URL}${p}${KEY}`
+      `${BASE_URL}/movie/popular?${KEY}&language=en-US&page=${page}`
     );
     const json = await data.json();
     if (json) {
@@ -36,7 +36,7 @@ function Popular() {
   }, []);
 
   return (
-    <div id="trending">
+    <div id="popular">
       <h2 className="title pt-3 px-3 fw-bolder">What's Popular</h2>
       <div className="p-3 row trending-film">
         {

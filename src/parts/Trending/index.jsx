@@ -10,9 +10,9 @@ function Trending() {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
 
-  const fetchData = async (p = "/discover/movie?", q = "sort_by=popularity.desc") => {
+  const fetchData = async (p = "/trending/all/day?") => {
     const data = await fetch(
-      `${BASE_URL}${p}${KEY}&${q}`
+      `${BASE_URL}${p}${KEY}`
     );
     const json = await data.json();
     if (json) {
