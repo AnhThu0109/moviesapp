@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import PopularPage from "./pages/Popular";
+import DetailMovie from "./pages/DetailMovie";
 
 
 function App() {
@@ -12,11 +13,7 @@ function App() {
         <Route path="/" element={<Layout/>}>
           <Route index element={<Home/>}/>
           <Route path="/popular" element={<PopularPage/>}/>
-          {/* <Route path="portfolio" element={<Portfolio/>}/>
-          <Route path="contact" element={<Contact/>}/>
-          <Route path="establish" element={<Establish/>}/>
-          <Route path="/events" element={<Events/>}/>
-          <Route path="/board" element={<Board/>}/> */}
+          <Route path="/movies/:id" element={<DetailMovie/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

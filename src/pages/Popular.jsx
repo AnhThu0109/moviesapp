@@ -4,14 +4,16 @@ import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import { Image, Form, Pagination } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../style.css";
+import "./style.css";
 import { POSTER_SRC } from "../utils/posterSrc";
+import { Link } from "react-router-dom";
 
 const PopularPage = () => {
   const [form] = Form.useForm();
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
+  const [detailLink, setDetailLink] = useState("");
 
   const onShowSizeChange = (current, pageSize) => {
     console.log(current, pageSize);
@@ -22,6 +24,7 @@ const PopularPage = () => {
     setPage(p);
   }
 
+
   const fetchData = async (page=1) => {
     const data = await fetch(
       `${BASE_URL}/movie/popular?${KEY}&language=en-US&page=${page}`
@@ -31,10 +34,13 @@ const PopularPage = () => {
       console.log(json);
       setData(json);
       let imgSrcArr = [];
+      let detailLinkArr = [];
       json.results.map(item => {
         imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
+        detailLinkArr.push(`/movies/${item.id}`)
       })
       setImgSrc(imgSrcArr);
+      setDetailLink(detailLinkArr);
     }
   };
   useEffect(() => {
@@ -50,11 +56,13 @@ const PopularPage = () => {
         {
           data?.results?.map((item, index) => (
             <div className="film col-3 pb-2">
+            <Link to={detailLink[index]} className="movieLink">
               <Image           
-                src={imgSrc[index]} className="rounded-4"
+                src={imgSrc[index]} className="rounded-4" 
               />
               <h6 className="pt-2 text-center">{item.title}</h6>
               <p className="text-center">{item.release_date}</p>
+            </Link>
             </div>
           ))
         }       
