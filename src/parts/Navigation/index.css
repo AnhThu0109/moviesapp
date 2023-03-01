@@ -15,8 +15,11 @@
 
 .lightTheme{
     background-color: whitesmoke;
-    color: black;
     font-weight: bolder;
+}
+
+.lightTheme a{
+    color: #003262 !important;
 }
 
 #navigation{
@@ -27,3 +30,4 @@
     top: 0;
     z-index: 2;
 }
+

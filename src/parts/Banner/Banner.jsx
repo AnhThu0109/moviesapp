@@ -5,18 +5,41 @@ import { useState } from "react";
 
 
 function Banner() {
-    const [form] = Form.useForm();
-    const [input, setInput] = useState();
+  const [bgSrc, setBgSrc] = useState([]);
     const onFinish = (value) => {
         console.log(value);
         setInput(value.search);
         form.resetFields();
       };
 
+      const fetchData = async (p = "/discover/movie?", q = "sort_by=popularity.desc") => {
+        const data = await fetch(
+          `${BASE_URL}${p}${KEY}&${q}`
+        );
+        const json = await data.json();
+        if (json) {
+          let bgSrcArr = [];
+          json.results.map(item => {
+            bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
+          })
+          setBgSrc(bgSrcArr);
+        }
+      };
+      useEffect(() => {
+        fetchData(input).catch((error) => {
+          console.log(error);
+          setError("Movie's name is not found. Please type again!!!");
+        });
+      }, [input]);
+
   return (
     <div id="banner" className="position-relative">
-      <Form form={form} onFinish={onFinish} id="searchForm" className="position-absolute">
-          <Form.Item
+      <div id="bannerHeading">
+        <h2><b>Welcome.</b></h2>
+        <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
+      
+      <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3">
+          <Form.Item className="col-10"
             name="search"
             rules={[
               {
@@ -35,20 +58,17 @@ function Banner() {
             />
           </Tooltip>
         </Form>
-        <Carousel autoplay>
-          <div>
-            <img className="bannerImg" src="https://marketplace.canva.com/EAE-xnqWvJk/1/0/1600w/canva-retro-smoke-and-round-light-desktop-wallpapers-JLofAI27pCg.jpg"></img>
-          </div>
-          <div>
-            <img className="bannerImg" src="https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__480.jpg"></img>
-          </div>
-          <div>
-            <img className="bannerImg" src="https://marketplace.canva.com/EAE-xnqWvJk/1/0/1600w/canva-retro-smoke-and-round-light-desktop-wallpapers-JLofAI27pCg.jpg"></img>
-          </div>
-          <div>
-            <img className="bannerImg" src="https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__480.jpg"></img>
-          </div>
+        </div>
+        <Carousel autoplay id="carousel">
+          {
+            data?.results?.map((item, index) => (
+              <div>
+                <img className="bannerImg" src={bgSrc[index]}></img>
+              </div>
+            ))
+          }
         </Carousel>
+        <div id="bannerColor"></div>
       </div>
   );
 }

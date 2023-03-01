@@ -43,3 +43,12 @@ input[type="text"]{
     color: white;
     z-index: 1;
   }
+
+  .title{
+    color: #003262;
+  }
+
+  /* .trending-film{
+    overflow: scroll;
+    height: 200px;
+  } */
