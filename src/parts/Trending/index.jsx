@@ -11,7 +11,7 @@ function Trending() {
   const [imgSrc, setImgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
 
-  const fetchData = async (p = "/trending/all/day?") => {
+  const fetchData = async (p = "/trending/movie/day?") => {
     const data = await fetch(
       `${BASE_URL}${p}${KEY}`
     );
@@ -47,7 +47,9 @@ function Trending() {
               <Image           
                 src={imgSrc[index]} className="rounded-4"
               />
-              <h6 className="pt-2 text-center">{item.title}</h6>
+              <h6 className="pt-2 text-center">
+                {item.title}
+              </h6>
               <p className="text-center">{item.release_date}</p>
               </Link>
             </div>

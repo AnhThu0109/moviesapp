@@ -9,7 +9,7 @@
     font-weight: bolder;
 }
 
-.darkTheme a{
+.darkTheme .homeNav{
     color: white !important;
 }
 
@@ -18,7 +18,7 @@
     font-weight: bolder;
 }
 
-.lightTheme a{
+.lightTheme a, .lightTheme #dropdownMovies{
     color: #003262 !important;
 }
 
@@ -31,3 +31,11 @@
     z-index: 2;
 }
 
+button#dropdownMovies{
+    background-color: transparent;
+    border: 0;
+}
+
+a.dropdownList{
+    color: black !important;
+}

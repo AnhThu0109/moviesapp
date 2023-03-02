@@ -13,6 +13,14 @@ const DetailMovie = (id) => {
   const [imgSrc, setImgSrc] = useState("");
   const [bgSrc, setBgSrc] = useState("");
 
+  const bgSrcSetting = (a, b) => {
+    let backgroungSrc = "";
+    if(a == null){
+      backgroungSrc = `${POSTER_SRC}`+ b;
+    } else{ backgroungSrc = `${BG_SRC}`+ a;}
+    return backgroungSrc;
+  }
+
   const fetchData = async (id) => {
     const data = await fetch(
       `${BASE_URL}/movie/${id}?${KEY}&language=en-US`
@@ -22,7 +30,7 @@ const DetailMovie = (id) => {
       console.log(json);
       setData(json);
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
-      let backgroundSrc = `${BG_SRC}`+ json?.backdrop_path;
+      let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
       setImgSrc(imageSrc);
       setBgSrc(backgroundSrc);
       console.log(bgSrc);
@@ -62,11 +70,11 @@ const DetailMovie = (id) => {
             </p>
             <p><i>{data?.tagline}</i></p>
             <h5>Overview</h5>
-            <p>{data?.overview}</p>
+            <p className="overview">{data?.overview}</p>
         </div>         
       </div>
 
-      <div className="position-absolute bg-color">a</div>
+      <div className="position-absolute bg-color"></div>
     </div>
     </>
   );
