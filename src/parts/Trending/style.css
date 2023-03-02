@@ -1,0 +1,7 @@
+.trending-film{
+    display: flex;
+}
+
+.titleFilm{
+    word-wrap: break-word !important;
+}

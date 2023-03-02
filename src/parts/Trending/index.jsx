@@ -1,5 +1,5 @@
 import "./style.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
@@ -10,6 +10,7 @@ function Trending() {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
+  const containerRef = useRef(null);
 
   const fetchData = async (p = "/trending/movie/day?") => {
     const data = await fetch(
@@ -39,15 +40,15 @@ function Trending() {
   return (
     <div id="trending">
       <h2 className="title pt-3 px-3 fw-bolder">Trending</h2>
-      <div className="p-3 row trending-film">
+      <div className="p-3 trending-film" ref={containerRef} style={{ overflowX: 'scroll', whiteSpace: 'nowrap' }}>
         {
           data?.results?.map((item, index) => (
-            <div className="film col-3 pb-2">
+            <div className="film col-3 me-3">
               <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} className="rounded-4"
               />
-              <h6 className="pt-2 text-center">
+              <h6 className="pt-2 text-center titleFilm">
                 {item.title}
               </h6>
               <p className="text-center">{item.release_date}</p>

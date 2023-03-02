@@ -1,36 +1,47 @@
 import "./index.css";
 import { Carousel, Form, Input, Tooltip, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { BG_SRC } from "../../utils/bgSrc";
+import { BASE_URL } from "../../utils/api";
+import { KEY } from "../../utils/key";
+import "antd/dist/reset.css";
+import { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 function Banner() {
   const [bgSrc, setBgSrc] = useState([]);
-    const onFinish = (value) => {
-        console.log(value);
-        setInput(value.search);
-        form.resetFields();
-      };
+  const [form] = Form.useForm();
+  const [input, setInput] = useState();
+  const [data, setData] = useState({});
 
-      const fetchData = async (p = "/discover/movie?", q = "sort_by=popularity.desc") => {
-        const data = await fetch(
-          `${BASE_URL}${p}${KEY}&${q}`
-        );
-        const json = await data.json();
-        if (json) {
-          let bgSrcArr = [];
-          json.results.map(item => {
-            bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
-          })
-          setBgSrc(bgSrcArr);
-        }
-      };
+  const onFinish = (value) => {
+    console.log(value);
+    setInput(value.search);
+    form.resetFields();
+  };
+
+  const fetchData = async (p = "/trending/movie/day?") => {
+    const data = await fetch(
+      `${BASE_URL}${p}${KEY}`
+    );
+    const json = await data.json();
+    console.log("data", json);
+    if (json) {
+      setData(json);
+      let bgSrcArr = [];
+      json.results.map(item => {
+        bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
+      })
+      setBgSrc(bgSrcArr);    
+    }
+  };
+
       useEffect(() => {
-        fetchData(input).catch((error) => {
+        fetchData().catch((error) => {
           console.log(error);
-          setError("Movie's name is not found. Please type again!!!");
         });
-      }, [input]);
+      }, []);
 
   return (
     <div id="banner" className="position-relative">

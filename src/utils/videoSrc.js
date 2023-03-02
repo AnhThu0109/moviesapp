@@ -1,0 +1,1 @@
+export const VD_SRC = 'http://www.themoviedb.org/video/play?key=';

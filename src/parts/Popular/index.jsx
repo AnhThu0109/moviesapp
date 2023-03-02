@@ -1,5 +1,5 @@
 import "./style.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
@@ -12,6 +12,8 @@ function Popular() {
   const [imgSrc, setImgSrc] = useState([]);
   const [bgSrc, setBgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
+  const containerRef = useRef(null);
+
   const fetchData = async (page=1) => {
     const data = await fetch(
       `${BASE_URL}/movie/popular?${KEY}&language=en-US&page=${page}`
@@ -43,10 +45,10 @@ function Popular() {
   return (
     <div id="popular">
       <h2 className="title pt-3 px-3 fw-bolder">What's Popular</h2>
-      <div className="p-3 row trending-film">
+      <div className="p-3 trending-film" ref={containerRef} style={{ overflowX: 'scroll', whiteSpace: 'nowrap' }}>
         {
           data?.results?.map((item, index) => (
-            <div className="film col-3 pb-2">
+            <div className="film col-3 me-3">
               <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} className="rounded-4"

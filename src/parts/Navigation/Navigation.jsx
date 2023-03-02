@@ -18,28 +18,9 @@ function Navigation() {
       id="navigation"
       className={isChangeTheme === true ? "darkTheme" : "lightTheme"}
     >
-      {/* <ul className={isChangeTheme === true ? "darkTheme px-3 nav" : "lightTheme px-3 nav"}>
-          <li className="nav-item">
-              <a class="nav-link active" href="/" aria-current="page">Home</a>
-          </li>
-          <li className="dropdown-menu1 nav-item">
-                <a className="nav-link">Movies</a>
-                <ul className="dropdown-menu1 dropdown-submenu">
-                  <li>
-                    <a className="dropdown-item">Popular</a>
-                  </li>
-                </ul>
-          </li>
-          <li className="nav-item">
-              <a className="nav-link" href="/actors">Actors</a>
-          </li>
-          <li className="nav-item">
-              <a className="nav-link" href="/contact">Contact</a>
-          </li>
-      </ul> */}
       
       <nav className="navbar">
-        <div className="container-fluid">
+        <div className="container-fluid ms-2">
           <a className="navbar-brand homeNav" href="/">
             HOME
           </a>
