@@ -22,6 +22,8 @@ const DetailMovie = (id) => {
   const [trailer, setTrailer] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [peopleList, setPeopleList] = useState();
+  const [peopleOfMovie, setPeople] = useState();
+  const [profileImg, setProfileImg] = useState();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -32,6 +34,7 @@ const DetailMovie = (id) => {
       `${BASE_URL}/movie/${id}?${KEY}&language=en-US`
     );
     const json = await data.json();
+    console.log(json);
     if (json) {
       setData(json);
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
@@ -69,24 +72,61 @@ const DetailMovie = (id) => {
     }
   }
 
-  const fetchPeople = async(index, page=1) => {
-    const data = await fetch(
-      `${BASE_URL}/person/popular?${id}/videos?${KEY}&language=en-US&page=${page}`
-    );
-    const json = await data.json();
-    if (json) {
-      let people = [];
-      json.results.map((item1) =>{
-        item1.known_for.map(item2 => {
-          if(item2.media_type == "movie" && item2.id == index){
-            people.push(item1);
-          }
-        })   
-      });
-      setPeopleList(people);
-      console.log(people);
-    }
+  // const fetchPeople = async(index, page=1) => {
+  //   const data = await fetch(
+  //     `${BASE_URL}/person/popular?${id}/videos?${KEY}&language=en-US&page=${page}`
+  //   );
+  //   const json = await data.json();
+  //   if (json) {
+  //     let people = [];
+  //     json.results.map((item1) =>{
+  //       item1.known_for.map(item2 => {
+  //         if(item2.media_type == "movie" && item2.id == index){
+  //           people.push(item1);
+  //         }
+  //       })   
+  //     });
+  //     setPeopleList(people);
+  //     console.log(people);
+  //   }
+  // }
+
+  const findPeople = (id, arr) => {
+    let people = [];
+    let img = [];
+    arr.map((item) => {
+      item.known_for.map(item1 => {
+        if(item1.id == id && item1.media_type == "movie"){
+          people = people.concat(item);
+        } 
+      })
+    })
+    people.map(item => {
+      img.push(`${POSTER_SRC}`+ item.profile_path)
+    })
+    setPeople(people);
+    setProfileImg(img);
   }
+
+  useEffect(() => {
+    let url = window.location.href;
+    let strs = url.split('/');
+    let id = strs.at(-1);
+    const fetchMovies = async () => {
+      let allPeople = [];
+      for (let i = 1; i <= 500; i++) {
+        const response = await fetch(
+          `${BASE_URL}/person/popular?${KEY}&language=en-US&page=${i}`
+        );
+        const json = await response.json();
+        allPeople = allPeople.concat(json?.results);
+      }
+      console.log(allPeople);
+      findPeople(id, allPeople);
+      setPeopleList(allPeople);
+    };
+    fetchMovies();
+  }, []);
 
   useEffect(() => {
     let url = window.location.href;
@@ -98,9 +138,6 @@ const DetailMovie = (id) => {
     fetchVideo(id).catch((error) => {
       console.log(error);
     });
-    // for (let page = 1; page <= 500; page++) {
-    //   fetchPeople(id, page);
-    // }
   }, []);
   return (
     <>
@@ -115,11 +152,11 @@ const DetailMovie = (id) => {
         <div className="py-4 pe-4 filmInfo text-white">
             <h1>{data?.title}</h1>
             <ul className="typeInfo">
-              <li className="dateInfo me-3">{data?.release_date}</li>
-              <li className="mx-3">
+              <li key="1" className="dateInfo me-3">{data?.release_date}</li>
+              <li key="2" className="mx-3">
                   {typeList}
               </li>
-              <li className="ms-3">{data?.runtime} mins</li>
+              <li key="3" className="ms-3">{data?.runtime} mins</li>
             </ul>
             <button className="pointBtn rounded-circle p-2 mb-3">{point}</button>
             <span className="voteTitle m-lg-3 m-sm-2"><b>Vote Score</b></span>
@@ -132,19 +169,45 @@ const DetailMovie = (id) => {
       <div className="position-absolute bg-image" style={{ backgroundImage: `url(${bgSrc})`}}></div>
       <div className="position-absolute bg-color"></div>
     </div>
-    <div className="movie p-5">
+
+    <div className="p-lg-5 p-sm-3 row">
+      <div className="col-9">
+        <h5>Top Billed Cast</h5>
+        <div className="d-flex peopleList" style={{ overflowX: 'scroll'}}>
+        {
+          peopleOfMovie?.map((item, index) => (
+            <div className="col-3 me-3 ms-1">
+              <Image           
+                  src={profileImg[index]} className="peopleImg"
+                />
+                <h6 className="p-2 mb-3 peopleName text-center">{item.name}</h6>
+            </div>
+          ))
+        }
+        <div class="box" style={{ overflowX: 'scroll'}}></div>
+        </div>
+      </div>
+      <div className="col-3 ps-lg-5 ps-sm-4">
+        <h5>Status</h5>
+      </div>
+    </div>
+
+    <div className="movie p-lg-5 p-sm-3">
       <h5>Most popular videos</h5>
-      {
-        videoList?.map(item => (
-          <VideoPlayer src={item}/> 
+      {/* {
+        videoList?.map((item, index) => (
+          <VideoPlayer key={index} src={item}/> 
         ))
-      } 
+      }  */}
     </div>
 
     <div>
       <Modal isOpen={modalIsOpen} >
         <div className="video-container text-center py-5">
-        <button onClick={toggleModal} className="closeBtn border-0">x</button>
+          <div className="headingTrailer bg-black py-3 ps-2">
+          <h5 className="text-white">Play Trailer</h5>
+          <button onClick={toggleModal} className="closeBtn border-0 text-white">x</button>
+          </div>
           <iframe
             width="560"
             height="200"

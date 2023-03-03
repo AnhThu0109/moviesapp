@@ -18,7 +18,6 @@ function Popular() {
     if(str.length > 17){
       const numLetters = 17;
       const shortenedStr = str.slice(0, numLetters) + "..."; 
-      console.log(shortenedStr); 
       return shortenedStr;
     } else return str; 
   }

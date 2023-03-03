@@ -68,7 +68,8 @@ img.posterImg {
 .video-container {
     display: flex;
     justify-content: center;
-    direction: rtl;
+    flex-direction: column;
+    /* width: 80%; */
 }
 
 .videoTrailer{
@@ -81,13 +82,18 @@ div .ReactModal__Content{
     background-color: transparent !important;
     border: none !important;
     overflow: hidden !important;
-    padding-right: 0 !important;
+    padding: 0 !important;
+}
+
+.headingTrailer{
+    display: flex;
+    justify-content: space-between;
+    width: 560px;
 }
 
 .closeBtn{
  background-color: transparent;
- align-items: top;
-    display: flex;
+ margin-right: -20px;
 }
 
 .pointBtn{
@@ -99,4 +105,34 @@ div .ReactModal__Content{
 
 button.pointBtn:hover{
     transform: scale(1.1);
+}
+
+.peopleList{
+    box-shadow: inset -20px 0px 15px -10px white;
+}
+
+/* .box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    box-shadow: inset -10px 0px 5px -5px white;
+    z-index: 1;
+  } */
+
+.peopleName{
+    height: 70px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+    z-index: -1;
+}
+
+.peopleImg{
+    position: relative;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    z-index: -1;
 }

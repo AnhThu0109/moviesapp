@@ -16,7 +16,6 @@ function Trending() {
     if(str.length > 15){
       const numLetters = 15;
       const shortenedStr = str.slice(0, numLetters) + "..."; 
-      console.log(shortenedStr); 
       return shortenedStr;
     } else return str; 
   }

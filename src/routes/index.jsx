@@ -1,9 +1,9 @@
 import Home from "../pages/Home";
-import PopularPage from "../pages/PopularMovie/PopularMovie";
-import PopularPeople from "../pages/PopularPeople/PopularPeople";
-import DetailMovie from "../pages/DetailMovie/DetailMovie";
-import DetailPeople from "../pages/DetailPeople/DetailPeople";
-import Layout from "../pages/Layout";
+import PopularPage from "../pages/PopularMovie";
+import PopularPeople from "../pages/PopularPeople";
+import DetailMovie from "../pages/DetailMovie";
+import DetailPeople from "../pages/DetailPeople";
+import TopRated from "../pages/TopRated";
 const routes = [
     {
         element: <Home/>,
@@ -24,6 +24,10 @@ const routes = [
     {
         element: <DetailPeople/>,
         path: "/people/:id"
+    },
+    {
+        element: <TopRated/>,
+        path: "/movie/top"
     }
 ];
 export default routes;
