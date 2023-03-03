@@ -69,33 +69,24 @@ const DetailMovie = (id) => {
     }
   }
 
-  for (let page = 1; page <= 500; page++) {
-    const url = `${BASE_URL}/person/popular?${KEY}&page=${page}`;}
-
-  // const fetchPeople = async(index, page=1) => {
-  //   const data = await fetch(
-  //     `${BASE_URL}/person/popular?${id}/videos?${KEY}&language=en-US&page=${page}`
-  //   );
-  //   const json = await data.json();
-  //   if (json) {
-  //     let people = [];
-  //     json.results.map((item1) =>{
-  //       item1.known_for.map(item2 => {
-  //         if(item2.media_type == "movie" && item2.id == index){
-  //           people.push(item1);
-  //         }
-  //       })   
-  //     });
-  //     setPeopleList(people);
-  //     console.log(people);
-  //   }
-  // }
-
-  // const getActors = async(id, length = 500) => {
-  //   for(let i = 0; i<500; i++){
-  //     await fetchPeople(id, i);
-  //   }
-  // } 
+  const fetchPeople = async(index, page=1) => {
+    const data = await fetch(
+      `${BASE_URL}/person/popular?${id}/videos?${KEY}&language=en-US&page=${page}`
+    );
+    const json = await data.json();
+    if (json) {
+      let people = [];
+      json.results.map((item1) =>{
+        item1.known_for.map(item2 => {
+          if(item2.media_type == "movie" && item2.id == index){
+            people.push(item1);
+          }
+        })   
+      });
+      setPeopleList(people);
+      console.log(people);
+    }
+  }
 
   useEffect(() => {
     let url = window.location.href;
@@ -107,6 +98,9 @@ const DetailMovie = (id) => {
     fetchVideo(id).catch((error) => {
       console.log(error);
     });
+    // for (let page = 1; page <= 500; page++) {
+    //   fetchPeople(id, page);
+    // }
   }, []);
   return (
     <>
