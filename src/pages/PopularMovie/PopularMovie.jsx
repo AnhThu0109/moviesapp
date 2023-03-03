@@ -1,15 +1,14 @@
-import { BASE_URL } from "../utils/api";
-import { KEY } from "../utils/key";
+import { BASE_URL } from "../../utils/api";
+import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import { Image, Form, Pagination } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import { POSTER_SRC } from "../utils/posterSrc";
+import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
 
 const PopularPage = () => {
-  const [form] = Form.useForm();
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
@@ -55,7 +54,7 @@ const PopularPage = () => {
       <div className="p-3 row trending-film">
         {
           data?.results?.map((item, index) => (
-            <div className="film col-3 pb-2">
+            <div className="film col-lg-3 col-sm-4 pb-2">
             <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} className="rounded-4" 

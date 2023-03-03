@@ -12,6 +12,15 @@ function Trending() {
   const [detailLink, setDetailLink] = useState("");
   const containerRef = useRef(null);
 
+  const showBrief = (str) => {
+    if(str.length > 15){
+      const numLetters = 15;
+      const shortenedStr = str.slice(0, numLetters) + "..."; 
+      console.log(shortenedStr); 
+      return shortenedStr;
+    } else return str; 
+  }
+
   const fetchData = async (p = "/trending/movie/day?") => {
     const data = await fetch(
       `${BASE_URL}${p}${KEY}`
@@ -49,7 +58,7 @@ function Trending() {
                 src={imgSrc[index]} className="rounded-4"
               />
               <h6 className="pt-2 text-center titleFilm">
-                {item.title}
+                {showBrief(item.title)}
               </h6>
               <p className="text-center">{item.release_date}</p>
               </Link>

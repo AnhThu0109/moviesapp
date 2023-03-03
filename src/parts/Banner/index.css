@@ -43,3 +43,7 @@ input[type="text"]{
   .title{
     color: #003262;
   }
+
+  #banner .slick-dots{
+    z-index: -1 !important;
+  }

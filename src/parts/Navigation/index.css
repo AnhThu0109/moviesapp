@@ -39,3 +39,8 @@ button#dropdownMovies{
 a.dropdownList{
     color: black !important;
 }
+
+.navList{
+    display: flex;
+    flex-direction: row !important;
+}

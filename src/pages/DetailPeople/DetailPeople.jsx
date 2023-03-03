@@ -1,17 +1,18 @@
-import { BASE_URL } from "../utils/api";
-import { KEY } from "../utils/key";
+import { BASE_URL } from "../../utils/api";
+import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import { Image } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
-import { POSTER_SRC } from "../utils/posterSrc";
-import { BG_SRC } from "../utils/bgSrc";
-import { VD_SRC } from "../utils/videoSrc";
-import VideoPlayer from "../utils/videoPlayer";
+import { POSTER_SRC } from "../../utils/posterSrc";
+import { BG_SRC } from "../../utils/bgSrc";
+import { VD_SRC } from "../../utils/videoSrc";
+import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
+import { CaretRightOutlined } from "@ant-design/icons";
 
-const DetailMovie = (id) => {
+const DetailPeople = (id) => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState("");
   const [bgSrc, setBgSrc] = useState("");
@@ -20,6 +21,7 @@ const DetailMovie = (id) => {
   const [videoList, setVideoList] = useState();
   const [trailer, setTrailer] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [peopleList, setPeopleList] = useState();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -31,7 +33,6 @@ const DetailMovie = (id) => {
     );
     const json = await data.json();
     if (json) {
-      console.log(json);
       setData(json);
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
@@ -65,9 +66,9 @@ const DetailMovie = (id) => {
       });
       setVideoList(videoListSrc);
       setTrailer(trailerLink);
-      console.log(trailerLink);
     }
   }
+
   useEffect(() => {
     let url = window.location.href;
     let strs = url.split('/');
@@ -102,8 +103,8 @@ const DetailMovie = (id) => {
                 <span className="ui-values">{point}</span>
                 
             </span> 
-            <span className="voteTitle m-3"><b>Vote Score</b></span>
-            <button className="ms-3 border-0 playTrailerBtn"><b><a onClick={toggleModal} >Play Trailer</a></b></button>
+            <span className="voteTitle m-lg-3 m-sm-2"><b>Vote Score</b></span>
+            <button className="ms-3 border-0 playTrailerBtn"><b><a onClick={toggleModal} ><CaretRightOutlined className="iconPlay"/> Play Trailer</a></b></button>
             <p><i>{data?.tagline}</i></p>
             <h5>Overview</h5>
             <p className="overview pe-lg-5">{data?.overview}</p>
@@ -141,4 +142,4 @@ const DetailMovie = (id) => {
   );
 };
 
-export default DetailMovie;
+export default DetailPeople;

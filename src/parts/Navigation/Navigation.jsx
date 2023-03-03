@@ -3,6 +3,7 @@ import { Switch } from "antd";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
@@ -21,17 +22,20 @@ function Navigation() {
       
       <nav className="navbar">
         <div className="container-fluid ms-2">
-          <a className="navbar-brand homeNav" href="/">
-            HOME
-          </a>
+          <Link to="/" className="movieLink homeNav me-3">HOME</Link>
           <div>
-            <ul className="navbar-nav">
+            <ul className="navbar-nav navList">
               <li>
               <DropdownButton id="dropdownMovies" title="Movies">
-                <Dropdown.Item href="/popular">Popular</Dropdown.Item>
-                <Dropdown.Item href="/toprated">Top Rated</Dropdown.Item>
-                <Dropdown.Item href="/upcomming">Up Coming</Dropdown.Item>
+                <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
+                <Dropdown.Item><Link to="/movies/toprated" className="movieLink">Top Rated</Link></Dropdown.Item>
+                <Dropdown.Item href="/movies/upcomming">Up Coming</Dropdown.Item>
               </DropdownButton>
+              </li>
+              <li>
+              <DropdownButton id="dropdownMovies" title="People">
+                <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular People</Link></Dropdown.Item>
+                  </DropdownButton>
               </li>
             </ul>
           </div>

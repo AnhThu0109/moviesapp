@@ -14,6 +14,15 @@ function Popular() {
   const [detailLink, setDetailLink] = useState("");
   const containerRef = useRef(null);
 
+  const showBrief = (str) => {
+    if(str.length > 17){
+      const numLetters = 17;
+      const shortenedStr = str.slice(0, numLetters) + "..."; 
+      console.log(shortenedStr); 
+      return shortenedStr;
+    } else return str; 
+  }
+
   const fetchData = async (page=1) => {
     const data = await fetch(
       `${BASE_URL}/movie/popular?${KEY}&language=en-US&page=${page}`
@@ -53,7 +62,7 @@ function Popular() {
               <Image           
                 src={imgSrc[index]} className="rounded-4"
               />
-              <h6 className="pt-2 text-center">{item.title}</h6>
+              <h6 className="pt-2 text-center">{showBrief(item.title)}</h6>
               <p className="text-center">{item.release_date}</p>
               </Link>
             </div>
