@@ -2,7 +2,7 @@ import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
-import { Image } from "antd";
+import { Image, Alert, Space, Spin } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
@@ -11,6 +11,8 @@ import { VD_SRC } from "../../utils/videoSrc";
 import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
 import { CaretRightOutlined } from "@ant-design/icons";
+import { fetchDataId } from "../../utils/fetchData";
+import { changeMoneyFormat } from "../../utils/function";
 
 const DetailMovie = (id) => {
   const [data, setData] = useState({});
@@ -24,18 +26,16 @@ const DetailMovie = (id) => {
   const [peopleList, setPeopleList] = useState();
   const [peopleOfMovie, setPeople] = useState();
   const [profileImg, setProfileImg] = useState();
+  const [flag, setFlag] = useState(false);
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
   }
 
-  const fetchData = async (id) => {
-    const data = await fetch(
-      `${BASE_URL}/movie/${id}?${KEY}&language=en-US`
-    );
-    const json = await data.json();
-    console.log(json);
+  const getById = async(id) => {
+    const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`)
     if (json) {
+      console.log(json);
       setData(json);
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
@@ -49,13 +49,10 @@ const DetailMovie = (id) => {
       setImgSrc(imageSrc);
       setBgSrc(backgroundSrc);
     }
-  };
+  }
 
-  const fetchVideo = async(id) => {
-    const data = await fetch(
-      `${BASE_URL}/movie/${id}/videos?${KEY}&language=en-US`
-    );
-    const json = await data.json();
+  const getVideoById = async(id) => {
+    const json = await fetchDataId(id, "/movie/", `/videos?${KEY}&language=en-US`);
     if (json) {
       let videoListSrc = [];
       let trailerLink = "";
@@ -72,25 +69,6 @@ const DetailMovie = (id) => {
     }
   }
 
-  // const fetchPeople = async(index, page=1) => {
-  //   const data = await fetch(
-  //     `${BASE_URL}/person/popular?${id}/videos?${KEY}&language=en-US&page=${page}`
-  //   );
-  //   const json = await data.json();
-  //   if (json) {
-  //     let people = [];
-  //     json.results.map((item1) =>{
-  //       item1.known_for.map(item2 => {
-  //         if(item2.media_type == "movie" && item2.id == index){
-  //           people.push(item1);
-  //         }
-  //       })   
-  //     });
-  //     setPeopleList(people);
-  //     console.log(people);
-  //   }
-  // }
-
   const findPeople = (id, arr) => {
     let people = [];
     let img = [];
@@ -104,43 +82,46 @@ const DetailMovie = (id) => {
     people.map(item => {
       img.push(`${POSTER_SRC}`+ item.profile_path)
     })
+    console.log(people);
     setPeople(people);
     setProfileImg(img);
+  }
+
+  const fetchPeople = async (id) => {
+    let allPeople = [];
+    for (let i = 1; i <= 500; i++) {
+      const response = await fetch(
+        `${BASE_URL}/person/popular?${KEY}&language=en-US&page=${i}`
+      );
+      const json = await response.json();
+      allPeople = allPeople.concat(json?.results);
+    }
+    findPeople(id, allPeople);
+    setPeopleList(allPeople);
+  };
+
+  const getAll = async(id) => {
+    await fetchPeople(id);
+    await getById(id);
+    await getVideoById(id);  
   }
 
   useEffect(() => {
     let url = window.location.href;
     let strs = url.split('/');
     let id = strs.at(-1);
-    const fetchMovies = async () => {
-      let allPeople = [];
-      for (let i = 1; i <= 500; i++) {
-        const response = await fetch(
-          `${BASE_URL}/person/popular?${KEY}&language=en-US&page=${i}`
-        );
-        const json = await response.json();
-        allPeople = allPeople.concat(json?.results);
-      }
-      console.log(allPeople);
-      findPeople(id, allPeople);
-      setPeopleList(allPeople);
-    };
-    fetchMovies();
-  }, []);
-
-  useEffect(() => {
-    let url = window.location.href;
-    let strs = url.split('/');
-    let id = strs.at(-1);
-    fetchData(id).catch((error) => {
-      console.log(error);
-    });
-    fetchVideo(id).catch((error) => {
-      console.log(error);
-    });
+    function setTime(){
+      setTimeout(function () {setFlag(true)}, 4000);
+    }
+    setTime();
+    clearTimeout(setTime);
+    getAll(id);  
   }, []);
   return (
     <>
+      {
+      flag? (
+        <>
       <div className="detail-film position-relative">
       <div className="detailInfo" >
         <div className=" py-4 ps-lg-5 ps-sm-3 me-3">
@@ -184,14 +165,30 @@ const DetailMovie = (id) => {
             </div>
           ))
         }
-        <div class="box" style={{ overflowX: 'scroll'}}></div>
+        <div className="box" style={{ overflowX: 'scroll'}}></div>
         </div>
       </div>
       <div className="col-3 ps-lg-5 ps-sm-4">
         <h5>Status</h5>
+        <p>{data?.status}</p><br></br>
+        <h5>Budget</h5>
+        <p>{data?.budget && changeMoneyFormat(data?.budget)}</p><br></br>
+        <h5>Revenue</h5>
+        <p>{data?.budget && changeMoneyFormat(data?.revenue)}</p>
       </div>
     </div>
 
+    <hr></hr>
+
+    <div className="review p-lg-5 p-sm-3">
+      <ul className="titleReview">
+        <li key="1" className="me-5"><h5>Social</h5></li>
+        <li key="2"><h6>Reviews</h6></li>
+      </ul>
+      
+    </div>
+
+    <hr></hr>
     <div className="movie p-lg-5 p-sm-3">
       <h5>Most popular videos</h5>
       {/* {
@@ -221,6 +218,23 @@ const DetailMovie = (id) => {
       </Modal>
     </div>
     </>
+      ) : (
+        <Space
+    direction="vertical"
+    style={{
+      width: '100%',
+    }} className="text-center p-5"
+  >
+    <Space className="pt-5">
+      <Spin tip="Loading" size="large">
+        <div className="content" />
+      </Spin>
+    </Space>
+  </Space>
+      )
+      }
+    </>
+    
   );
 };
 

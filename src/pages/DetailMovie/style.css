@@ -93,7 +93,7 @@ div .ReactModal__Content{
 
 .closeBtn{
  background-color: transparent;
- margin-right: -20px;
+ margin-right: 30px;
 }
 
 .pointBtn{
@@ -135,4 +135,21 @@ button.pointBtn:hover{
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     z-index: -1;
+}
+
+hr{
+    width: 95%;
+    position: relative;
+    left: 4%;
+}
+
+.titleReview{
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+}
+
+.ant-spin-text {
+    margin-left: -22px;
 }

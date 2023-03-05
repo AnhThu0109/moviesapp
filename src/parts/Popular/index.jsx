@@ -1,11 +1,10 @@
 import "./style.css";
 import { useEffect, useState, useRef } from "react";
-import { BASE_URL } from "../../utils/api";
-import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { BG_SRC } from "../../utils/bgSrc";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
+import { fetchPage } from "../../utils/fetchData";
 
 function Popular() {
   const [data, setData] = useState({});
@@ -21,12 +20,9 @@ function Popular() {
       return shortenedStr;
     } else return str; 
   }
-
-  const fetchData = async (page=1) => {
-    const data = await fetch(
-      `${BASE_URL}/movie/popular?${KEY}&language=en-US&page=${page}`
-    );
-    const json = await data.json();
+  
+  const getData = async () => {
+    const json = await fetchPage(1, "/movie/popular?", "&language=en-US&page=")
     if (json) {
       console.log(json);
       setData(json);
@@ -42,10 +38,10 @@ function Popular() {
       setBgSrc(bgSrcArr);
       setDetailLink(detailLinkArr);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData().catch((error) => {
+    getData().catch((error) => {
       console.log(error);
     });
   }, []);

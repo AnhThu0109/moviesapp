@@ -1,5 +1,3 @@
-import { BASE_URL } from "../../utils/api";
-import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import { Image, Pagination } from "antd";
@@ -7,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
+import { fetchPage } from "../../utils/fetchData";
 
 const PopularPeople = () => {
   const [data, setData] = useState({});
@@ -33,14 +32,10 @@ const PopularPeople = () => {
     
   }
 
-  const fetchData = async (page=1) => {
-    const data = await fetch(
-      `${BASE_URL}/person/popular?${KEY}&language=en-US&page=${page}`
-    );
-    const json = await data.json();
+  const getData = async (page=1) => {
+    const json = await fetchPage(page, "/person/popular?", "&language=en-US&page=")
     if (json) {
-      console.log(json);
-    setData(json);
+      setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];
       let arrFilm1 = [];
@@ -53,18 +48,17 @@ const PopularPeople = () => {
         })
         let strFilm = arrFilm.join(", ");
         strFilm = showBrief(strFilm);
-        console.log(strFilm);
         arrFilm1.push(strFilm);
-        console.log(arrFilm1);
       })
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);
       setDetailLink(detailLinkArr);
       setFilm(arrFilm1);
     }
-  };
+  }
+
   useEffect(() => {
-    fetchData(page).catch((error) => {
+    getData(page).catch((error) => {
       console.log(error);
     });
   }, [page]);

@@ -5,6 +5,7 @@ import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
+import { fetchData } from "../../utils/fetchData";
 
 function Trending() {
   const [data, setData] = useState({});
@@ -20,11 +21,8 @@ function Trending() {
     } else return str; 
   }
 
-  const fetchData = async (p = "/trending/movie/day?") => {
-    const data = await fetch(
-      `${BASE_URL}${p}${KEY}`
-    );
-    const json = await data.json();
+  const getData = async () => {
+    const json = await fetchData(`${BASE_URL}/trending/movie/day?${KEY}`);
     if (json) {
       console.log(json);
       setData(json);
@@ -37,12 +35,13 @@ function Trending() {
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);
     }
-  };
+  }
+  
 
   useEffect(() => {
-    fetchData().catch((error) => {
-      console.log(error);
-    });
+    getData().catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
