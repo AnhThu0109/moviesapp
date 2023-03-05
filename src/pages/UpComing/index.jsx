@@ -6,7 +6,7 @@ import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
 import { fetchPage } from "../../utils/fetchData";
 
-const TopRated = () => {
+const UpComing = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
@@ -22,8 +22,9 @@ const TopRated = () => {
   }
 
   const getData = async (page=1) => {
-    const json = await fetchPage(page, "/movie/top_rated?", "&language=en-US&page=")
+    const json = await fetchPage(page, "/movie/upcoming?", "&language=en-US&page=")
     if (json) {
+        console.log(json);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];
@@ -43,7 +44,7 @@ const TopRated = () => {
   return (
     <>
       <div id="popular">
-      <h2 className="title pt-3 px-3 fw-bolder">Top Rated Movies</h2>
+      <h2 className="title pt-3 px-3 fw-bolder">Up Coming Movies</h2>
       <div className="p-3 row trending-film">
         {
           data?.results?.map((item, index) => (
@@ -65,11 +66,11 @@ const TopRated = () => {
       showSizeChanger
       onShowSizeChange={onShowSizeChange}
       defaultCurrent={1}
-      total={500} className="text-center"
+      total={15} className="text-center"
       onChange={onChange}
         />
     </>
   );
 };
 
-export default TopRated;
+export default UpComing;

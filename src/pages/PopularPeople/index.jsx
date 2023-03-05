@@ -19,7 +19,6 @@ const PopularPeople = () => {
   };
 
   const onChange = (p) => {
-    console.log(p);
     setPage(p);
   }
 
@@ -35,6 +34,7 @@ const PopularPeople = () => {
   const getData = async (page=1) => {
     const json = await fetchPage(page, "/person/popular?", "&language=en-US&page=")
     if (json) {
+      console.log(json);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];

@@ -68,8 +68,11 @@ img.posterImg {
 .video-container {
     display: flex;
     justify-content: center;
+    
+}
+
+.videoDetailContainer{
     flex-direction: column;
-    /* width: 80%; */
 }
 
 .videoTrailer{
@@ -110,16 +113,6 @@ button.pointBtn:hover{
 .peopleList{
     box-shadow: inset -20px 0px 15px -10px white;
 }
-
-/* .box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    height: 100%;
-    box-shadow: inset -10px 0px 5px -5px white;
-    z-index: 1;
-  } */
 
 .peopleName{
     height: 70px;

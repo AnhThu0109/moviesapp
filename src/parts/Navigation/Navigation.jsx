@@ -28,8 +28,8 @@ function Navigation() {
               <li>
               <DropdownButton id="dropdownMovies" title="Movies">
                 <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
-                <Dropdown.Item><Link to="/movie/top" className="movieLink">Top Rated</Link></Dropdown.Item>
-                <Dropdown.Item href="/movies/upcomming">Up Coming</Dropdown.Item>
+                <Dropdown.Item><Link to="/movies/top" className="movieLink">Top Rated</Link></Dropdown.Item>
+                <Dropdown.Item><Link to="/movies/upcoming" className="movieLink">Up Coming</Link></Dropdown.Item>
               </DropdownButton>
               </li>
               <li>

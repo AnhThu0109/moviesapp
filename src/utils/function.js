@@ -9,4 +9,11 @@ const changeMoneyFormat = (number)=>{
       return formattedNumber;
 }
 
-export {changeMoneyFormat};
+const getId = () => {
+    let url = window.location.href;
+    let strs = url.split('/');
+    let id = strs.at(-1);
+    return id;
+}
+
+export {changeMoneyFormat, getId};

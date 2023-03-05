@@ -12,9 +12,9 @@ import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
 import { CaretRightOutlined } from "@ant-design/icons";
 import { fetchDataId } from "../../utils/fetchData";
-import { changeMoneyFormat } from "../../utils/function";
+import { changeMoneyFormat, getId } from "../../utils/function";
 
-const DetailMovie = (id) => {
+const DetailMovie = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState("");
   const [bgSrc, setBgSrc] = useState("");
@@ -107,9 +107,7 @@ const DetailMovie = (id) => {
   }
 
   useEffect(() => {
-    let url = window.location.href;
-    let strs = url.split('/');
-    let id = strs.at(-1);
+    let id = getId();
     function setTime(){
       setTimeout(function () {setFlag(true)}, 4000);
     }
@@ -201,6 +199,7 @@ const DetailMovie = (id) => {
     <div>
       <Modal isOpen={modalIsOpen} >
         <div className="video-container text-center py-5">
+          <div className="videoDetailContainer">
           <div className="headingTrailer bg-black py-3 ps-2">
           <h5 className="text-white">Play Trailer</h5>
           <button onClick={toggleModal} className="closeBtn border-0 text-white">x</button>
@@ -214,6 +213,7 @@ const DetailMovie = (id) => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen className="videoTrailer"
           ></iframe>
+          </div>         
         </div>
       </Modal>
     </div>

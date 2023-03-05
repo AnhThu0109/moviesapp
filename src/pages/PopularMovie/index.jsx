@@ -18,13 +18,13 @@ const PopularPage = () => {
   };
 
   const onChange = (p) => {
-    console.log(p);
     setPage(p);
   }
 
   const getData = async (page=1) => {
     const json = await fetchPage(page, "/movie/popular?", "&language=en-US&page=")
     if (json) {
+      console.log(json);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];

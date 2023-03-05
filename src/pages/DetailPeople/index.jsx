@@ -11,8 +11,9 @@ import { VD_SRC } from "../../utils/videoSrc";
 import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
 import { CaretRightOutlined } from "@ant-design/icons";
+import { getId } from "../../utils/function";
 
-const DetailPeople = (id) => {
+const DetailPeople = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState("");
   const [bgSrc, setBgSrc] = useState("");
@@ -70,9 +71,7 @@ const DetailPeople = (id) => {
   }
 
   useEffect(() => {
-    let url = window.location.href;
-    let strs = url.split('/');
-    let id = strs.at(-1);
+    let id = getId();
     fetchData(id).catch((error) => {
       console.log(error);
     });
