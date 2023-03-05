@@ -6,20 +6,13 @@ import { POSTER_SRC } from "../../utils/posterSrc";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
 import { fetchData } from "../../utils/fetchData";
+import { showBrief } from "../../utils/function";
 
 function Trending() {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
   const containerRef = useRef(null);
-
-  const showBrief = (str) => {
-    if(str.length > 15){
-      const numLetters = 15;
-      const shortenedStr = str.slice(0, numLetters) + "..."; 
-      return shortenedStr;
-    } else return str; 
-  }
 
   const getData = async () => {
     const json = await fetchData(`${BASE_URL}/trending/movie/day?${KEY}`);
@@ -56,7 +49,7 @@ function Trending() {
                 src={imgSrc[index]} className="rounded-4"
               />
               <h6 className="pt-2 text-center titleFilm">
-                {showBrief(item.title)}
+                {showBrief(item.title, 15)}
               </h6>
               <p className="text-center">{item.release_date}</p>
               </Link>

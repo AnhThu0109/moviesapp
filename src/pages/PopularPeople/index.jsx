@@ -6,6 +6,7 @@ import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
 import { fetchPage } from "../../utils/fetchData";
+import { showBrief } from "../../utils/function";
 
 const PopularPeople = () => {
   const [data, setData] = useState({});
@@ -22,14 +23,14 @@ const PopularPeople = () => {
     setPage(p);
   }
 
-  const showBrief = (str) => {
-    if(str.length > 35){
-        const numLetters = 35;
-        const shortenedStr = str.slice(0, numLetters) + "...";  
-        return shortenedStr;
-    } else return str;
+  // const showBrief = (str) => {
+  //   if(str.length > 35){
+  //       const numLetters = 35;
+  //       const shortenedStr = str.slice(0, numLetters) + "...";  
+  //       return shortenedStr;
+  //   } else return str;
     
-  }
+  // }
 
   const getData = async (page=1) => {
     const json = await fetchPage(page, "/person/popular?", "&language=en-US&page=")
@@ -47,7 +48,7 @@ const PopularPeople = () => {
             item1.name? arrFilm.push(item1.name) : arrFilm.push(item1.title);
         })
         let strFilm = arrFilm.join(", ");
-        strFilm = showBrief(strFilm);
+        strFilm = showBrief(strFilm, 35);
         arrFilm1.push(strFilm);
       })
       setImgSrc(imgSrcArr);
