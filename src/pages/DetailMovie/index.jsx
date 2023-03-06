@@ -11,7 +11,7 @@ import { VD_SRC } from "../../utils/videoSrc";
 import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
 import { CaretRightOutlined } from "@ant-design/icons";
-import { fetchDataId } from "../../utils/fetchData";
+import { fetchDataId, fetchPage } from "../../utils/fetchData";
 import { changeMoneyFormat, getId } from "../../utils/function";
 
 const DetailMovie = () => {
@@ -27,6 +27,7 @@ const DetailMovie = () => {
   const [peopleOfMovie, setPeople] = useState();
   const [profileImg, setProfileImg] = useState();
   const [flag, setFlag] = useState(false);
+  const [totalReviews, setTotalReviews] = useState();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -100,10 +101,25 @@ const DetailMovie = () => {
     setPeopleList(allPeople);
   };
 
+  const getReview = async(id) => {
+    const data = await fetchPage(1, `/movie/${id}/reviews?`, "&language=en-US&");
+    if(data){
+      let allReviews = [];
+      for (let i=1; i<= data.total_pages; i++){
+        const response = await fetchPage(i, `/movie/${id}/reviews?`, "&language=en-US&");
+        const review = await response.json();
+        allReviews = allReviews.concat(review?.results);
+      }
+      console.log("review", allReviews);
+      setTotalReviews(allReviews);
+    }
+  }
+
   const getAll = async(id) => {
     await fetchPeople(id);
     await getById(id);
-    await getVideoById(id);  
+    await getVideoById(id); 
+    //await getReview(id); 
   }
 
   useEffect(() => {
@@ -152,6 +168,9 @@ const DetailMovie = () => {
     <div className="p-lg-5 p-sm-3 row">
       <div className="col-9">
         <h5>Top Billed Cast</h5>
+        {/* {
+          peopleOfMovie?.length == 0 ? () : ()
+        } */}
         <div className="d-flex peopleList" style={{ overflowX: 'scroll'}}>
         {
           peopleOfMovie?.map((item, index) => (
@@ -170,24 +189,38 @@ const DetailMovie = () => {
         <h5>Status</h5>
         <p>{data?.status}</p><br></br>
         <h5>Budget</h5>
-        <p>{data?.budget && changeMoneyFormat(data?.budget)}</p><br></br>
+        <p>
+          {
+          (data?.budget == 0)? (<>Unknown</>) : (<>{changeMoneyFormat(data?.budget)}</>)
+          }
+        </p><br></br>
         <h5>Revenue</h5>
-        <p>{data?.budget && changeMoneyFormat(data?.revenue)}</p>
+        <p>
+          {
+          (data?.revenue == 0)? (<>Unknown</>) : (<>{changeMoneyFormat(data?.revenue)}</>)
+          }
+        </p>
       </div>
     </div>
 
     <hr></hr>
 
-    <div className="review p-lg-5 p-sm-3">
+    <div className="review px-lg-5 px-sm-3 py-3">
       <ul className="titleReview">
         <li key="1" className="me-5"><h5>Social</h5></li>
-        <li key="2"><h6>Reviews</h6></li>
+        <li key="2" className="me-5">
+          <h6>Reviews</h6>
+          {
+
+          }
+        </li>
+        <li key="3"><h6>Home Page</h6></li>
       </ul>
       
     </div>
 
     <hr></hr>
-    <div className="movie p-lg-5 p-sm-3">
+    <div className="movie px-lg-5 px-sm-3 py-3">
       <h5>Most popular videos</h5>
       {/* {
         videoList?.map((item, index) => (

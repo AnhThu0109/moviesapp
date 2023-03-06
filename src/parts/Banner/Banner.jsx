@@ -1,6 +1,5 @@
 import "./style.css";
 import { Carousel, Form, Input, Tooltip, Button } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
 import { BG_SRC } from "../../utils/bgSrc";
 import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
@@ -73,33 +72,7 @@ function Banner() {
         <form onSubmit={(e) => handleFormSubmit(e, input)}>
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
         <button className='text-white m-2 btn-hover rounded-5 py-2 px-2'><b>Search</b></button>
-        </form>
-
-      {/* <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3" action="https://example.com/api/formdata" method="POST">
-          <Form.Item className="col-10"
-            name="search"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Input className="input" placeholder="Search movie..." name="keyword"/>
-          </Form.Item>
-          <Form.Item>
-          {/* <Tooltip title="Search">
-            <Button
-              id="searchBtn"
-              htmlType="submit"
-              shape="circle"
-              icon={<SearchOutlined />}
-            />
-          </Tooltip> */}
-          {/* <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-          </Form.Item>
-        </Form> */} 
+        </form> 
         </div>
         <Carousel autoplay id="carousel">
           {

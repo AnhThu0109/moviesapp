@@ -4,6 +4,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
 
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
@@ -25,18 +26,19 @@ function Navigation() {
           <Link to="/" className="movieLink homeNav me-3">HOME</Link>
           <div>
             <ul className="navbar-nav navList">
-              <li>
+              <li className="ms-2">
               <DropdownButton id="dropdownMovies" title="Movies">
                 <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
                 <Dropdown.Item><Link to="/movies/top" className="movieLink">Top Rated</Link></Dropdown.Item>
                 <Dropdown.Item><Link to="/movies/upcoming" className="movieLink">Up Coming</Link></Dropdown.Item>
               </DropdownButton>
               </li>
-              <li>
+              <li className="ms-2">
               <DropdownButton id="dropdownMovies" title="People">
                 <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular People</Link></Dropdown.Item>
                   </DropdownButton>
               </li>
+              <li className="ms-4 login fw-lighter"><Link to="/people/popular">Login</Link> <UserOutlined className="ms-2"/></li>
             </ul>
           </div>
         </div>

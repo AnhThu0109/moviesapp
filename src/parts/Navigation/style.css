@@ -1,6 +1,7 @@
 .navLink a{
     text-decoration: none !important;
     padding: 10px;
+    color: white;
 }
 
 .darkTheme{
@@ -43,4 +44,14 @@ a.dropdownList{
 .navList{
     display: flex;
     flex-direction: row !important;
+}
+
+.login{
+    display: flex;
+    align-items: center;
+}
+
+.login a{
+    color: white;
+    text-decoration: none;
 }
