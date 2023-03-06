@@ -23,15 +23,6 @@ const PopularPeople = () => {
     setPage(p);
   }
 
-  // const showBrief = (str) => {
-  //   if(str.length > 35){
-  //       const numLetters = 35;
-  //       const shortenedStr = str.slice(0, numLetters) + "...";  
-  //       return shortenedStr;
-  //   } else return str;
-    
-  // }
-
   const getData = async (page=1) => {
     const json = await fetchPage(page, "/person/popular?", "&language=en-US&page=")
     if (json) {

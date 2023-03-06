@@ -1,4 +1,4 @@
-import "./index.css";
+import "./style.css";
 import { Carousel, Form, Input, Tooltip, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { BG_SRC } from "../../utils/bgSrc";
@@ -7,20 +7,41 @@ import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { POSTER_SRC } from "../../utils/posterSrc";
+import { useNavigate } from 'react-router-dom';
 
 
 function Banner() {
   const [bgSrc, setBgSrc] = useState([]);
   const [form] = Form.useForm();
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
   const [data, setData] = useState({});
+  const [searchData, setSearchData] = useState();
+  const [poster, setPoster] = useState();
+  const navigate = useNavigate();
 
-  const onFinish = (value) => {
-    console.log(value);
-    setInput(value.search);
-    form.resetFields();
-  };
+  const handleFormSubmit = (e, input) => {
+    e.preventDefault();
+    input = input.trim();
+    if(input != ""){
+      navigate(`/search/${input}`);
+    }
+}
 
+  const fetchKeywords = async (keyword, page=1) => {
+    const data = await fetch(
+      `${BASE_URL}/search/movie?${KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
+    const json = await data.json();
+    console.log("DataKey:", json);
+    if (json) {
+      setSearchData(json);
+      let posterSrcArr = [];
+      json.results.map(item => {
+        posterSrcArr.push(`${POSTER_SRC}` + item.poster_path);
+      })
+      setPoster(posterSrcArr);    
+    }
+  }
   const fetchData = async (p = "/trending/movie/day?") => {
     const data = await fetch(
       `${BASE_URL}${p}${KEY}`
@@ -49,7 +70,12 @@ function Banner() {
         <h2><b>Welcome.</b></h2>
         <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
       
-      <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3">
+        <form className='text-center' onSubmit={(e) => handleFormSubmit(e, input)} action="/search">
+        <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
+        <button className='m-2 btn btn-info rounded-circle'>Search</button>
+        </form>
+
+      {/* <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3" action="https://example.com/api/formdata" method="POST">
           <Form.Item className="col-10"
             name="search"
             rules={[
@@ -58,17 +84,22 @@ function Banner() {
               },
             ]}
           >
-            <Input className="input" placeholder="Search movie..." />
+            <Input className="input" placeholder="Search movie..." name="keyword"/>
           </Form.Item>
-          <Tooltip title="Search">
+          <Form.Item>
+          {/* <Tooltip title="Search">
             <Button
               id="searchBtn"
               htmlType="submit"
               shape="circle"
               icon={<SearchOutlined />}
             />
-          </Tooltip>
-        </Form>
+          </Tooltip> */}
+          {/* <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+          </Form.Item>
+        </Form> */} 
         </div>
         <Carousel autoplay id="carousel">
           {

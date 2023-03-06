@@ -5,6 +5,7 @@ import DetailMovie from "../pages/DetailMovie";
 import DetailPeople from "../pages/DetailPeople";
 import TopRated from "../pages/TopRated";
 import UpComing from "../pages/UpComing";
+import SearchPage from "../pages/SearchPage";
 const routes = [
     {
         element: <Home/>,
@@ -37,6 +38,10 @@ const routes = [
     {
         element: <TopRated/>,
         path: "/movie/top"
+    },
+    {
+        element: <SearchPage/>,
+        path: "/search/:keyword"
     }
 ];
 export default routes;

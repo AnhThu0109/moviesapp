@@ -11,7 +11,7 @@ const PopularPage = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
-  const [detailLink, setDetailLink] = useState("");
+  const [detailLink, setDetailLink] = useState([]);
 
   const onShowSizeChange = (current, pageSize) => {
     console.log(current, pageSize);

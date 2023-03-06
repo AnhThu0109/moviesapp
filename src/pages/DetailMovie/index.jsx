@@ -35,7 +35,7 @@ const DetailMovie = () => {
   const getById = async(id) => {
     const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`)
     if (json) {
-      console.log(json);
+      console.log("Detail Movie:",json);
       setData(json);
       let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
@@ -109,7 +109,7 @@ const DetailMovie = () => {
   useEffect(() => {
     let id = getId();
     function setTime(){
-      setTimeout(function () {setFlag(true)}, 4000);
+      setTimeout(function () {setFlag(true)}, 5000);
     }
     setTime();
     clearTimeout(setTime);

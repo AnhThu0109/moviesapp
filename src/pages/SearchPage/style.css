@@ -1,0 +1,18 @@
+.errorMess{
+    font-size: 30px;
+    color: red;
+}
+
+.searchResult{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin: 0;
+}
+
+.showBriefSearch{
+    text-align: justify;
+}
+
+.movieDetailLink{
+    text-decoration: underline;
+    color:#6ab7ff !important;
+}
