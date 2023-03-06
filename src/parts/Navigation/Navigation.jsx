@@ -1,4 +1,4 @@
-import "./index.css";
+import "./style.css";
 import { Switch } from "antd";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";

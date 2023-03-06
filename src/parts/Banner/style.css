@@ -14,13 +14,21 @@ input[type="text"]{
     padding: 10px;
     border-radius: 20px;
     color: black;
+    width: 75%;
+    border: none;
   }
 
-  button#searchBtn {
-    margin-left: 10px;
-    width: 45px;
-    height: 45px;
-}
+  .btn-hover{
+    background-image: linear-gradient(to right, #25aae1, #45e9db, #4beadf, #2bb673);
+    width: 100px;
+    border: none;
+    background-size: 300% 100%;
+    transition: all .4s ease-in-out;
+  }
+  .btn-hover:hover {
+    background-position: 100% 0;
+    transition: all .4s ease-in-out;
+  }
 
   #bannerColor{
     background-color: #002B53;

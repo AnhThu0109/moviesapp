@@ -70,9 +70,9 @@ function Banner() {
         <h2><b>Welcome.</b></h2>
         <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
       
-        <form className='text-center' onSubmit={(e) => handleFormSubmit(e, input)} action="/search">
+        <form onSubmit={(e) => handleFormSubmit(e, input)}>
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
-        <button className='m-2 btn btn-info rounded-circle'>Search</button>
+        <button className='text-white m-2 btn-hover rounded-5 py-2 px-2'><b>Search</b></button>
         </form>
 
       {/* <Form form={form} onFinish={onFinish} id="searchForm" className="row py-3" action="https://example.com/api/formdata" method="POST">
