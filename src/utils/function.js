@@ -24,4 +24,9 @@ const showBrief = (str, len) => {
     } else return str; 
   }
 
-export {changeMoneyFormat, getId, showBrief};
+const showFirstLetter = (str) => {
+  const shortenedStr = str.slice(0, 1);
+  return shortenedStr;
+  }
+
+export {changeMoneyFormat, getId, showBrief, showFirstLetter};

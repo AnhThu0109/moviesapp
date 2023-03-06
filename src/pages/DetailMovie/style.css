@@ -81,6 +81,11 @@ img.posterImg {
     text-align: center;
 }
 
+.errorTrailer{
+    display: flex;
+    justify-content: left;
+}
+
 div .ReactModal__Content{
     background-color: transparent !important;
     border: none !important;
@@ -97,7 +102,12 @@ div .ReactModal__Content{
 .closeBtn{
  background-color: transparent;
  margin-right: 30px;
+ transition: transform 0.1s ease-in-out;
 }
+
+.closeBtn:hover{
+    transform: scale(1.5);
+   }
 
 .pointBtn{
     background-color: transparent;
@@ -145,4 +155,52 @@ hr{
 
 .ant-spin-text {
     margin-left: -22px;
+}
+
+.socialLink h6{
+    border-bottom: 5px solid black;
+    padding-bottom: 5px;
+}
+
+.firstReview{
+    margin-bottom: 0;
+}
+
+.firstReview>span{
+    font-size: 15px;
+    padding: 4px;
+}
+
+.starIcon>svg {
+    margin-bottom: 5px;
+    margin-right: 2px;
+}
+
+.avatarReview{
+    background-color: #C51E3A;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+    width: 60px;
+    height: 60px;
+}
+
+.showContent {
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+
+.showContent .col-2{
+    display: flex;
+    justify-content: center;
+}
+
+.homeIcon>svg {
+    margin-bottom: 7px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.review a>b:hover{
+    color: grey;
 }

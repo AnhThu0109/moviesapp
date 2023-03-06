@@ -75,13 +75,12 @@ const PopularPeople = () => {
         }        
       </div>
     </div>
-
-      <Pagination
-      showSizeChanger
-      onShowSizeChange={onShowSizeChange}
-      defaultCurrent={1}
-      total={500} className="text-center"
-      onChange={onChange}
+    
+        <Pagination 
+        defaultCurrent={1}
+        total={10000}
+        pageSize={20}
+        onChange={onChange} className="text-center"
         />
     </>
   );

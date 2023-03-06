@@ -8,7 +8,6 @@ import "../style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { BG_SRC } from "../../utils/bgSrc";
 import { VD_SRC } from "../../utils/videoSrc";
-import VideoPlayer from "../../utils/videoPlayer";
 import Modal from 'react-modal';
 import { CaretRightOutlined } from "@ant-design/icons";
 import { getId } from "../../utils/function";
@@ -114,11 +113,6 @@ const DetailPeople = () => {
     </div>
     <div className="movie p-5">
       <h5>Most popular videos</h5>
-      {
-        videoList?.map(item => (
-          <VideoPlayer src={item}/> 
-        ))
-      } 
     </div>
 
     <div>
