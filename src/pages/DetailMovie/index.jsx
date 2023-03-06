@@ -63,7 +63,7 @@ const DetailMovie = () => {
       let videoListSrc = [];
       let trailerLink = "";
       json.results.map((item, index) => {
-        if (index < 2) {
+        if (index < 7) {
           videoListSrc.push(`${VD_SRC}` + item.key);
         }
         if (item.type == "Trailer") {
@@ -258,17 +258,34 @@ const DetailMovie = () => {
               {
                 isShowReview == true? (
                   <div className="d-flex">
-                    <div className="mx-3">
+                    {
+                      totalReviews?.length == 0? (
+                        <div className="ms-3">There is no review on this movie.</div>
+                      ) : (
+                        <>
+                        <div className="mx-3">
                       <button className="avatarReview rounded-circle p-3 border-0">{totalReviews && showFirstLetter(totalReviews[0].author)}</button>                      
                     </div>
                     <div className="me-3">
                       <h5 className="firstReview">A review by {totalReviews &&totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon"/>{totalReviews && (totalReviews[0].author_details.rating).toFixed(1)}</span></h5>
                       <p className="fw-lighter text-black-50">Written by <b>{totalReviews &&totalReviews[0].author}</b> on {totalReviews &&totalReviews[0].created_at}</p>
                       <p className="reviewContent">{totalReviews && totalReviews[0].content}</p>
-                    </div>                  
+                    </div>
+                        </>
+                      )
+                    }
+                                      
                   </div>
                 ) : (
-                  <div className="ps-3"><Link to={data?.homepage}><HomeOutlined className="homeIcon text-black"/>{data?.homepage}</Link></div>
+                  <>
+                  {
+                    data?.homepage == ""? (
+                      <div className="ps-3">Unknown</div>
+                    ) : (
+                      <div className="ps-3"><Link to={data?.homepage}><HomeOutlined className="homeIcon text-black"/>{data?.homepage}</Link></div>
+                    )
+                  }                 
+                  </>                 
                 )
               }
             </div>   
@@ -278,18 +295,20 @@ const DetailMovie = () => {
           <hr></hr>
           <div className="movie px-lg-5 px-sm-3 py-3">
             <h5>Most popular videos</h5>
-            {videoList?.map((item, index) => (
-              <iframe
-                width="350"
-                height="150"
-                src={item}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="pe-2 mb-2"
-              ></iframe>
-            ))}
+            <div style={{ overflowX: "scroll" }} className="d-flex">
+              {videoList?.map((item, index) => (
+                <iframe
+                  width="350"
+                  height="150"
+                  src={item}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="pe-2 mb-2"
+                ></iframe>
+              ))}
+            </div>           
           </div>
 
           <div>

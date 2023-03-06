@@ -62,12 +62,11 @@ const UpComing = () => {
       </div>
     </div>
 
-      <Pagination
-      showSizeChanger
-      onShowSizeChange={onShowSizeChange}
-      defaultCurrent={1}
-      total={15} className="text-center"
-      onChange={onChange}
+    <Pagination 
+        defaultCurrent={1}
+        total={300}
+        pageSize={20}
+        onChange={onChange} className="text-center"
         />
     </>
   );
