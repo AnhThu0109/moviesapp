@@ -4,12 +4,15 @@ import { KEY } from '../../utils/key';
 import { BASE_URL } from '../../utils/api';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [session, setSession] = useState(1);
   const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -23,12 +26,11 @@ const Login = () => {
     const tokenResponse = await fetch(`${BASE_URL}/authentication/token/new?${KEY}`);
     const tokenData = await tokenResponse.json();
     const requestToken = tokenData.request_token;
-    console.log(requestToken);
 
     // Validate the request token with the user's credentials
     const loginUrl = `https://api.themoviedb.org/3/authentication/token/validate_with_login?${KEY}`;
     const loginParams = {
-      username: email,
+      username: username,
       password: password,
       request_token: requestToken,
     };
@@ -38,10 +40,6 @@ const Login = () => {
       body: JSON.stringify(loginParams),
     });
 
-    // const response = await fetch(`${BASE_URL}/authentication/token/validate_with_login?${KEY}&request_token=${requestToken}&username=${email}&password=${password}`);
-    // const data = await response.json();
-    // console.log(data);
-
     // Create a session
     const sessionResponse = await fetch(`${BASE_URL}/authentication/session/new?${KEY}&request_token=${requestToken}`, {
       method: 'POST',
@@ -50,25 +48,33 @@ const Login = () => {
     const sessionData = await sessionResponse.json();
     console.log(sessionData);
     const sessionId = sessionData.session_id;
+    setSession(sessionId);
 
     // Store the session ID in local storage
-    localStorage.setItem('session_id', sessionId);
-    navigate('/');
+    localStorage.setItem('session_id', sessionId);  
+    if(sessionId != undefined){
+        navigate(-1);
+    }
+    else {
+        console.log("Fail login");
+    }   
   };
+
+  
 
   return (
     <div className='p-5'>
       <h2 className=''>Login to your account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email" className='form-label'>Email:</label>
+          <label htmlFor="text" className='form-label'>Username:</label>
           <input
             className='form-control'
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
+            type="input"
+            id="username"
+            name="username"
+            value={username}
+            onChange={handleUsernameChange}
             required
           />
         </div>
@@ -86,6 +92,13 @@ const Login = () => {
         </div>
         <button type="submit" className='mt-3 text-white btn btn-info'>Login</button>
       </form>
+      {
+        session == undefined? (
+            <h5 className='text-danger pt-4'>Incorrect username or password. Please type again.</h5>
+        ) : (
+            <></>
+        )
+      }
     </div>
   );
 };

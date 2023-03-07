@@ -17,6 +17,7 @@ const DetailPeople = () => {
   const [movieListTime, setMovieListTime] = useState([]);
   const [movieListTimeNull, setMovieListTimeNull] = useState([]);
   const { id } = useParams();
+  const [session, setSession] = useState();
 
   const getDataById = async (id) => {
     const json = await fetchDataId(id, "/person/", `?${KEY}&language=en-US`);
@@ -61,7 +62,8 @@ const DetailPeople = () => {
 
 
   useEffect(() => {
-    console.log(id);
+    let s = localStorage.getItem("session_id");
+    setSession(s);
     getDataById(id).catch((error) => {
       console.log(error);
     });
@@ -71,7 +73,9 @@ const DetailPeople = () => {
   }, []);
   return (
     <>
-      <div className="row p-lg-5 p-sm-4 detailInfo">
+    {
+      session != undefined? (
+        <div className="row p-lg-5 p-sm-4 detailInfo">
         <div className="col-sm-6 col-lg-4">
           <Image src={imgSrc} className="rounded-4 profileImg"></Image>
           <h4 className="fw-bolder mt-4">Personal Info</h4>
@@ -149,6 +153,11 @@ const DetailPeople = () => {
           </div>
         </div>
       </div>
+      ) : (
+        <h2 className="text-center p-5">Please log in to see detail. <Link to="/login">Login here.</Link></h2>
+      )
+    }
+      
     </>
   );
 };

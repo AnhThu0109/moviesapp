@@ -144,6 +144,14 @@ h6.peopleName:hover {
     z-index: -1;
 }
 
+.billCast img.ant-image-img.peopleImg{
+    height: 100%;
+}
+
+.billCast .movieLink>div{
+    height: 65%;
+}
+
 hr{
     width: 95%;
     position: relative;

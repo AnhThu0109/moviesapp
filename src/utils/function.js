@@ -9,13 +9,6 @@ const changeMoneyFormat = (number)=>{
       return formattedNumber;
 }
 
-const getId = () => {
-    let url = window.location.href;
-    let strs = url.split('/');
-    let id = strs.at(-1);
-    return id;
-}
-
 const showBrief = (str, len) => {
     if(str.length > len){
       const numLetters = len;
@@ -34,4 +27,4 @@ const getYear = (date) => {
   return d.getFullYear();
 }
 
-export {changeMoneyFormat, getId, showBrief, showFirstLetter, getYear};
+export {changeMoneyFormat, showBrief, showFirstLetter, getYear};

@@ -3,7 +3,7 @@ import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CaretRightOutlined, StarFilled, HomeOutlined} from "@ant-design/icons";
 import { Image, Space, Spin } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -31,6 +31,8 @@ const DetailMovie = () => {
   const [totalReviews, setTotalReviews] = useState();
   const [isShowReview, setShowReview] = useState(true);
   const [reviewPoint, setReviewPoint] = useState();
+  const [session, setSession] = useState();
+  const {id} = useParams();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -94,7 +96,11 @@ const DetailMovie = () => {
       });
     });
     people.map((item) => {
-      img.push(`${POSTER_SRC}` + item.profile_path);
+      if(item.profile_path == null){
+        img.push("https://media.istockphoto.com/photos/icon-of-a-businessman-avatar-or-profile-pic-picture-id474001892?k=6&m=474001892&s=612x612&w=0&h=6g0M3Q3HF8_uMQpYbkM9XAAoEDym7z9leencMcC4pxo=");
+      } else{
+        img.push(`${POSTER_SRC}` + item.profile_path);
+      }     
     });
     setPeople(people);
     setProfileImg(img);
@@ -146,7 +152,8 @@ const DetailMovie = () => {
   };
 
   useEffect(() => {
-    let id = getId();
+    let s = localStorage.getItem("session_id");
+    setSession(s);
     getAll(id);
     function setTime() {
       setTimeout(function () {
@@ -158,6 +165,9 @@ const DetailMovie = () => {
   }, []);
   return (
     <>
+      {
+        session != undefined? (
+          <>
       {flag ? (
         <>
           <div className="detail-film position-relative">
@@ -206,7 +216,7 @@ const DetailMovie = () => {
             <div className="position-absolute bg-color"></div>
           </div>
 
-          <div className="p-lg-5 p-sm-3 row">
+          <div className="p-lg-5 p-sm-3 row billCast">
             <div className="col-9">
               <h5>Top Billed Cast</h5>
               {peopleOfMovie?.length == 0 ? (
@@ -381,6 +391,12 @@ const DetailMovie = () => {
         </Space>
       )}
     </>
+        ) : (
+          <h2 className="text-center p-5">Please log in to see detail. <Link to="/login">Login here.</Link></h2>
+        )
+      }
+    </>
+    
   );
 };
 

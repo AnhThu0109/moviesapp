@@ -1,6 +1,6 @@
 import "./style.css";
 import { Switch } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from "react-router-dom";
@@ -9,11 +9,38 @@ import { UserOutlined } from "@ant-design/icons";
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
   const [theme, setTheme] = useState("dark");
+  const [session, setSession] = useState();
+  const [text, setText] = useState("");
+
   const changeTheme = (value) => {
     console.log(value);
     setTheme(value ? "dark" : "light");
     setIsChangeTheme(value);
   };
+  const s = localStorage.getItem("session_id");
+
+  const userLog = () => {
+    let user = "";
+    if(s == undefined) {
+      user = "Login";
+      setText(user);
+    } else {
+      user = "Logout";
+      setText(user);
+    }
+  }
+
+  const logOut = () => {
+    localStorage.removeItem('session_id');
+    setSession(s);
+    let user = "Login";
+    setText(user);
+  }
+
+  useEffect(() => {
+    userLog();
+    setSession(s);
+  }, [session])
 
   return (
     <div
@@ -38,7 +65,16 @@ function Navigation() {
                 <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular People</Link></Dropdown.Item>
                   </DropdownButton>
               </li>
-              <li className="ms-4 login fw-lighter"><Link to="/login">Login</Link> <UserOutlined className="ms-2"/></li>
+              <li className="ms-4 login fw-lighter">
+                {
+                  session != undefined? (
+                    <Link onClick={logOut}>{text}</Link>
+                  ) : (
+                    <Link to="/login" onClick={userLog}>{text}</Link>
+                  )
+                }                 
+                <UserOutlined className="ms-2"/>
+              </li>
             </ul>
           </div>
         </div>
