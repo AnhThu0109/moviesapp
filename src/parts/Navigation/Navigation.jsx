@@ -38,7 +38,7 @@ function Navigation() {
                 <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular People</Link></Dropdown.Item>
                   </DropdownButton>
               </li>
-              <li className="ms-4 login fw-lighter"><Link to="/people/popular">Login</Link> <UserOutlined className="ms-2"/></li>
+              <li className="ms-4 login fw-lighter"><Link to="/login">Login</Link> <UserOutlined className="ms-2"/></li>
             </ul>
           </div>
         </div>

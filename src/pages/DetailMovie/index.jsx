@@ -30,6 +30,7 @@ const DetailMovie = () => {
   const [flag, setFlag] = useState(false);
   const [totalReviews, setTotalReviews] = useState();
   const [isShowReview, setShowReview] = useState(true);
+  const [reviewPoint, setReviewPoint] = useState();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -39,7 +40,13 @@ const DetailMovie = () => {
     const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`);
     if (json) {
       setData(json);
-      let imageSrc = `${POSTER_SRC}` + json?.poster_path;
+      let imageSrc = "";
+      if(json?.poster_path == null){
+        imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png";
+      }
+      else{
+        imageSrc = `${POSTER_SRC}` + json?.poster_path;
+      }    
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
       let types = [];
       json?.genres.map((item) => {
@@ -70,6 +77,7 @@ const DetailMovie = () => {
           trailerLink = `${VD_SRC}` + item.key;
         }
       });
+      console.log(videoListSrc);
       setVideoList(videoListSrc);
       setTrailer(trailerLink);
     }
@@ -122,6 +130,10 @@ const DetailMovie = () => {
         allReviews = allReviews.concat(response?.results);
       }
       console.log("review", allReviews);
+      if(allReviews[0].author_details?.rating != null){
+        let point = allReviews[0].author_details.rating.toFixed(1);
+        setReviewPoint(point);     
+      }         
       setTotalReviews(allReviews);
     }
   };
@@ -206,13 +218,15 @@ const DetailMovie = () => {
                 >
                   {peopleOfMovie?.map((item, index) => (
                     <div className="col-3 me-3 ms-1">
+                      <Link to={`/people/${item.id}`} className="movieLink">
                       <Image src={profileImg[index]} className="peopleImg" />
                       <h6 className="p-2 mb-3 peopleName text-center">
                         {item.name}
                       </h6>
+                      </Link>
                     </div>
                   ))}
-                  <div className="box" style={{ overflowX: "scroll" }}></div>
+                  {/* <div className="box" style={{ overflowX: "scroll" }}></div> */}
                 </div>
               )}
             </div>
@@ -267,8 +281,8 @@ const DetailMovie = () => {
                       <button className="avatarReview rounded-circle p-3 border-0">{totalReviews && showFirstLetter(totalReviews[0].author)}</button>                      
                     </div>
                     <div className="me-3">
-                      <h5 className="firstReview">A review by {totalReviews &&totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon"/>{totalReviews && (totalReviews[0].author_details.rating).toFixed(1)}</span></h5>
-                      <p className="fw-lighter text-black-50">Written by <b>{totalReviews &&totalReviews[0].author}</b> on {totalReviews &&totalReviews[0].created_at}</p>
+                      <h5 className="firstReview">A review by {totalReviews && totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon"/>{reviewPoint}</span></h5>
+                      <p className="fw-lighter text-black-50">Written by <b>{totalReviews && totalReviews[0].author}</b> on {totalReviews &&totalReviews[0].created_at}</p>
                       <p className="reviewContent">{totalReviews && totalReviews[0].content}</p>
                     </div>
                         </>
@@ -295,20 +309,26 @@ const DetailMovie = () => {
           <hr></hr>
           <div className="movie px-lg-5 px-sm-3 py-3">
             <h5>Most popular videos</h5>
-            <div style={{ overflowX: "scroll" }} className="d-flex">
-              {videoList?.map((item, index) => (
-                <iframe
-                  width="350"
-                  height="150"
-                  src={item}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="pe-2 mb-2"
-                ></iframe>
-              ))}
-            </div>           
+            {
+              videoList?.length == 0? (
+                <p>Unknown</p>
+              ) : (
+                <div style={{ overflowX: "scroll" }} className="d-flex">
+                  {videoList?.map((item, index) => (
+                    <iframe
+                      width="350"
+                      height="150"
+                      src={item}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="pe-2 mb-2"
+                    ></iframe>
+                  ))}
+                </div>
+              )
+            }                     
           </div>
 
           <div>

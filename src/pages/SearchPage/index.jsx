@@ -19,10 +19,6 @@ function SearchPage() {
   const { keyword } = useParams();
   const [detailLink, setDetailLink] = useState([]);
 
-  const onShowSizeChange = (current, pageSize) => {
-    console.log(current, pageSize);
-  };
-
   const onChange = (p) => {
     setPage(p);
   }
@@ -32,12 +28,18 @@ function SearchPage() {
       `${BASE_URL}/search/movie?${KEY}&language=en-US&query=${k}&page=${page}&include_adult=false`);
     const json = await data.json();
     console.log("DataKey:", json);
+    console.log("Num:", json.total_results);
     if (json) {
       setSearchData(json);
       let posterSrcArr = [];
       let detailLinkArr = [];
       json.results.map(item => {
-        posterSrcArr.push(`${POSTER_SRC}` + item.poster_path);
+        if(item.poster_path == null){
+          posterSrcArr.push("https://img.lovepik.com/element/40021/7866.png_1200.png");
+        }
+        else{
+          posterSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
+        }      
         detailLinkArr.push(`/movies/${item.id}`)
       })
       setPoster(posterSrcArr);   
@@ -58,7 +60,7 @@ function SearchPage() {
             searchData?.results.map((item, index) => (
             <div className="row px-sm-2 px-lg-5 py-3 searchResult mx-sm-2 mx-lg-5 my-3 rounded-4">
               <div className="col-3">
-                <Image className="rounded-4"          
+                <Image className="rounded-4 imagePoster"          
                 src={poster[index]} 
                 />
               </div>
@@ -75,13 +77,12 @@ function SearchPage() {
           )
         }
       </div>
-
-      <Pagination
-      showSizeChanger
-      onShowSizeChange={onShowSizeChange}
-      defaultCurrent={1}
-      total={10} className="text-center"
-      onChange={onChange}
+      
+      <Pagination 
+        defaultCurrent={1}
+        total={searchData?.total_results}
+        pageSize={20}
+        onChange={onChange} className="text-center"
         />
     </>
   );

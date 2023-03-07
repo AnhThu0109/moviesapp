@@ -13,10 +13,6 @@ const PopularPage = () => {
   const [page, setPage] = useState(1);
   const [detailLink, setDetailLink] = useState([]);
 
-  const onShowSizeChange = (current, pageSize) => {
-    console.log(current, pageSize);
-  };
-
   const onChange = (p) => {
     setPage(p);
   }
@@ -29,9 +25,15 @@ const PopularPage = () => {
       let imgSrcArr = [];
       let detailLinkArr = [];
       json.results.map(item => {
-        imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
+        if(item.poster_path == null){
+          imgSrcArr.push("https://img.lovepik.com/element/40021/7866.png_1200.png");
+        }
+        else{
+          imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
+        }      
         detailLinkArr.push(`/movies/${item.id}`)
       })
+      console.log(imgSrcArr);
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);
     }

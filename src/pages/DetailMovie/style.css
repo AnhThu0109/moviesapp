@@ -121,7 +121,7 @@ button.pointBtn:hover{
 }
 
 .peopleList{
-    box-shadow: inset -20px 0px 15px -10px white;
+    box-shadow: inset -50px 0px 25px -10px white;
 }
 
 .peopleName{
@@ -131,6 +131,10 @@ button.pointBtn:hover{
     border-bottom-right-radius: 10px;
     position: relative;
     z-index: -1;
+}
+
+h6.peopleName:hover {
+    color: rgb(35, 152, 199) !important;
 }
 
 .peopleImg{

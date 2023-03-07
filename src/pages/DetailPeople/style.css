@@ -1,0 +1,29 @@
+.detailInfo .profileImg{
+    width: 100%;
+}
+
+.detailInfo .imagePosterList{
+    width: 150px !important;
+    position: relative;
+    z-index: -1;
+}
+
+/* .detailInfo .movieLink p{
+    z-index: -1;
+} */
+.detailInfo .movieLink p :hover{
+    color: rgb(35, 152, 199) !important;
+}
+
+.filmList{
+    box-shadow: inset -50px 0px 25px -10px white;
+}
+
+.timeIcon{
+    width: 50px !important;
+    padding: 0px !important;
+}
+
+.movieTimeList{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}

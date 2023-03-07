@@ -6,6 +6,7 @@ import DetailPeople from "../pages/DetailPeople";
 import TopRated from "../pages/TopRated";
 import UpComing from "../pages/UpComing";
 import SearchPage from "../pages/SearchPage";
+import Login from "../pages/Login";
 const routes = [
     {
         element: <Home/>,
@@ -42,6 +43,10 @@ const routes = [
     {
         element: <SearchPage/>,
         path: "/search/:keyword"
+    },
+    {
+        element: <Login/>,
+        path: "/login"
     }
 ];
 export default routes;

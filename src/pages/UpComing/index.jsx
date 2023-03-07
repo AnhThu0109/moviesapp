@@ -12,10 +12,6 @@ const UpComing = () => {
   const [page, setPage] = useState(1);
   const [detailLink, setDetailLink] = useState("");
 
-  const onShowSizeChange = (current, pageSize) => {
-    console.log(current, pageSize);
-  };
-
   const onChange = (p) => {
     console.log(p);
     setPage(p);
@@ -64,7 +60,7 @@ const UpComing = () => {
 
     <Pagination 
         defaultCurrent={1}
-        total={300}
+        total={data?.total_results}
         pageSize={20}
         onChange={onChange} className="text-center"
         />

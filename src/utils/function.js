@@ -29,4 +29,9 @@ const showFirstLetter = (str) => {
   return shortenedStr;
   }
 
-export {changeMoneyFormat, getId, showBrief, showFirstLetter};
+const getYear = (date) => {
+  const d = new Date(date);
+  return d.getFullYear();
+}
+
+export {changeMoneyFormat, getId, showBrief, showFirstLetter, getYear};

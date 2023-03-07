@@ -33,7 +33,12 @@ const PopularPeople = () => {
       let arrFilm1 = [];
       json.results.map((item, index) => {
         let arrFilm = [];
-        imgSrcArr.push(`${POSTER_SRC}`+ item.profile_path);
+        if(item.profile_path == null){
+          imgSrcArr.push("https://media.istockphoto.com/photos/icon-of-a-businessman-avatar-or-profile-pic-picture-id474001892?k=6&m=474001892&s=612x612&w=0&h=6g0M3Q3HF8_uMQpYbkM9XAAoEDym7z9leencMcC4pxo=");
+        }
+        else{
+          imgSrcArr.push(`${POSTER_SRC}`+ item.profile_path);
+        }      
         detailLinkArr.push(`/people/${item.id}`);
         item.known_for.map(item1 => {
             item1.name? arrFilm.push(item1.name) : arrFilm.push(item1.title);
@@ -78,7 +83,7 @@ const PopularPeople = () => {
     
         <Pagination 
         defaultCurrent={1}
-        total={10000}
+        total={data?.total_results}
         pageSize={20}
         onChange={onChange} className="text-center"
         />

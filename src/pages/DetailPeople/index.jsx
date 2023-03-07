@@ -1,136 +1,154 @@
-import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import { Image } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../style.css";
+import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
-import { BG_SRC } from "../../utils/bgSrc";
-import { VD_SRC } from "../../utils/videoSrc";
-import Modal from 'react-modal';
-import { CaretRightOutlined } from "@ant-design/icons";
-import { getId } from "../../utils/function";
+import { fetchDataId } from "../../utils/fetchData";
+import { useParams, Link } from 'react-router-dom';
+import { getYear } from "../../utils/function";
 
 const DetailPeople = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState("");
-  const [bgSrc, setBgSrc] = useState("");
-  const [typeList, setTypeList] = useState();
-  const [point, setPoint] = useState();
-  const [videoList, setVideoList] = useState();
-  const [trailer, setTrailer] = useState();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [peopleList, setPeopleList] = useState();
+  const [movieList, setMovieList] = useState([]);
+  const [moviePoster, setMoviePoster] = useState([]);
+  const [movieListTime, setMovieListTime] = useState([]);
+  const [movieListTimeNull, setMovieListTimeNull] = useState([]);
+  const { id } = useParams();
 
-  function toggleModal() {
-    setModalIsOpen(!modalIsOpen);
-  }
-
-  const fetchData = async (id) => {
-    const data = await fetch(
-      `${BASE_URL}/movie/${id}?${KEY}&language=en-US`
-    );
-    const json = await data.json();
+  const getDataById = async (id) => {
+    const json = await fetchDataId(id, "/person/", `?${KEY}&language=en-US`);
+    console.log(json);
     if (json) {
       setData(json);
-      let imageSrc = `${POSTER_SRC}`+ json?.poster_path;
-      let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
-      let types = [];
-      json?.genres.map((item) => {
-        types.push(item.name);
-      });
-      let averPoint = json?.vote_average.toFixed(2);
-      setPoint(averPoint);
-      setTypeList(types.join(", "));
-      setImgSrc(imageSrc);
-      setBgSrc(backgroundSrc);
+      let img = `${POSTER_SRC}` + json.profile_path;
+      setImgSrc(img);
     }
   };
 
-  const fetchVideo = async(id) => {
-    const data = await fetch(
-      `${BASE_URL}/movie/${id}/videos?${KEY}&language=en-US`
-    );
-    const json = await data.json();
-    if (json) {
-      let videoListSrc = [];
-      let trailerLink = "";
-      json.results.map((item, index) =>{
-        if(index < 2){
-          videoListSrc.push( `${VD_SRC}`+ item.key);
-        } 
-        if(item.type == "Trailer") {
-          trailerLink = `${VD_SRC}`+ item.key;
-        }   
+  const getMovies = async(id) => {
+    const json = await fetchDataId(id, "/person/", `/movie_credits?${KEY}&language=en-US`);
+    console.log(json);
+    let castArr = [];
+    let castArrDes = [];
+    let castArrTime = [];
+    let castArrTimeNull = [];
+    let moviePosterArr = [];
+    if(json) {
+      castArr = json.cast.sort((a, b) => b.popularity - a.popularity);
+      castArrTime = json.cast.sort((a,b) => getYear(b.release_date) - getYear(a.release_date));
+      castArr.map((item, index) => {
+        if(index < 10){
+          castArrDes.push(item);
+          moviePosterArr.push(`${POSTER_SRC}` + item.poster_path);
+        }
       });
-      setVideoList(videoListSrc);
-      setTrailer(trailerLink);
+      castArrTime.map((item, index) => {
+        if(item.release_date == ""){
+          castArrTimeNull.push(item);
+          castArrTime.splice(index, 1);
+        }
+      })
+      console.log("cast",castArrTimeNull);
+      setMovieListTime(castArrTime);
+      setMovieListTimeNull(castArrTimeNull);
+      setMovieList(castArrDes);
+      setMoviePoster(moviePosterArr);
     }
   }
 
+
   useEffect(() => {
-    let id = getId();
-    fetchData(id).catch((error) => {
+    console.log(id);
+    getDataById(id).catch((error) => {
       console.log(error);
     });
-    fetchVideo(id).catch((error) => {
+    getMovies(id).catch((error) => {
       console.log(error);
     });
   }, []);
   return (
     <>
-      <div className="detail-film position-relative">
-      <div className="detailInfo" >
-        <div className=" py-4 ps-lg-5 ps-sm-3 me-3">
-        <Image           
-                src={imgSrc} className="posterImg rounded-4"
-              />
-        </div>
-            
-        <div className="py-4 pe-4 filmInfo text-white">
-            <h1>{data?.title}</h1>
-            <ul className="typeInfo">
-              <li className="dateInfo me-3">{data?.release_date}</li>
-              <li className="mx-3">
-                  {typeList}
-              </li>
-              <li className="ms-3">{data?.runtime} mins</li>
-            </ul>
-            <span className="ui-widgets">
-                <span className="ui-values">{point}</span>
-                
-            </span> 
-            <span className="voteTitle m-lg-3 m-sm-2"><b>Vote Score</b></span>
-            <button className="ms-3 border-0 playTrailerBtn"><b><a onClick={toggleModal} ><CaretRightOutlined className="iconPlay"/> Play Trailer</a></b></button>
-            <p><i>{data?.tagline}</i></p>
-            <h5>Overview</h5>
-            <p className="overview pe-lg-5">{data?.overview}</p>
-        </div>         
-      </div>
-      <div className="position-absolute bg-image" style={{ backgroundImage: `url(${bgSrc})`}}></div>
-      <div className="position-absolute bg-color"></div>
-    </div>
-    <div className="movie p-5">
-      <h5>Most popular videos</h5>
-    </div>
+      <div className="row p-lg-5 p-sm-4 detailInfo">
+        <div className="col-sm-6 col-lg-4">
+          <Image src={imgSrc} className="rounded-4 profileImg"></Image>
+          <h4 className="fw-bolder mt-4">Personal Info</h4>
+          <p><b>Known For</b><br></br>{data?.known_for_department}</p>
+          <p><b>Gender</b><br></br>
+          {
+          data?.gender == 2? ("Male") : ("Female")
+          }</p>
+          <p><b>Birthday</b><br></br>{data?.birthday}</p>
+          <p><b>Place of Birth</b><br></br>{data?.place_of_birth}</p>
+          <p><b>Also Known As</b><br></br>
+          {
+          data?.also_known_as?.map(item => (
+            <>{item}<br></br></>
+          ))
+          }</p>
+        </div>    
 
-    <div>
-      <Modal isOpen={modalIsOpen} >
-        <div className="video-container text-center py-5">
-        <button onClick={toggleModal} className="closeBtn border-0">x</button>
-          <iframe
-            width="560"
-            height="200"
-            src={trailer}
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen className="videoTrailer"
-          ></iframe>
+        <div className="col-sm-6 col-lg-8">
+          <h1 className="fw-bolder">{data?.name}</h1>
+          <h4 className="fw-bolder">Biology</h4>
+          <p>{data?.biography}</p>
+          <br></br>
+          <h4 className="fw-bolder">Known For</h4>
+          <div className="d-flex filmList" style={{ overflowX: "scroll", whiteSpace: "nowrap"}}>
+            {
+              movieList?.map((item, index) => (
+                <div className="me-3">
+                  <Link to={`/movies/${item.id}`} className="movieLink">                  
+                    <Image src={moviePoster[index]} className="imagePosterList rounded-4"></Image>
+                    <p className="text-wrap text-center text-black"><b>{item.title}</b></p>
+                  </Link>
+                </div>
+              ))
+            }
+          </div>
+          <br></br>
+          <h4 className="fw-bolder">Acting</h4>
+          <div className="movieTimeList p-3">
+            {
+              movieListTimeNull? (
+                <>
+                  {
+                    movieListTimeNull?.map(item => (
+                      <>
+                         <div>
+                         None<Image src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png" className="timeIcon"></Image> 
+                          <b>{item.title}</b>
+                          {item.character == ""? ("") : (<> as {item.character}</>)}
+                          </div>                          
+                      </>
+                    ))
+                  }
+                </>
+              ) : ("")             
+            }
+            <hr></hr>
+            {
+              movieListTime? (
+                <>
+                  {
+                    movieListTime?.map(item => (
+                      <>
+                         <div>
+                         {getYear(item.release_date)}<Image src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png" className="timeIcon"></Image> 
+                          <b>{item.title}</b>
+                          {item.character == ""? ("") : (<> as {item.character}</>)}
+                          </div>                          
+                      </>
+                    ))
+                  }
+                </>
+              ) : ("")             
+            }
+          </div>
         </div>
-      </Modal>
-    </div>
+      </div>
     </>
   );
 };
