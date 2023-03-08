@@ -189,7 +189,7 @@ const DetailMovie = () => {
                 <span className="voteTitle m-lg-3 m-sm-2">
                   <b>Vote Score</b>
                 </span>
-                <button className="ms-3 border-0 playTrailerBtn">
+                <button className="ms-2 border-0 playTrailerBtn">
                   <b>
                     <a onClick={toggleModal}>
                       <CaretRightOutlined className="iconPlay" /> Play Trailer

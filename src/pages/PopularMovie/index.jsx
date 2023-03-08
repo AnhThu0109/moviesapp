@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
-import { fetchPage } from "../../utils/fetchData";
+import { fetchPage, fetchPageSort } from "../../utils/fetchData";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 const PopularPage = () => {
@@ -13,13 +13,38 @@ const PopularPage = () => {
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
   const [detailLink, setDetailLink] = useState([]);
+  const [des, setDes] = useState(false);
+  const [asc, setAsc] = useState(false);
+  const [desRelease, setDesRelease] = useState(false);
+  const [ascRelease, setAscRelease] = useState(false);
+  const [aToZ, setAToZ] = useState(false);
 
   const onChange = (p) => {
     setPage(p);
   }
 
-  const getData = async (page=1) => {
-    const json = await fetchPage(page, "/movie/popular?", "&language=en-US&page="); 
+  let getData = async (page=1) => {
+    console.log(des);
+    console.log(asc);
+    console.log(desRelease);
+    console.log(ascRelease);
+    let json = await fetchPage(page, "/movie/popular?", "&language=en-US&page=");
+    if(des == true){
+      json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate"); 
+    }
+    if(asc == true){
+      json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate");  
+    }
+    if(desRelease == true){
+      json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=release_date.desc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate");
+    }
+    if(ascRelease == true){
+      json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=release_date.asc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate");
+    }
+    if(aToZ == true){
+      json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=original_title.asc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate");
+    }
+
     if (json) {
       console.log(json);    
       setData(json);
@@ -37,13 +62,19 @@ const PopularPage = () => {
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);
     }
+    
   }
 
   useEffect(() => {
     getData(page).catch((error) => {
       console.log(error);
     });
-  }, [page]);
+    setAsc(false);
+    setDes(false);
+    setDesRelease(false);
+    setAscRelease(false);
+    setAToZ(false);
+  }, [page, des, asc, desRelease, ascRelease, aToZ]);
   return (
     <div className="px-sm-3 px-lg-5">
       <h2 className="title pt-3 fw-bolder">Popular Movies</h2>
@@ -52,13 +83,11 @@ const PopularPage = () => {
       <h5>Sort</h5>
       <hr></hr>
       <DropdownButton title="Sort Results By" className="sortFilm">
-        <Dropdown.Item><Link to="/movies/popular/des">Popular Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular/asc">Popular Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/top/des">Rating Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/top/asc">Rating Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Release Date Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Release Date Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Title (A-Z)</Link></Dropdown.Item>
+        <Dropdown.Item><Link onClick={() => setDes(true)}>Popular Descending</Link></Dropdown.Item>
+        <Dropdown.Item><Link onClick={() => setAsc(true)}>Popular Ascending</Link></Dropdown.Item>
+        <Dropdown.Item><Link onClick={() => setDesRelease(true)}>Release Date Descending</Link></Dropdown.Item>
+        <Dropdown.Item><Link onClick={() => setAscRelease(true)}>Release Date Ascending</Link></Dropdown.Item>
+        <Dropdown.Item><Link onClick={() => setAToZ(true)}>Title (A-Z)</Link></Dropdown.Item>
       </DropdownButton>
     </div>
 
@@ -66,7 +95,7 @@ const PopularPage = () => {
       <div className="p-3 row trending-film">
         {
           data?.results?.map((item, index) => (
-            <div className="film col-lg-3 col-sm-4 pb-2" key={index}>
+            <div className="film col-lg-3 col-sm-6 pb-2" key={index}>
             <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} className="rounded-4" 
