@@ -9,7 +9,7 @@ import { UserOutlined } from "@ant-design/icons";
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
   const [theme, setTheme] = useState("dark");
-  const [session, setSession] = useState();
+  const [session, setSession] = useState("");
   const [text, setText] = useState("");
 
   const changeTheme = (value) => {
@@ -32,7 +32,7 @@ function Navigation() {
 
   const logOut = () => {
     localStorage.removeItem('session_id');
-    setSession(s);
+    setSession("");
     let user = "Login";
     setText(user);
   }
@@ -40,7 +40,7 @@ function Navigation() {
   useEffect(() => {
     userLog();
     setSession(s);
-  }, [session])
+  }, [session, text])
 
   return (
     <div

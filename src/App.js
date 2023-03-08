@@ -19,7 +19,8 @@ function App() {
 
         {privateRoutes.map((item, index) => {
           return (
-            <Route
+            <Route 
+              key={index}
               path={item.path}
               element={<PrivateRoute Component={item.element} />}
             />

@@ -99,7 +99,7 @@ const DetailPeople = () => {
           <div className="d-flex filmList" style={{ overflowX: "scroll", whiteSpace: "nowrap"}}>
             {
               movieList?.map((item, index) => (
-                <div className="me-3">
+                <div className="me-3" key={index}>
                   <Link to={`/movies/${item.id}`} className="movieLink">                  
                     <Image src={moviePoster[index]} className="imagePosterList rounded-4"></Image>
                     <p className="text-wrap text-center text-black"><b>{item.title}</b></p>
@@ -115,14 +115,14 @@ const DetailPeople = () => {
               movieListTimeNull? (
                 <>
                   {
-                    movieListTimeNull?.map(item => (
-                      <>
+                    movieListTimeNull?.map((item, index) => (
+                      <div key={index}>
                          <div>
                          None<Image src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png" className="timeIcon"></Image> 
                           <b>{item.title}</b>
                           {item.character == ""? ("") : (<> as {item.character}</>)}
                           </div>                          
-                      </>
+                      </div>
                     ))
                   }
                 </>
@@ -133,9 +133,9 @@ const DetailPeople = () => {
               movieListTime? (
                 <>
                   {
-                    movieListTime?.map(item => (
+                    movieListTime?.map((item, index) => (
                       <>
-                         <div>
+                         <div key={index}>
                          {getYear(item.release_date)}<Image src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png" className="timeIcon"></Image> 
                           <b>{item.title}</b>
                           {item.character == ""? ("") : (<> as {item.character}</>)}

@@ -66,7 +66,7 @@ const PopularPeople = () => {
       <div className="p-3 row trending-film">
       {
           data?.results?.map((item, index) => (
-            <div className="col-lg-3 col-sm-4 mb-4">
+            <div className="col-lg-3 col-sm-4 mb-4" key={index}>
             <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} 

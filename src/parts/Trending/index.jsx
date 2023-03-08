@@ -44,7 +44,7 @@ function Trending() {
         {
           data?.results?.map((item, index) => (
             <div className="film col-3 me-3" key={index}>
-              <Link to={detailLink[index]} className="movieLink">
+              <Link to={detailLink[index]} className="movieLinkHome">
               <Image           
                 src={imgSrc[index]} className="rounded-4"
               />
