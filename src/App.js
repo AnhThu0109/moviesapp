@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import Layout from "./pages/Layout";
-import {routes, publicRoutes, privateRoutes} from "./routes";
+import Login from "./pages/Login";
+import PopularPage from "./pages/PopularMovie";
+import {publicRoutes, privateRoutes} from "./routes";
 import PrivateRoute from "./utils/privateRoute";
 
 
@@ -10,15 +13,18 @@ function App() {
       <BrowserRouter>
       <Routes>
       <Route path="/" element={<Layout/>}>
-        {routes.map((item, index) => {
+        {publicRoutes.map((item, index) => {
           return <Route key={index} path={item.path} element={item.element}/>
         })}
-        {/* {publicRoutes.map((item, index) => {
-          return <Route key={index} path={item.path} element={item.element}/>
-        })}
+
         {privateRoutes.map((item, index) => {
-          return <PrivateRoute parentIndex={index} parentPath={item.path} parentElement={item.element}></PrivateRoute>
-        })} */}
+          return (
+            <Route
+              path={item.path}
+              element={<PrivateRoute Component={item.element} />}
+            />
+          );
+        })}       
       </Route>
       </Routes>
     </BrowserRouter>      

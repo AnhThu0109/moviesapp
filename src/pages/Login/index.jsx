@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { KEY } from '../../utils/key';
 import { BASE_URL } from '../../utils/api';
 
@@ -52,20 +52,16 @@ const Login = () => {
 
     // Store the session ID in local storage
     localStorage.setItem('session_id', sessionId);  
-    if(sessionId != undefined){
-        navigate(-1);
-    }
-    else {
-        console.log("Fail login");
-    }   
+    navigate(-1);
   };
 
   
 
   return (
     <div className='p-5'>
-      <h2 className=''>Login to your account</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className='fw-bolder'>Login to your account</h2>
+      <p className='fw-bolder'>Please log in to see more information.</p>
+      <form onSubmit={handleSubmit} className="pt-4">
         <div>
           <label htmlFor="text" className='form-label'>Username:</label>
           <input

@@ -31,7 +31,6 @@ const DetailMovie = () => {
   const [totalReviews, setTotalReviews] = useState();
   const [isShowReview, setShowReview] = useState(true);
   const [reviewPoint, setReviewPoint] = useState();
-  const [session, setSession] = useState();
   const {id} = useParams();
 
   function toggleModal() {
@@ -152,8 +151,6 @@ const DetailMovie = () => {
   };
 
   useEffect(() => {
-    let s = localStorage.getItem("session_id");
-    setSession(s);
     getAll(id);
     function setTime() {
       setTimeout(function () {
@@ -165,9 +162,6 @@ const DetailMovie = () => {
   }, []);
   return (
     <>
-      {
-        session != undefined? (
-          <>
       {flag ? (
         <>
           <div className="detail-film position-relative">
@@ -390,13 +384,7 @@ const DetailMovie = () => {
           </Space>
         </Space>
       )}
-    </>
-        ) : (
-          <h2 className="text-center p-5">Please log in to see detail. <Link to="/login">Login here.</Link></h2>
-        )
-      }
-    </>
-    
+    </> 
   );
 };
 
