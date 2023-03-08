@@ -1,12 +1,11 @@
 import "./style.css";
-import { Carousel, Form, Input, Tooltip, Button } from "antd";
+import { Carousel, Form } from "antd";
 import { BG_SRC } from "../../utils/bgSrc";
 import { BASE_URL } from "../../utils/api";
 import { KEY } from "../../utils/key";
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { POSTER_SRC } from "../../utils/posterSrc";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,8 +14,6 @@ function Banner() {
   const [form] = Form.useForm();
   const [input, setInput] = useState("");
   const [data, setData] = useState({});
-  const [searchData, setSearchData] = useState();
-  const [poster, setPoster] = useState();
   const navigate = useNavigate();
 
   const handleFormSubmit = (e, input) => {
@@ -27,20 +24,6 @@ function Banner() {
     }
 }
 
-  const fetchKeywords = async (keyword, page=1) => {
-    const data = await fetch(
-      `${BASE_URL}/search/movie?${KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
-    const json = await data.json();
-    console.log("DataKey:", json);
-    if (json) {
-      setSearchData(json);
-      let posterSrcArr = [];
-      json.results.map(item => {
-        posterSrcArr.push(`${POSTER_SRC}` + item.poster_path);
-      })
-      setPoster(posterSrcArr);    
-    }
-  }
   const fetchData = async (p = "/trending/movie/day?") => {
     const data = await fetch(
       `${BASE_URL}${p}${KEY}`
@@ -77,7 +60,7 @@ function Banner() {
         <Carousel autoplay id="carousel">
           {
             data?.results?.map((item, index) => (
-              <div>
+              <div key={index}>
                 <img className="bannerImg" src={bgSrc[index]}></img>
               </div>
             ))

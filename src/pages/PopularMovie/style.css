@@ -3,3 +3,23 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.sortFilm>button{
+    background-color: grey;
+    border: none;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sortFilm a{
+    text-decoration: none;
+    color: black;
+}
+
+.sort {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 150px;
+}

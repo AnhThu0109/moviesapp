@@ -43,7 +43,7 @@ function Trending() {
       <div className="p-3 trending-film" ref={containerRef} style={{ overflowX: 'scroll', whiteSpace: 'nowrap' }}>
         {
           data?.results?.map((item, index) => (
-            <div className="film col-3 me-3">
+            <div className="film col-3 me-3" key={index}>
               <Link to={detailLink[index]} className="movieLink">
               <Image           
                 src={imgSrc[index]} className="rounded-4"

@@ -48,11 +48,12 @@ const DetailPeople = () => {
       });
       castArrTime.map((item, index) => {
         if(item.release_date == ""){
-          castArrTimeNull.push(item);
           castArrTime.splice(index, 1);
+          castArrTimeNull.push(item);     
+          console.log(index);
         }
       })
-      console.log("cast",castArrTimeNull);
+      console.log("cast",castArrTime);
       setMovieListTime(castArrTime);
       setMovieListTimeNull(castArrTimeNull);
       setMovieList(castArrDes);

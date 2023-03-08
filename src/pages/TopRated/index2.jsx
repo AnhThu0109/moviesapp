@@ -1,13 +1,12 @@
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
-import { Image, Form, Pagination } from "antd";
+import { Image, Pagination } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
-import { fetchPage } from "../../utils/fetchData";
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { fetchPageSort } from "../../utils/fetchData";
 
-const TopRated = () => {
+const TopRatedAsc = () => {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,7 +18,7 @@ const TopRated = () => {
   }
 
   const getData = async (page=1) => {
-    const json = await fetchPage(page, "/movie/top_rated?", "&language=en-US&page=")
+    const json = await fetchPageSort(page, "/discover/movie?", "&language=en-US&sort_by=vote_average.asc&include_adult=false&include_video=false&page=", "&with_watch_monetization_types=flatrate");   
     if (json) {
       setData(json);
       let imgSrcArr = [];
@@ -38,23 +37,9 @@ const TopRated = () => {
     });
   }, [page]);
   return (
-    <div className="px-sm-3 px-lg-5">
-      <h2 className="title pt-3 fw-bolder">Top Rated Movies</h2>
-      <div className="row">
-    <div className="col-sm-4 col-lg-3 my-3 sort ms-3 rounded-4">
-      <h5>Sort</h5>
-      <hr></hr>
-      <DropdownButton title="Sort Results By" className="sortFilm">
-        <Dropdown.Item><Link to="/movies/popular/des">Popular Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular/asc">Popular Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/top/desc">Rating Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/top/asc">Rating Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Release Date Descending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Release Date Ascending</Link></Dropdown.Item>
-        <Dropdown.Item><Link to="/movies/popular">Title (A-Z)</Link></Dropdown.Item>
-      </DropdownButton>
-    </div>
-      <div id="popular" className="col">
+    <>
+      <div id="popular">
+      <h2 className="title pt-3 px-3 fw-bolder">Top Rated Movies</h2>
       <div className="p-3 row trending-film">
         {
           data?.results?.map((item, index) => (
@@ -71,7 +56,6 @@ const TopRated = () => {
         }       
       </div>
     </div>
-    </div>
 
     <Pagination 
         defaultCurrent={1}
@@ -79,8 +63,8 @@ const TopRated = () => {
         pageSize={20}
         onChange={onChange} className="text-center"
         />
-    </div>
+    </>
   );
 };
 
-export default TopRated;
+export default TopRatedAsc;

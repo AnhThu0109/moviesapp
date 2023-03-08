@@ -53,7 +53,7 @@ function SearchPage() {
       }, [page]);
 
   return (
-    <>
+    <div>
       <div className="py-3">
         {
           searchData?.results.length != 0? (
@@ -84,7 +84,7 @@ function SearchPage() {
         pageSize={20}
         onChange={onChange} className="text-center"
         />
-    </>
+    </div>
   );
 }
 

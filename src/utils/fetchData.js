@@ -25,4 +25,12 @@ const fetchPage = async (page=1, q, p) => {
     return json;
   };
 
-export {fetchData, fetchDataId, fetchPage};
+const fetchPageSort = async (page=1, q, p, k) => {
+    const data = await fetch(
+      `${BASE_URL}${q}${KEY}${p}${page}${k}`
+    );
+    const json = await data.json();
+    return json;
+  };
+
+export {fetchData, fetchDataId, fetchPage, fetchPageSort};
