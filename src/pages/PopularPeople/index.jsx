@@ -67,7 +67,7 @@ const PopularPeople = () => {
           {
             data?.results?.map((item, index) => (
               <div className="col-lg-3 col-sm-4 mb-4" key={index}>
-                <Link to={detailLink[index]} className="movieLink">
+                <Link to={detailLink[index]} className="peopleLink text-decoration-none text-black">
                   <Image
                     src={imgSrc[index]}
                   />

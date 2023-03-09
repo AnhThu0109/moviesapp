@@ -44,11 +44,15 @@ function AllReviews() {
             }
             console.log("review", allReviews);
             allReviews.map(item => {
-                point.push(item.author_details.rating.toFixed(1));
-                if(item.author_details.avatar_path == null){
+                point.push(item?.author_details?.rating?.toFixed(1));
+                if(item?.author_details?.avatar_path == null){
                     avatar.push("https://cdn-icons-png.flaticon.com/512/1177/1177568.png");
                 } else {
-                    avatar.push(AVATAR_SRC + item.author_details.avatar_path);
+                    if(item?.author_details?.avatar_path.includes("http")){
+                        avatar.push(item?.author_details?.avatar_path?.substring(1));
+                    } else{
+                        avatar.push(AVATAR_SRC + item?.author_details?.avatar_path);
+                    }                    
                 }
             })
             setAvatarSrc(avatar);

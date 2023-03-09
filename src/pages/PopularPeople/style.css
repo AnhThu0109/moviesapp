@@ -2,3 +2,13 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     height: 75px;
 }
+
+#popular .peopleLink>div{
+    height: 330px;
+    width: 100%;
+}
+
+#popular .peopleLink>div>img{
+    height: 100%;
+    width: 100%;
+}

@@ -137,8 +137,13 @@ const DetailMovie = () => {
         allReviews = allReviews.concat(response?.results);
       }
       console.log("review", allReviews);
+      let avatar = "";
       if(allReviews[0].author_details?.avatar_path != null){
-          let avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
+        if(allReviews[0].author_details?.avatar_path.includes("http")){
+            avatar = allReviews[0].author_details?.avatar_path?.substring(1);
+          } else{
+            avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
+          }               
           setAvatarSrc(avatar);
       }
       if (allReviews[0].author_details?.rating != null) {
@@ -264,7 +269,6 @@ const DetailMovie = () => {
           </div>
 
           <hr></hr>
-
           <div className="review px-lg-5 px-sm-3 py-3">
             <ul className="titleReview">
               <li key="1" className="me-5">
@@ -282,9 +286,7 @@ const DetailMovie = () => {
                 isShowReview == true ? (
                   <div className="d-flex">
                     {
-                      totalReviews?.length == 0 ? (
-                        <div className="ms-3">There is no review on this movie.</div>
-                      ) : (
+                      totalReviews? (
                         <div className="row p-2">
                           <div className="mx-3 col-sm-2 col-lg-1">
                                 <Image src={avatarSrc} className="rounded-circle avatarImg"></Image>
@@ -294,7 +296,11 @@ const DetailMovie = () => {
                             <p className="fw-lighter text-black-50">Written by <b>{totalReviews && totalReviews[0].author}</b> on {totalReviews && totalReviews[0].created_at}</p>
                             <p className="reviewContent">{totalReviews && totalReviews[0].content}</p>
                           </div>
-                        </div>
+
+                          <Link to={`/movies/${id}/allreviews`} className="text-black text-decoration-none ps-4"><b>Read All Reviews</b></Link>
+                        </div>                     
+                      ) : (
+                        <div className="ms-3">There is no review on this movie.</div>
                       )
                     }
 
@@ -312,7 +318,6 @@ const DetailMovie = () => {
                 )
               }
             </div>
-            <Link to={`/movies/${id}/allreviews`} className="text-black text-decoration-none"><b>Read All Reviews</b></Link>
           </div>
 
           <hr></hr>
@@ -333,6 +338,7 @@ const DetailMovie = () => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                       className="pe-2 mb-2"
+                      key={index}
                     ></iframe>
                   ))}
                 </div>
