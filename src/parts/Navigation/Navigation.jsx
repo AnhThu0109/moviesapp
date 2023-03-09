@@ -22,7 +22,7 @@ function Navigation() {
 
   const userLog = () => {
     let user = "";
-    if(s == undefined) {
+    if(s == "undefined" || s == null) {
       user = "Login";
       setText(user);
     } else {
@@ -34,14 +34,13 @@ function Navigation() {
   const logOut = () => {
     localStorage.removeItem('session_id');
     setSession("");
-    let user = "Login";
-    setText(user);
+    navigate("/");
   }
 
   useEffect(() => {
     userLog();
     setSession(s);
-  }, [session, text])
+  }, [session])
 
   return (
     <div
@@ -68,10 +67,10 @@ function Navigation() {
               </li>
               <li className="ms-4 login fw-lighter">
                 {
-                  session != undefined? (
-                    <Link onClick={() => {logOut()}}>{text}</Link>
+                  (session != "undefined" && s != null)? (
+                    <Link to="/" onClick={() => {logOut()}}>Logout</Link>
                   ) : (
-                    <Link to="/login" onClick={userLog}>{text}</Link>
+                    <Link to="/login">Login</Link>
                   )
                 }                 
                 <UserOutlined className="ms-2"/>

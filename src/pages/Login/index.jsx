@@ -52,7 +52,7 @@ const Login = () => {
 
     // Store the session ID in local storage
     localStorage.setItem('session_id', sessionId);  
-    if(localStorage.getItem('session_id') != undefined){
+    if(localStorage.getItem('session_id') != "undefined" && localStorage.getItem('session_id') != null){
       navigate(-1);
     }
   };
