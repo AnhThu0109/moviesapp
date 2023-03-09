@@ -1,0 +1,1 @@
+export const AVATAR_SRC = 'https://www.themoviedb.org/t/p/w128_and_h128_face';

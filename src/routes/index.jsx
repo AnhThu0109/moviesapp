@@ -7,6 +7,7 @@ import TopRated from "../pages/TopRated";
 import UpComing from "../pages/UpComing";
 import SearchPage from "../pages/SearchPage";
 import Login from "../pages/Login";
+import AllReviews from "../pages/AllReview";
 
 const publicRoutes = [
     {
@@ -39,6 +40,10 @@ const privateRoutes = [
     {
         element: DetailMovie,
         path: "/movies/:id"
+    },
+    {
+        element: AllReviews,
+        path: "/movies/:id/allreviews"
     },
     {
         element: PopularPeople,

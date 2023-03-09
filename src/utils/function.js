@@ -17,14 +17,10 @@ const showBrief = (str, len) => {
     } else return str; 
   }
 
-const showFirstLetter = (str) => {
-  const shortenedStr = str.slice(0, 1);
-  return shortenedStr;
-  }
 
 const getYear = (date) => {
   const d = new Date(date);
   return d.getFullYear();
 }
 
-export {changeMoneyFormat, showBrief, showFirstLetter, getYear};
+export {changeMoneyFormat, showBrief, getYear};

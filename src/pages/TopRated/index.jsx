@@ -86,7 +86,7 @@ const TopRated = () => {
           <div className="p-3 row trending-film">
             {
               data?.results?.map((item, index) => (
-                <div className="film col-lg-3 col-sm-6 pb-2">
+                <div className="film col-lg-3 col-sm-6 pb-2" key={index}>
                   <Link to={detailLink[index]} className="movieLink">
                     <Image
                       src={imgSrc[index]} className="rounded-4"

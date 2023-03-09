@@ -4,15 +4,16 @@ import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Link, useParams } from "react-router-dom";
-import { CaretRightOutlined, StarFilled, HomeOutlined} from "@ant-design/icons";
+import { CaretRightOutlined, StarFilled, HomeOutlined } from "@ant-design/icons";
 import { Image, Space, Spin } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { BG_SRC } from "../../utils/bgSrc";
+import { AVATAR_SRC } from "../../utils/avatarSrc";
 import { VD_SRC } from "../../utils/videoSrc";
 import { fetchDataId, fetchPage } from "../../utils/fetchData";
-import { changeMoneyFormat, getId, showFirstLetter } from "../../utils/function";
+import { changeMoneyFormat } from "../../utils/function";
 
 
 const DetailMovie = () => {
@@ -31,7 +32,8 @@ const DetailMovie = () => {
   const [totalReviews, setTotalReviews] = useState();
   const [isShowReview, setShowReview] = useState(true);
   const [reviewPoint, setReviewPoint] = useState();
-  const {id} = useParams();
+  const [avatarSrc, setAvatarSrc] = useState("https://cdn-icons-png.flaticon.com/512/1177/1177568.png");
+  const { id } = useParams();
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -42,12 +44,12 @@ const DetailMovie = () => {
     if (json) {
       setData(json);
       let imageSrc = "";
-      if(json?.poster_path == null){
+      if (json?.poster_path == null) {
         imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png";
       }
-      else{
+      else {
         imageSrc = `${POSTER_SRC}` + json?.poster_path;
-      }    
+      }
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
       let types = [];
       json?.genres.map((item) => {
@@ -95,11 +97,11 @@ const DetailMovie = () => {
       });
     });
     people.map((item) => {
-      if(item.profile_path == null){
+      if (item.profile_path == null) {
         img.push("https://media.istockphoto.com/photos/icon-of-a-businessman-avatar-or-profile-pic-picture-id474001892?k=6&m=474001892&s=612x612&w=0&h=6g0M3Q3HF8_uMQpYbkM9XAAoEDym7z9leencMcC4pxo=");
-      } else{
+      } else {
         img.push(`${POSTER_SRC}` + item.profile_path);
-      }     
+      }
     });
     setPeople(people);
     setProfileImg(img);
@@ -135,10 +137,14 @@ const DetailMovie = () => {
         allReviews = allReviews.concat(response?.results);
       }
       console.log("review", allReviews);
-      if(allReviews[0].author_details?.rating != null){
+      if(allReviews[0].author_details?.avatar_path != null){
+          let avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
+          setAvatarSrc(avatar);
+      }
+      if (allReviews[0].author_details?.rating != null) {
         let point = allReviews[0].author_details.rating.toFixed(1);
-        setReviewPoint(point);     
-      }         
+        setReviewPoint(point);
+      }
       setTotalReviews(allReviews);
     }
   };
@@ -221,16 +227,15 @@ const DetailMovie = () => {
                   style={{ overflowX: "scroll" }}
                 >
                   {peopleOfMovie?.map((item, index) => (
-                    <div className="col-3 me-3 ms-1">
+                    <div className="col-3 me-3 ms-1" key={index}>
                       <Link to={`/people/${item.id}`} className="movieLink">
-                      <Image src={profileImg[index]} className="peopleImg" />
-                      <h6 className="p-2 mb-3 peopleName text-center">
-                        {item.name}
-                      </h6>
+                        <Image src={profileImg[index]} className="peopleImg" />
+                        <h6 className="p-2 mb-3 peopleName text-center">
+                          {item.name}
+                        </h6>
                       </Link>
                     </div>
                   ))}
-                  {/* <div className="box" style={{ overflowX: "scroll" }}></div> */}
                 </div>
               )}
             </div>
@@ -266,55 +271,55 @@ const DetailMovie = () => {
                 <h5>Social</h5>
               </li>
               <li key="2" className="me-5">
-                <Link className={isShowReview == true? "socialLink text-decoration-none text-black": "text-decoration-none text-black"} onClick={() => setShowReview(true)}><h6>Reviews <span className="text-black-50">{totalReviews?.length}</span></h6></Link>
+                <Link className={isShowReview == true ? "socialLink text-decoration-none text-black" : "text-decoration-none text-black"} onClick={() => setShowReview(true)}><h6>Reviews <span className="text-black-50">{totalReviews?.length}</span></h6></Link>
               </li>
               <li key="3">
-                <Link className={isShowReview == false? "socialLink text-decoration-none text-black": "text-decoration-none text-black"} onClick={() => setShowReview(false)}><h6>Home Page</h6></Link>
+                <Link className={isShowReview == false ? "socialLink text-decoration-none text-black" : "text-decoration-none text-black"} onClick={() => setShowReview(false)}><h6>Home Page</h6></Link>
               </li>
             </ul>
             <div className="showContent py-3 rounded-3 mb-3">
               {
-                isShowReview == true? (
+                isShowReview == true ? (
                   <div className="d-flex">
                     {
-                      totalReviews?.length == 0? (
+                      totalReviews?.length == 0 ? (
                         <div className="ms-3">There is no review on this movie.</div>
                       ) : (
-                        <>
-                        <div className="mx-3">
-                      <button className="avatarReview rounded-circle p-3 border-0">{totalReviews && showFirstLetter(totalReviews[0].author)}</button>                      
-                    </div>
-                    <div className="me-3">
-                      <h5 className="firstReview">A review by {totalReviews && totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon"/>{reviewPoint}</span></h5>
-                      <p className="fw-lighter text-black-50">Written by <b>{totalReviews && totalReviews[0].author}</b> on {totalReviews &&totalReviews[0].created_at}</p>
-                      <p className="reviewContent">{totalReviews && totalReviews[0].content}</p>
-                    </div>
-                        </>
+                        <div className="row p-2">
+                          <div className="mx-3 col-sm-2 col-lg-1">
+                                <Image src={avatarSrc} className="rounded-circle avatarImg"></Image>
+                          </div>
+                          <div className="me-3 col">
+                            <h5 className="firstReview">A review by {totalReviews && totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon" />{reviewPoint}</span></h5>
+                            <p className="fw-lighter text-black-50">Written by <b>{totalReviews && totalReviews[0].author}</b> on {totalReviews && totalReviews[0].created_at}</p>
+                            <p className="reviewContent">{totalReviews && totalReviews[0].content}</p>
+                          </div>
+                        </div>
                       )
                     }
-                                      
+
                   </div>
                 ) : (
                   <>
-                  {
-                    data?.homepage == ""? (
-                      <div className="ps-3">Unknown</div>
-                    ) : (
-                      <div className="ps-3"><Link to={data?.homepage}><HomeOutlined className="homeIcon text-black"/>{data?.homepage}</Link></div>
-                    )
-                  }                 
-                  </>                 
+                    {
+                      data?.homepage == "" ? (
+                        <div className="ps-3">Unknown</div>
+                      ) : (
+                        <div className="ps-3"><Link to={data?.homepage}><HomeOutlined className="homeIcon text-black" />{data?.homepage}</Link></div>
+                      )
+                    }
+                  </>
                 )
               }
-            </div>   
-            <Link to="/movies/:id/reviews" className="text-black text-decoration-none"><b>Read All Reviews</b></Link>         
+            </div>
+            <Link to={`/movies/${id}/allreviews`} className="text-black text-decoration-none"><b>Read All Reviews</b></Link>
           </div>
 
           <hr></hr>
           <div className="movie px-lg-5 px-sm-3 py-3">
             <h5>Most popular videos</h5>
             {
-              videoList?.length == 0? (
+              videoList?.length == 0 ? (
                 <p>Unknown</p>
               ) : (
                 <div style={{ overflowX: "scroll" }} className="d-flex">
@@ -332,7 +337,7 @@ const DetailMovie = () => {
                   ))}
                 </div>
               )
-            }                     
+            }
           </div>
 
           <div>
@@ -384,7 +389,7 @@ const DetailMovie = () => {
           </Space>
         </Space>
       )}
-    </> 
+    </>
   );
 };
 
