@@ -61,8 +61,8 @@ function Navigation() {
               </DropdownButton>
               </li>
               <li className="ms-2">
-              <DropdownButton id="dropdownMovies" title="People">
-                <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular People</Link></Dropdown.Item>
+              <DropdownButton id="dropdownMovies" title="Actors">
+                <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular</Link></Dropdown.Item>
                   </DropdownButton>
               </li>
               <li className="ms-4 login fw-lighter">

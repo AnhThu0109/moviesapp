@@ -50,7 +50,7 @@ function Banner() {
     <div id="banner" className="position-relative">
       <div id="bannerHeading">
         <h2><b>Welcome.</b></h2>
-        <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
+        <h3>Millions of interesting movies and actors to discover. Explore now.</h3>
       
         <form onSubmit={(e) => handleFormSubmit(e, input)}>
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
