@@ -3,7 +3,7 @@ import { Switch } from "antd";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 
 function Navigation() {
@@ -11,6 +11,7 @@ function Navigation() {
   const [theme, setTheme] = useState("dark");
   const [session, setSession] = useState("");
   const [text, setText] = useState("");
+  const navigate = useNavigate();
 
   const changeTheme = (value) => {
     console.log(value);
@@ -68,7 +69,7 @@ function Navigation() {
               <li className="ms-4 login fw-lighter">
                 {
                   session != undefined? (
-                    <Link onClick={logOut}>{text}</Link>
+                    <Link onClick={() => {logOut()}}>{text}</Link>
                   ) : (
                     <Link to="/login" onClick={userLog}>{text}</Link>
                   )

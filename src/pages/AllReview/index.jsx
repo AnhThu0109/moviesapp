@@ -3,13 +3,16 @@ import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useParams } from 'react-router-dom';
-import { fetchPage } from "../../utils/fetchData";
+import { fetchPage, fetchDataId } from "../../utils/fetchData";
+import { KEY } from "../../utils/key";
+import { POSTER_SRC } from "../../utils/posterSrc";
 import "./style.css";
 import { Image } from "antd";
 import { showBrief } from "../../utils/function";
-import { StarFilled } from "@ant-design/icons";
+import { StarFilled, ArrowLeftOutlined } from "@ant-design/icons";
 import { AVATAR_SRC } from "../../utils/avatarSrc";
 import { Link } from "react-router-dom";
+import { getYear } from "../../utils/function";
 
 
 function AllReviews() {
@@ -18,6 +21,8 @@ function AllReviews() {
     const [reviewPoint, setReviewPoint] = useState([]);
     const [avatarSrc, setAvatarSrc] = useState([]);
     const [isShowRest, setShowRest] = useState(false);
+    const [movie, setMovie] = useState();
+    const [posterSrc, setPosterSrc] = useState();
     const { id } = useParams();
 
     const onChange = (p) => {
@@ -61,13 +66,40 @@ function AllReviews() {
         }
     };
 
+    const getMovieById = async (id) => {
+        const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`);
+        if (json) {
+            console.log(json);
+          setMovie(json);
+          let imageSrc = "";
+          if (json?.poster_path == null) {
+            imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png";
+          }
+          else {
+            imageSrc = `${POSTER_SRC}` + json?.poster_path;
+          }
+          console.log(imageSrc);
+          setPosterSrc(imageSrc);
+        }
+      };
+
     useEffect(() => {
         console.log(id)
         getReview(id).catch(e => console.log(e));
+        getMovieById(id).catch(e => console.log(e));
     }, [page]);
 
     return (
         <div>
+            <div className="backMenu py-3 px-sm-3 px-lg-5 row">
+                <div className="col-sm-2 col-lg-1 ps-4">
+                    <Image src={posterSrc} className="rounded-2"></Image>
+                </div>              
+                <div className="col text-white">
+                    <h1><span className="fw-bolder">{movie?.title}</span> <span className="fw-lighter">({getYear(movie?.release_date)})</span></h1>
+                    <Link to={`/movies/${id}`} className="text-decoration-none text-white"><ArrowLeftOutlined /> Back to main</Link>
+                </div>
+            </div>
             <div className="p-sm-3 p-lg-5 mx-3">
                 {
                     totalReviews?.map((item, index) => (
