@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { KEY } from '../../utils/key';
 import { BASE_URL } from '../../utils/api';
@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [session, setSession] = useState(1);
   const navigate = useNavigate();
-
+  let s = localStorage.getItem('session_id');
   
 
   const handleUsernameChange = (event) => {
@@ -57,6 +57,11 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if(s != undefined){
+      navigate(-1);
+    }
+  }, [session])
   
 
   return (
