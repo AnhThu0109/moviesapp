@@ -23,4 +23,8 @@ const getYear = (date) => {
   return d.getFullYear();
 }
 
-export {changeMoneyFormat, showBrief, getYear};
+const countLetter = (str) => {
+  return str.length;
+}
+
+export {changeMoneyFormat, showBrief, getYear, countLetter};

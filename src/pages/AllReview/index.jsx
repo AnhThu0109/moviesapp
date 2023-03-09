@@ -8,7 +8,7 @@ import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import "./style.css";
 import { Image } from "antd";
-import { showBrief } from "../../utils/function";
+import { showBrief, countLetter } from "../../utils/function";
 import { StarFilled, ArrowLeftOutlined } from "@ant-design/icons";
 import { AVATAR_SRC } from "../../utils/avatarSrc";
 import { Link } from "react-router-dom";
@@ -50,14 +50,14 @@ function AllReviews() {
             console.log("review", allReviews);
             allReviews.map(item => {
                 point.push(item?.author_details?.rating?.toFixed(1));
-                if(item?.author_details?.avatar_path == null){
+                if (item?.author_details?.avatar_path == null) {
                     avatar.push("https://cdn-icons-png.flaticon.com/512/1177/1177568.png");
                 } else {
-                    if(item?.author_details?.avatar_path.includes("http")){
+                    if (item?.author_details?.avatar_path.includes("http")) {
                         avatar.push(item?.author_details?.avatar_path?.substring(1));
-                    } else{
+                    } else {
                         avatar.push(AVATAR_SRC + item?.author_details?.avatar_path);
-                    }                    
+                    }
                 }
             })
             setAvatarSrc(avatar);
@@ -70,18 +70,18 @@ function AllReviews() {
         const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`);
         if (json) {
             console.log(json);
-          setMovie(json);
-          let imageSrc = "";
-          if (json?.poster_path == null) {
-            imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png";
-          }
-          else {
-            imageSrc = `${POSTER_SRC}` + json?.poster_path;
-          }
-          console.log(imageSrc);
-          setPosterSrc(imageSrc);
+            setMovie(json);
+            let imageSrc = "";
+            if (json?.poster_path == null) {
+                imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png";
+            }
+            else {
+                imageSrc = `${POSTER_SRC}` + json?.poster_path;
+            }
+            console.log(imageSrc);
+            setPosterSrc(imageSrc);
         }
-      };
+    };
 
     useEffect(() => {
         console.log(id)
@@ -94,7 +94,7 @@ function AllReviews() {
             <div className="backMenu py-3 px-sm-3 px-lg-5 row">
                 <div className="col-sm-2 col-lg-1 ps-4">
                     <Image src={posterSrc} className="rounded-2"></Image>
-                </div>              
+                </div>
                 <div className="col text-white">
                     <h1><span className="fw-bolder">{movie?.title}</span> <span className="fw-lighter">({getYear(movie?.release_date)})</span></h1>
                     <Link to={`/movies/${id}`} className="text-decoration-none text-white"><ArrowLeftOutlined /> Back to main</Link>
@@ -111,13 +111,20 @@ function AllReviews() {
                                 <h5 className="firstReview">A review by {item?.author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon" />{reviewPoint[index]}</span></h5>
                                 <p className="fw-lighter text-black-50">Written by <b>{item?.author}</b> on {item?.created_at}</p>
                                 {
-                                    isShowRest == false? (
-                                        <p className="reviewContent">{showBrief(item?.content, 500)} <Link onClick={() => setShowRest(true)}>Read the rest.</Link></p>
+                                    countLetter(item?.content) > 500 ? (
+                                        <>
+                                            {
+                                                isShowRest == false ? (
+                                                    <p className="reviewContent">{showBrief(item?.content, 500)} <Link onClick={() => setShowRest(true)}>Read the rest.</Link></p>
+                                                ) : (
+                                                    <p className="reviewContent">{item?.content} <Link onClick={() => setShowRest(false)}>Hide the rest.</Link></p>
+                                                )
+                                            }
+                                        </>
                                     ) : (
-                                        <p className="reviewContent">{item?.content} <Link onClick={() => setShowRest(false)}>Hide the rest.</Link></p>
+                                        <p className="reviewContent">{item?.content}</p>
                                     )
                                 }
-                                
                             </div>
                         </div>
                     ))

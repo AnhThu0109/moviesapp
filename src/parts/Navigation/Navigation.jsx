@@ -20,16 +20,16 @@ function Navigation() {
   };
   const s = localStorage.getItem("session_id");
 
-  const userLog = () => {
-    let user = "";
-    if(s == "undefined" || s == null) {
-      user = "Login";
-      setText(user);
-    } else {
-      user = "Logout";
-      setText(user);
-    }
-  }
+  // const userLog = () => {
+  //   let user = "";
+  //   if(s == "undefined" || s == null) {
+  //     user = "Login";
+  //     setText(user);
+  //   } else {
+  //     user = "Logout";
+  //     setText(user);
+  //   }
+  // }
 
   const logOut = () => {
     localStorage.removeItem('session_id');
@@ -38,7 +38,7 @@ function Navigation() {
   }
 
   useEffect(() => {
-    userLog();
+    //userLog();
     setSession(s);
   }, [session])
 

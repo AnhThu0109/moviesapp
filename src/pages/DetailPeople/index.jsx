@@ -82,7 +82,7 @@ const DetailPeople = () => {
               data?.gender == 2 ? ("Male") : ("Female")
             }</p>
           <p><b>Birthday</b><br></br>{data?.birthday == null ? (<>Unknown</>) : (data?.birthday)}</p>
-          <p><b>Place of Birth</b><br></br>{data?.place_of_birth}</p>
+          <p><b>Place of Birth</b><br></br>{data?.place_of_birth? (<>{data?.place_of_birth}</>) : (<>Unknown</>)}</p>
           <p><b>Also Known As</b><br></br>
             {
               data?.also_known_as ? (
@@ -98,7 +98,7 @@ const DetailPeople = () => {
         <div className="col-sm-6 col-lg-8">
           <h1 className="fw-bolder">{data?.name}</h1>
           <h4 className="fw-bolder">Biology</h4>
-          <p>{data?.biography}</p>
+          <p>{data?.biography? (<>{data?.biography}</>) : (<>Unknown</>)}</p>
           <br></br>
           <h4 className="fw-bolder">Known For</h4>
           {
@@ -120,7 +120,7 @@ const DetailPeople = () => {
 
           <br></br>
           {
-            movieList?.cast ? (
+            movieList? (
               <>
                 <h4 className="fw-bolder">Acting</h4>
                 <div className="movieTimeList p-3">
