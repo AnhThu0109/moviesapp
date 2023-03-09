@@ -59,7 +59,7 @@ function SearchPage() {
             <>
             <h3 className="px-sm-2 px-lg-5 py-3">We found <span className="fw-bolder">{searchData?.total_results}</span> results</h3>
             {searchData?.results?.map((item, index) => (
-              <div className="row px-sm-2 px-lg-5 py-3 searchResult mx-sm-2 mx-lg-5 my-3 rounded-4">
+              <div className="row px-sm-2 px-lg-5 py-3 searchResult mx-sm-2 mx-lg-5 my-3 rounded-4" key={index}>
                 <div className="col-3">
                   <Image className="rounded-4 imagePoster"
                     src={poster[index]}
