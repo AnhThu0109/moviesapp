@@ -17,15 +17,15 @@ const UpComing = () => {
     setPage(p);
   }
 
-  const getData = async (page=1) => {
+  const getData = async (page = 1) => {
     const json = await fetchPage(page, "/movie/upcoming?", "&language=en-US&page=")
     if (json) {
-        console.log(json);
+      console.log(json);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];
       json.results.map(item => {
-        imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
+        imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`)
       })
       setImgSrc(imgSrcArr);
@@ -40,30 +40,31 @@ const UpComing = () => {
   return (
     <>
       <div id="popular">
-      <h2 className="title pt-3 px-3 fw-bolder">Up Coming Movies</h2>
-      <div className="p-3 row trending-film">
-        {
-          data?.results?.map((item, index) => (
-            <div className="film col-lg-3 col-sm-4 pb-2">
-            <Link to={detailLink[index]} className="movieLink">
-              <Image           
-                src={imgSrc[index]} className="rounded-4" 
-              />
-              <h6 className="pt-2 text-center">{item.title}</h6>
-              <p className="text-center">{item.release_date}</p>
-            </Link>
-            </div>
-          ))
-        }       
+        <h2 className="title pt-3 px-3 fw-bolder">Up Coming Movies</h2>
+        <div className="p-3 row trending-film">
+          {
+            data?.results?.map((item, index) => (
+              <div className="film col-lg-3 col-sm-4 pb-2">
+                <Link to={detailLink[index]} className="movieLink">
+                  <Image
+                    src={imgSrc[index]} className="rounded-4"
+                  />
+                  <h6 className="pt-2 text-center">{item.title}</h6>
+                  <p className="text-center">{item.release_date}</p>
+                </Link>
+              </div>
+            ))
+          }
+        </div>
       </div>
-    </div>
 
-    <Pagination 
+      <Pagination
         defaultCurrent={1}
         total={data?.total_results}
         pageSize={20}
         onChange={onChange} className="text-center"
-        />
+        showSizeChanger={false}
+      />
     </>
   );
 };
