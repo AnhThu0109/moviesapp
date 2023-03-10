@@ -42,6 +42,7 @@ const DetailMovie = () => {
   const getById = async (id) => {
     const json = await fetchDataId(id, "/movie/", `?${KEY}&language=en-US`);
     if (json) {
+      console.log("moviedetail", json);
       setData(json);
       let imageSrc = "";
       if (json?.poster_path == null) {
@@ -327,7 +328,7 @@ const DetailMovie = () => {
               videoList?.length == 0 ? (
                 <p>Unknown</p>
               ) : (
-                <div style={{ overflowX: "scroll" }} className="d-flex">
+                <div style={{ overflowX: "scroll" }} className="d-flex popularVideoList">
                   {videoList?.map((item, index) => (
                     <iframe
                       width="350"

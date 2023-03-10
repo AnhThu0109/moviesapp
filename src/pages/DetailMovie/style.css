@@ -120,8 +120,16 @@ button.pointBtn:hover{
     transform: scale(1.1);
 }
 
-.peopleList{
+.peopleList, .popularVideoList{
     box-shadow: inset -50px 0px 25px -10px white;
+}
+
+.popularVideoList iframe{
+    z-index: -1;
+}
+
+.peopleList .col-3{
+    height: 70%;
 }
 
 .peopleName{
@@ -142,6 +150,10 @@ h6.peopleName:hover {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     z-index: -1;
+}
+
+.billCast{
+    margin: 0px !important;
 }
 
 .billCast img.ant-image-img.peopleImg{
