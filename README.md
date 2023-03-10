@@ -1,8 +1,17 @@
-# Getting Started with Create React App
+# Movies App:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is using ReactJs, Bootstrap 5, Ant Design, HTML and JS.
+
+## Functions:
+
+Just view HomePage, search movies and access Login page if don't have account.
+If being a user, you can:
+ See movies for detail information (introduction, trailer, cast, related videos and similar movies)
+ See actors for detail information (introduction, films they joined and history line of their acting career)
 
 ## Available Scripts
+Username: anhthu0109
+Password: btftiu15050
 
 In the project directory, you can run:
 
