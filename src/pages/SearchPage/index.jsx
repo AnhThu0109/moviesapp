@@ -54,10 +54,7 @@ function SearchPage() {
   return (
     <div>
       <div className="py-3">
-        {
-          searchData?.results?.length != 0 ? (
-            <>
-            <h3 className="px-sm-2 px-lg-5 py-3">We found <span className="fw-bolder">{searchData?.total_results}</span> results</h3>
+      <h3 className="px-sm-3 px-lg-5 py-3">We found <span className="fw-bolder">{searchData?.total_results}</span> results</h3>
             {searchData?.results?.map((item, index) => (
               <div className="row px-sm-2 px-lg-5 py-3 searchResult mx-sm-2 mx-lg-5 my-3 rounded-4" key={index}>
                 <div className="col-3">
@@ -73,12 +70,6 @@ function SearchPage() {
                 </div>
               </div>
             ))}
-            </>
-            
-          ) : (
-            <p className="text-center errorMess">There is no movie with keyword <b>{keyword}</b></p>
-          )
-        }
       </div>
 
       <Pagination
