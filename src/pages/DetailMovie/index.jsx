@@ -141,11 +141,11 @@ const DetailMovie = () => {
       }
       console.log("review", allReviews);
       let avatar = "";
-      if (allReviews[0].author_details?.avatar_path != null) {
-        if (allReviews[0].author_details?.avatar_path.includes("http")) {
-          avatar = allReviews[0].author_details?.avatar_path?.substring(1);
+      if (allReviews[0]?.author_details?.avatar_path != null) {
+        if (allReviews[0]?.author_details?.avatar_path.includes("http")) {
+          avatar = allReviews[0]?.author_details?.avatar_path?.substring(1);
         } else {
-          avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
+          avatar = AVATAR_SRC + allReviews[0]?.author_details?.avatar_path;
         }
         setAvatarSrc(avatar);
       }
@@ -207,13 +207,13 @@ const DetailMovie = () => {
                 <h1>{data?.title}</h1>
                 <ul className="typeInfo">
                   <li key="1" className="dateInfo me-3">
-                    {data?.release_date}
+                    {data?.release_date? (<>{data?.release_date}</>) : (<>Unknown release date</>)}
                   </li>
                   <li key="2" className="mx-3">
-                    {typeList}
+                    {typeList? (<>{typeList}</>) : (<>Unknown type</>)}
                   </li>
                   <li key="3" className="ms-3">
-                    {data?.runtime} mins
+                    {data?.runtime? (<>{data?.runtime} mins</>) : (<>Unknown time</>)}             
                   </li>
                 </ul>
                 <button className="pointBtn rounded-circle p-2 mb-3">
@@ -233,7 +233,7 @@ const DetailMovie = () => {
                   <i>{data?.tagline}</i>
                 </p>
                 <h5>Overview</h5>
-                <p className="overview pe-lg-5">{data?.overview}</p>
+                <p className="overview pe-lg-5">{data?.overview? (<>{data?.overview}</>) : (<>Unknown</>)}</p>
               </div>
             </div>
             <div
