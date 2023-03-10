@@ -47,46 +47,56 @@ function Navigation() {
       id="navigation"
       className={isChangeTheme === true ? "darkTheme" : "lightTheme"}
     >
-      
+
       <nav className="navbar">
         <div className="container-fluid ms-2">
           <Link to="/" className="movieLink homeNav me-3">HOME</Link>
           <div>
             <ul className="navbar-nav navList">
               <li className="ms-2">
-              <DropdownButton id="dropdownMovies" title="Movies">
-                <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
-                <Dropdown.Item><Link to="/movies/top" className="movieLink">Top Rated</Link></Dropdown.Item>
-                <Dropdown.Item><Link to="/movies/upcoming" className="movieLink">Up Coming</Link></Dropdown.Item>
-              </DropdownButton>
+                <DropdownButton id="dropdownMovies" title="Movies">
+                  <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
+                  <Dropdown.Item><Link to="/movies/top" className="movieLink">Top Rated</Link></Dropdown.Item>
+                  <Dropdown.Item><Link to="/movies/upcoming" className="movieLink">Up Coming</Link></Dropdown.Item>
+                </DropdownButton>
               </li>
               <li className="ms-2">
-              <DropdownButton id="dropdownMovies" title="Actors">
-                <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular</Link></Dropdown.Item>
-                  </DropdownButton>
+                <DropdownButton id="dropdownMovies" title="Actors">
+                  <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular</Link></Dropdown.Item>
+                </DropdownButton>
               </li>
               <li className="ms-4 login fw-lighter">
                 {
-                  (session != "undefined" && s != null)? (
-                    <Link to="/" onClick={() => {logOut()}}>Logout</Link>
+                  (session != "undefined" && s != null) ? (
+                    <Link to="/" onClick={() => { logOut() }}>Logout</Link>
                   ) : (
                     <Link to="/login">Login</Link>
                   )
-                }                 
-                <UserOutlined className="ms-2"/>
+                }
+                <UserOutlined className="ms-2" />
               </li>
+
             </ul>
           </div>
         </div>
       </nav>
-
-      <Switch
-        className="m-3"
-        checked={theme === "dark"}
-        onChange={changeTheme}
-        checkedChildren="Dark"
-        unCheckedChildren="Light"
-      />
+      {/* "/signin" */}
+      <div>
+        <ul className="navbar-nav navList">
+          <li className="ms-4 login fw-lighter text-white">
+            <Link to="/signup">Join Us</Link>            
+          </li>
+          <li>
+            <Switch
+              className="m-3"
+              checked={theme === "dark"}
+              onChange={changeTheme}
+              checkedChildren="Dark"
+              unCheckedChildren="Light"
+            />
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import UpComing from "../pages/UpComing";
 import SearchPage from "../pages/SearchPage";
 import Login from "../pages/Login";
 import AllReviews from "../pages/AllReview";
+import JoinUs from "../pages/JoinUs";
 
 const publicRoutes = [
     {
@@ -21,6 +22,10 @@ const publicRoutes = [
     {
         element: <Login/>,
         path: "/login"
+    },
+    {
+        element: <JoinUs/>,
+        path: "/signup"
     }
 ]
 
