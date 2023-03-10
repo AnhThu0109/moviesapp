@@ -6,7 +6,7 @@ import { POSTER_SRC } from "../../utils/posterSrc";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
 import { fetchData } from "../../utils/fetchData";
-import { showBrief } from "../../utils/function";
+import { showBrief, countPercent } from "../../utils/function";
 
 function Trending() {
   const [data, setData] = useState({});
@@ -26,7 +26,7 @@ function Trending() {
       json.results.map(item => {
         imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
-        pointLists.push(((item.vote_average / 10)*100).toFixed(0));
+        pointLists.push(countPercent(item.vote_average));
       })
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);

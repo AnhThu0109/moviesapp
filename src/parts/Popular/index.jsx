@@ -5,6 +5,7 @@ import { BG_SRC } from "../../utils/bgSrc";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
 import { fetchPage } from "../../utils/fetchData";
+import { countPercent } from "../../utils/function";
 
 function Popular() {
   const [data, setData] = useState({});
@@ -35,7 +36,7 @@ function Popular() {
         imgSrcArr.push(`${POSTER_SRC}`+ item.poster_path);
         bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
         detailLinkArr.push(`/movies/${item.id}`);
-        pointLists.push(((item.vote_average / 10)*100).toFixed(0));
+        pointLists.push(countPercent(item.vote_average));
       })
       setImgSrc(imgSrcArr);
       setBgSrc(bgSrcArr);

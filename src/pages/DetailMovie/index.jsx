@@ -13,7 +13,7 @@ import { BG_SRC } from "../../utils/bgSrc";
 import { AVATAR_SRC } from "../../utils/avatarSrc";
 import { VD_SRC } from "../../utils/videoSrc";
 import { fetchDataId, fetchPage } from "../../utils/fetchData";
-import { changeMoneyFormat } from "../../utils/function";
+import { changeMoneyFormat, showBrief, countPercent } from "../../utils/function";
 
 
 const DetailMovie = () => {
@@ -33,6 +33,8 @@ const DetailMovie = () => {
   const [isShowReview, setShowReview] = useState(true);
   const [reviewPoint, setReviewPoint] = useState();
   const [avatarSrc, setAvatarSrc] = useState("https://cdn-icons-png.flaticon.com/512/1177/1177568.png");
+  const [similarMovies, setSimilarMovies] = useState();
+  const [posterSimilarMovies, setPosterSimilarMovies] = useState();
   const { id } = useParams();
 
   function toggleModal() {
@@ -139,13 +141,13 @@ const DetailMovie = () => {
       }
       console.log("review", allReviews);
       let avatar = "";
-      if(allReviews[0].author_details?.avatar_path != null){
-        if(allReviews[0].author_details?.avatar_path.includes("http")){
-            avatar = allReviews[0].author_details?.avatar_path?.substring(1);
-          } else{
-            avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
-          }               
-          setAvatarSrc(avatar);
+      if (allReviews[0].author_details?.avatar_path != null) {
+        if (allReviews[0].author_details?.avatar_path.includes("http")) {
+          avatar = allReviews[0].author_details?.avatar_path?.substring(1);
+        } else {
+          avatar = AVATAR_SRC + allReviews[0].author_details.avatar_path;
+        }
+        setAvatarSrc(avatar);
       }
       if (allReviews[0].author_details?.rating != null) {
         let point = allReviews[0].author_details.rating.toFixed(1);
@@ -155,11 +157,30 @@ const DetailMovie = () => {
     }
   };
 
+  const getSimilarMovie = async (id) => {
+    const json = await fetchDataId(id, "/movie/", `/similar?${KEY}&language=en-US&page=1`);
+    if (json) {
+      let similarMovieList = [];
+      let posters = [];
+      json?.results?.map((item, index) => {
+        if (index < 10) {
+          similarMovieList.push(item);
+          posters.push(POSTER_SRC + item.poster_path)
+        }
+      })
+      console.log("similar", similarMovieList);
+      console.log("similar2", posters);
+      setSimilarMovies(similarMovieList);
+      setPosterSimilarMovies(posters);
+    }
+  }
+
   const getAll = async (id) => {
     await fetchPeople(id);
     await getById(id);
     await getVideoById(id);
     await getReview(id);
+    await getSimilarMovie(id);
   };
 
   useEffect(() => {
@@ -171,7 +192,7 @@ const DetailMovie = () => {
     }
     setTime();
     clearTimeout(setTime);
-  }, []);
+  }, [id]);
   return (
     <>
       {flag ? (
@@ -224,7 +245,7 @@ const DetailMovie = () => {
 
           <div className="p-lg-5 p-sm-3 row billCast">
             <div className="col-9">
-              <h5>Top Billed Cast</h5>
+              <h4>Top Billed Cast</h4>
               {peopleOfMovie?.length == 0 ? (
                 <>Unknown</>
               ) : (
@@ -246,7 +267,7 @@ const DetailMovie = () => {
               )}
             </div>
             <div className="col-3 ps-lg-5 ps-sm-4">
-              <h5>Status</h5>
+              <h4>Status</h4>
               <p>{data?.status}</p>
               <br></br>
               <h5>Budget</h5>
@@ -273,7 +294,7 @@ const DetailMovie = () => {
           <div className="review px-lg-5 px-sm-3 py-3">
             <ul className="titleReview">
               <li key="1" className="me-5">
-                <h5>Social</h5>
+                <h4>Social</h4>
               </li>
               <li key="2" className="me-5">
                 <Link className={isShowReview == true ? "socialLink text-decoration-none text-black" : "text-decoration-none text-black"} onClick={() => setShowReview(true)}><h6>Reviews <span className="text-black-50">{totalReviews?.length}</span></h6></Link>
@@ -287,10 +308,10 @@ const DetailMovie = () => {
                 isShowReview == true ? (
                   <div className="d-flex">
                     {
-                      totalReviews? (
+                      totalReviews ? (
                         <div className="row p-2">
                           <div className="mx-3 col-sm-2 col-lg-1">
-                                <Image src={avatarSrc} className="rounded-circle avatarImg"></Image>
+                            <Image src={avatarSrc} className="rounded-circle avatarImg"></Image>
                           </div>
                           <div className="me-3 col">
                             <h5 className="firstReview">A review by {totalReviews && totalReviews[0].author} <span className="bg-black text-white rounded-3 px-2"><StarFilled className="starIcon" />{reviewPoint}</span></h5>
@@ -299,7 +320,7 @@ const DetailMovie = () => {
                           </div>
 
                           <Link to={`/movies/${id}/allreviews`} className="text-black text-decoration-none ps-4"><b>Read All Reviews</b></Link>
-                        </div>                     
+                        </div>
                       ) : (
                         <div className="ms-3">There is no review on this movie.</div>
                       )
@@ -323,7 +344,7 @@ const DetailMovie = () => {
 
           <hr></hr>
           <div className="movie px-lg-5 px-sm-3 py-3">
-            <h5>Most popular videos</h5>
+            <h4>Most popular videos</h4>
             {
               videoList?.length == 0 ? (
                 <p>Unknown</p>
@@ -347,6 +368,32 @@ const DetailMovie = () => {
             }
           </div>
 
+          <hr></hr>
+          <div className="movie px-lg-5 px-sm-3 py-3">
+            <h4>Similar movies</h4>
+            {
+              similarMovies ? (
+                <div className="d-flex peopleList"
+                  style={{ overflowX: "scroll" }}>
+                  {
+                    similarMovies?.map((item, index) => (
+                      <div className="col-sm-4 col-lg-3 me-3 mb-2" key={index}>
+                        <Link to={`/movies/${item.id}`}>
+                          <Image src={posterSimilarMovies[index]} className="rounded-4"></Image>
+                          <div className="d-flex justify-content-between text-black">
+                            <p>{showBrief(item.title, 15)}</p>
+                            <p>{countPercent(item.vote_average)}%</p>
+                          </div>
+                        </Link>
+                      </div>
+                    ))
+                  }
+                </div>
+              ) : (
+                <>Unknown</>
+              )
+            }
+          </div>
           <div>
             <Modal isOpen={modalIsOpen} ariaHideApp={false}>
               <div className="video-container text-center py-5">

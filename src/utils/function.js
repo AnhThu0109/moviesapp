@@ -27,4 +27,8 @@ const countLetter = (str) => {
   return str.length;
 }
 
-export {changeMoneyFormat, showBrief, getYear, countLetter};
+const countPercent = (num) => {
+  return ((num / 10)*100).toFixed(0);
+}
+
+export {changeMoneyFormat, showBrief, getYear, countLetter, countPercent};
