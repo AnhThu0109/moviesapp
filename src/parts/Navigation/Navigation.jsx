@@ -11,8 +11,6 @@ import { logout } from "../../redux/loginSlice";
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
   const [theme, setTheme] = useState("dark");
-  const [session, setSession] = useState("");
-  const [text, setText] = useState("");
   const navigate = useNavigate();
 
   const changeTheme = (value) => {
@@ -33,20 +31,14 @@ function Navigation() {
   //   }
   // }
 
-  const currentAuthentication = useSelector(state => state.auth.value);
+  const currentAuthentication = useSelector(state => state.authentication.value);
   const dispatch = useDispatch();
 
   const logOut = () => {
     localStorage.removeItem('session_id');
-    setSession("");
-    debugger;
     dispatch(logout());
     navigate("/");
   }
-
-  useEffect(() => {
-    //userLog();
-  }, [currentAuthentication])
 
   return (
     <div

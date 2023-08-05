@@ -3,11 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const token = localStorage.getItem("session_id");
 
 const initialState = {
-    value: token === null ? false : true,
+    value: token == null? false: true
 }
 
 export const authentication = createSlice({
-    name: "auth",
+    //using the same name
+    name: "authentication",
     initialState,
     reducers:{
         loginSuccess: (state) => {
