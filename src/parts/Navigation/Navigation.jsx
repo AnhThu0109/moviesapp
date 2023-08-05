@@ -1,10 +1,12 @@
 import "./style.css";
 import { Switch } from "antd";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+import { logout } from "../../redux/loginSlice";
 
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
@@ -18,7 +20,7 @@ function Navigation() {
     setTheme(value ? "dark" : "light");
     setIsChangeTheme(value);
   };
-  const s = localStorage.getItem("session_id");
+  // const s = localStorage.getItem("session_id");
 
   // const userLog = () => {
   //   let user = "";
@@ -31,16 +33,20 @@ function Navigation() {
   //   }
   // }
 
+  const currentAuthentication = useSelector(state => state.auth.value);
+  const dispatch = useDispatch();
+
   const logOut = () => {
     localStorage.removeItem('session_id');
     setSession("");
+    debugger;
+    dispatch(logout());
     navigate("/");
   }
 
   useEffect(() => {
     //userLog();
-    setSession(s);
-  }, [session])
+  }, [currentAuthentication])
 
   return (
     <div
@@ -67,7 +73,7 @@ function Navigation() {
               </li>
               <li className="ms-4 login fw-lighter">
                 {
-                  (session != "undefined" && s != null) ? (
+                  (currentAuthentication === true) ? (
                     <Link to="/" onClick={() => { logOut() }}>Logout</Link>
                   ) : (
                     <Link to="/login">Login</Link>

@@ -28,7 +28,7 @@ const JoinUs = () => {
         <div className='p-5'>
             <h2 className='fw-bolder'>Sign up for an account</h2>
             <p>Signing up for an account is free and easy. Fill out the form below to get started.</p>
-            <form onSubmit={handleSubmit} className="pt-4">
+            <form onSubmit={handleSubmit} className="pt-4" method='post'>
                 <div>
                     <label htmlFor="text" className='form-label'>Username:</label>
                     <input
