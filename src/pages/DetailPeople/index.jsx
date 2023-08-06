@@ -1,14 +1,23 @@
-import { KEY } from "../../utils/key";
-import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
-import { Image } from "antd";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
-import { POSTER_SRC } from "../../utils/posterSrc";
-import { fetchDataId } from "../../utils/fetchData";
 import { useParams, Link } from "react-router-dom";
 import { getYear } from "../../utils/function";
+import { fetchDataId } from "../../utils/fetchData";
+import { POSTER_SRC } from "../../utils/posterSrc";
+import { KEY } from "../../utils/key";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
+import "antd/dist/reset.css";
+import { Image } from "antd";
 import { Skeleton } from "@mui/material";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+  TimelineOppositeContent,
+} from "@mui/lab";
 
 const DetailPeople = () => {
   const [data, setData] = useState({});
@@ -163,21 +172,25 @@ const DetailPeople = () => {
                   {movieListTimeNull ? (
                     <>
                       {movieListTimeNull?.map((item, index) => (
-                        <div key={index}>
-                          <div>
-                            None
-                            <Image
-                              src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png"
-                              className="timeIcon"
-                            ></Image>
-                            <b>{item.title}</b>
-                            {item.character == "" ? (
-                              ""
-                            ) : (
-                              <> as {item.character}</>
-                            )}
-                          </div>
-                        </div>
+                        <Timeline position="alternate" key={index}>
+                          <TimelineItem>
+                            <TimelineOppositeContent color="text.secondary">
+                              None
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                              <TimelineDot variant="outlined" color="primary" />
+                              <TimelineConnector />
+                            </TimelineSeparator>
+                            <TimelineContent>
+                              <b>{item.title}</b>
+                              {item.character === "" ? (
+                                ""
+                              ) : (
+                                <> as {item.character}</>
+                              )}
+                            </TimelineContent>
+                          </TimelineItem>
+                        </Timeline>
                       ))}
                     </>
                   ) : (
@@ -187,21 +200,25 @@ const DetailPeople = () => {
                   {movieListTime ? (
                     <>
                       {movieListTime?.map((item, index) => (
-                        <>
-                          <div key={index}>
-                            {getYear(item.release_date)}
-                            <Image
-                              src="https://cdn-icons-png.flaticon.com/128/9664/9664175.png"
-                              className="timeIcon"
-                            ></Image>
-                            <b>{item.title}</b>
-                            {item.character === "" ? (
-                              ""
-                            ) : (
-                              <> as {item.character}</>
-                            )}
-                          </div>
-                        </>
+                        <Timeline position="alternate" key={index}>
+                          <TimelineItem>
+                            <TimelineOppositeContent color="text.secondary">
+                              {getYear(item.release_date)}
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                              <TimelineDot variant="outlined" color="primary" />
+                              <TimelineConnector />
+                            </TimelineSeparator>
+                            <TimelineContent>
+                              <b>{item.title}</b>
+                              {item.character === "" ? (
+                                ""
+                              ) : (
+                                <> as {item.character}</>
+                              )}
+                            </TimelineContent>
+                          </TimelineItem>
+                        </Timeline>
                       ))}
                     </>
                   ) : (
