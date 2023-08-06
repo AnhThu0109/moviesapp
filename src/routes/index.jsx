@@ -17,7 +17,11 @@ const publicRoutes = [
     },
     {
         element: <SearchPage/>,
-        path: "/search/:keyword"
+        path: "/search/movies/:keyword"
+    },
+    {
+        element: <SearchPage/>,
+        path: "/search/people/:keyword"
     },
     {
         element: <Login/>,

@@ -61,7 +61,7 @@ function Trending() {
               </div>
               <div className="pointList">
                 <button className="rounded-circle p-2 pointBtn text-white">
-                  {points[index] == 0? (
+                  {points[index] === 0? (
                     <>NaN</>
                   ): (<>{points[index]}<sup>%</sup></>)}
                 </button>

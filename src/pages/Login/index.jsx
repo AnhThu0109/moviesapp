@@ -56,6 +56,7 @@ const Login = () => {
       );
       const tokenData = await tokenResponse.json();
       let requestToken = tokenData.request_token;
+      console.log('requestToken', requestToken);
 
       // Validate the request token with the user's credentials
       const loginUrl = `https://api.themoviedb.org/3/authentication/token/validate_with_login?${KEY}&username=${username}&password=${password}&request_token=${requestToken}`;
@@ -116,7 +117,6 @@ const Login = () => {
       .then((res) => console.log(res))
       .then((data) => console.log(data))
       .catch((error) => {
-        debugger;
         console.log(error);
       });
     setIsLoading(false);

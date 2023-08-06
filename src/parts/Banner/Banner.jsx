@@ -18,7 +18,7 @@ function Banner() {
     e.preventDefault();
     input = input.trim();
     if (input !== "") {
-      navigate(`/search/${input}`);
+      navigate(`/search/movies/${input}`);
     }
   };
 

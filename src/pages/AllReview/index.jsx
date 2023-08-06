@@ -114,7 +114,7 @@ function AllReviews() {
                                     countLetter(item?.content) > 500 ? (
                                         <>
                                             {
-                                                isShowRest == false ? (
+                                                isShowRest === false ? (
                                                     <p className="reviewContent">{showBrief(item?.content, 500)} <Link onClick={() => setShowRest(true)}>Read the rest.</Link></p>
                                                 ) : (
                                                     <p className="reviewContent">{item?.content} <Link onClick={() => setShowRest(false)}>Hide the rest.</Link></p>

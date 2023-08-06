@@ -1,17 +1,8 @@
-import { BASE_URL } from "../../utils/api";
-import { KEY } from "../../utils/key";
-import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Link, useParams } from "react-router-dom";
-import {
-  CaretRightOutlined,
-  StarFilled,
-  HomeOutlined,
-} from "@ant-design/icons";
-import { Image } from "antd";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css";
+import { BASE_URL } from "../../utils/api";
+import { KEY } from "../../utils/key";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { BG_SRC } from "../../utils/bgSrc";
 import { AVATAR_SRC } from "../../utils/avatarSrc";
@@ -22,6 +13,15 @@ import {
   showBrief,
   countPercent,
 } from "../../utils/function";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
+import "antd/dist/reset.css";
+import { Image } from "antd";
+import {
+  CaretRightOutlined,
+  StarFilled,
+  HomeOutlined,
+} from "@ant-design/icons";
 import { Skeleton } from "@mui/material";
 
 const DetailMovie = () => {
@@ -57,7 +57,9 @@ const DetailMovie = () => {
       console.log("moviedetail", json);
       setData(json);
       let imageSrc = "";
-      json?.poster_path == null? imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png" : imageSrc = `${POSTER_SRC}` + json?.poster_path;
+      json?.poster_path == null
+        ? (imageSrc = "https://img.lovepik.com/element/40021/7866.png_1200.png")
+        : (imageSrc = `${POSTER_SRC}` + json?.poster_path);
       let backgroundSrc = `${BG_SRC}` + json?.backdrop_path;
       let types = [];
       json?.genres.map((item) => {
@@ -176,7 +178,11 @@ const DetailMovie = () => {
       json?.results?.map((item, index) => {
         if (index < 10) {
           similarMovieList.push(item);
-          item.poster_path != null? posters.push(POSTER_SRC + item.poster_path) : posters.push("https://img.lovepik.com/element/40021/7866.png_1200.png");
+          item.poster_path != null
+            ? posters.push(POSTER_SRC + item.poster_path)
+            : posters.push(
+                "https://img.lovepik.com/element/40021/7866.png_1200.png"
+              );
         }
       });
       console.log("similar", similarMovieList);
@@ -438,7 +444,10 @@ const DetailMovie = () => {
                 style={{ overflowX: "scroll" }}
               >
                 {similarMovies?.map((item, index) => (
-                  <div className="col-sm-4 col-lg-3 me-3 mb-2 similarMovieCol" key={index}>
+                  <div
+                    className="col-sm-4 col-lg-3 me-3 mb-2 similarMovieCol"
+                    key={index}
+                  >
                     <Link to={`/movies/${item.id}`}>
                       <Image
                         src={posterSimilarMovies[index]}
