@@ -97,7 +97,7 @@ const Login = () => {
 
   return (
     <div className="p-5">
-      {isLoading == true ? (
+      {isLoading === true ? (
         <>
           <Skeleton />
           <Skeleton animation="wave" />

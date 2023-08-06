@@ -232,3 +232,26 @@ hr{
 .review a>b:hover{
     color: grey;
 }
+
+@media screen and (min-width: 993px) {
+    img.ant-image-img.rounded-4.similarMovieImg {
+        height: 380px !important;
+        width: 285px !important;
+    }
+  }
+
+@media screen and (max-width: 992px) {
+    img.ant-image-img.rounded-4.similarMovieImg {
+        height: 330px !important;
+        width: 250px !important;
+    }
+  }
+  
+  /* On screens that are 600px or less, set the background color to olive */
+  @media screen and (max-width: 600px) {
+    img.ant-image-img.rounded-4.similarMovieImg {
+        height: 330px !important;
+        width: 250px !important;
+    }
+  }
+

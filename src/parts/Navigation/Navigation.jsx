@@ -1,9 +1,9 @@
 import "./style.css";
 import { Switch } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import { logout } from "../../redux/loginSlice";
@@ -31,49 +31,72 @@ function Navigation() {
   //   }
   // }
 
-  const currentAuthentication = useSelector(state => state.authentication.value);
+  const currentAuthentication = useSelector(
+    (state) => state.authentication.value
+  );
   const dispatch = useDispatch();
 
   const logOut = () => {
-    localStorage.removeItem('session_id');
+    localStorage.removeItem("session_id");
     dispatch(logout());
     navigate("/");
-  }
+  };
 
   return (
     <div
       id="navigation"
       className={isChangeTheme === true ? "darkTheme" : "lightTheme"}
     >
-
       <nav className="navbar">
         <div className="container-fluid ms-2">
-          <Link to="/" className="movieLink homeNav me-3">HOME</Link>
+          <Link to="/" className="movieLink homeNav me-3">
+            HOME
+          </Link>
           <div>
             <ul className="navbar-nav navList">
               <li className="ms-2">
                 <DropdownButton id="dropdownMovies" title="Movies">
-                  <Dropdown.Item ><Link to="/movies/popular" className="movieLink">Popular</Link></Dropdown.Item>
-                  <Dropdown.Item><Link to="/movies/top" className="movieLink">Top Rated</Link></Dropdown.Item>
-                  <Dropdown.Item><Link to="/movies/upcoming" className="movieLink">Up Coming</Link></Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to="/movies/popular" className="movieLink">
+                      Popular
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to="/movies/top" className="movieLink">
+                      Top Rated
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to="/movies/upcoming" className="movieLink">
+                      Up Coming
+                    </Link>
+                  </Dropdown.Item>
                 </DropdownButton>
               </li>
               <li className="ms-2">
                 <DropdownButton id="dropdownMovies" title="Actors">
-                  <Dropdown.Item><Link to="/people/popular" className="movieLink">Popular</Link></Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link to="/people/popular" className="movieLink">
+                      Popular
+                    </Link>
+                  </Dropdown.Item>
                 </DropdownButton>
               </li>
               <li className="ms-4 login fw-lighter">
-                {
-                  (currentAuthentication === true) ? (
-                    <Link to="/" onClick={() => { logOut() }}>Logout</Link>
-                  ) : (
-                    <Link to="/login">Login</Link>
-                  )
-                }
+                {currentAuthentication === true ? (
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    Logout
+                  </Link>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
                 <UserOutlined className="ms-2" />
               </li>
-
             </ul>
           </div>
         </div>
@@ -82,7 +105,7 @@ function Navigation() {
       <div>
         <ul className="navbar-nav navList">
           <li className="ms-4 login fw-lighter text-white">
-            <Link to="/signup">Join Us</Link>            
+            <Link to="/signup">Join Us</Link>
           </li>
           <li>
             <Switch
