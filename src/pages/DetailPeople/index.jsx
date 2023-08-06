@@ -17,6 +17,7 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineOppositeContent,
+  timelineOppositeContentClasses,
 } from "@mui/lab";
 
 const DetailPeople = () => {
@@ -172,7 +173,15 @@ const DetailPeople = () => {
                   {movieListTimeNull ? (
                     <>
                       {movieListTimeNull?.map((item, index) => (
-                        <Timeline position="alternate" key={index}>
+                        <Timeline
+                          position="alternate"
+                          key={index}
+                          sx={{
+                            [`& .${timelineOppositeContentClasses.root}`]: {
+                              flex: 0.2,
+                            },
+                          }}
+                        >
                           <TimelineItem>
                             <TimelineOppositeContent color="text.secondary">
                               None
@@ -200,7 +209,15 @@ const DetailPeople = () => {
                   {movieListTime ? (
                     <>
                       {movieListTime?.map((item, index) => (
-                        <Timeline position="alternate" key={index}>
+                        <Timeline
+                          position="alternate"
+                          key={index}
+                          sx={{
+                            [`& .${timelineOppositeContentClasses.root}`]: {
+                              flex: 0.2,
+                            },
+                          }}
+                        >
                           <TimelineItem>
                             <TimelineOppositeContent color="text.secondary">
                               {getYear(item.release_date)}

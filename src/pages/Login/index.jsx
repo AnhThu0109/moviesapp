@@ -4,11 +4,21 @@ import { KEY } from "../../utils/key";
 import { BASE_URL } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "../../redux/loginSlice";
-import { Skeleton } from "@mui/material";
+import "./style.css";
+import {
+  Button,
+  IconButton,
+  Skeleton,
+  TextField,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [session, setSession] = useState(1);
   const [errMess, setErrMess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,62 +33,79 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword((show) => !show);
+  };
+
   const handleLogin = async () => {
-    // Get a request token
-    const tokenResponse = await fetch(
-      `${BASE_URL}/authentication/token/new?${KEY}`
-    );
-    const tokenData = await tokenResponse.json();
-    let requestToken = tokenData.request_token;
+    setUsernameError(false);
+    setPasswordError(false);
 
-    // Validate the request token with the user's credentials
-    const loginUrl = `https://api.themoviedb.org/3/authentication/token/validate_with_login?${KEY}&username=${username}&password=${password}&request_token=${requestToken}`;
-    const loginParams = {
-      username: username, //anhthu010997
-      password: password, //010997
-      request_token: requestToken,
-    };
-    await fetch(loginUrl, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        Authorization: `Bearer ${requestToken}`,
-      },
-      body: JSON.stringify(loginParams),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success === false) {
-          setErrMess(data.status_message);
-          dispatch(loginFail());
-          return;
-        } else {
-          requestToken = data.request_token;
-        }
-      })
-      .catch((err) => console.log(err));
+    if (username.trim() === "") {
+      setUsernameError(true);
+      setErrMess("You must enter username.");
+    }
+    if (password.trim() === "") {
+      setPasswordError(true);
+      setErrMess("You must enter password.");
+    }
+    if (username.trim() !== "" && password.trim() !== "") {
+      // Get a request token
+      const tokenResponse = await fetch(
+        `${BASE_URL}/authentication/token/new?${KEY}`
+      );
+      const tokenData = await tokenResponse.json();
+      let requestToken = tokenData.request_token;
 
-    // Create a session
-    const sessionResponse = await fetch(
-      `${BASE_URL}/authentication/session/new?${KEY}&request_token=${requestToken}`,
-      {
+      // Validate the request token with the user's credentials
+      const loginUrl = `https://api.themoviedb.org/3/authentication/token/validate_with_login?${KEY}&username=${username}&password=${password}&request_token=${requestToken}`;
+      const loginParams = {
+        username: username, //anhthu010997
+        password: password, //010997
+        request_token: requestToken,
+      };
+      await fetch(loginUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const sessionData = await sessionResponse.json();
-    const sessionId = sessionData.session_id;
-    setSession(sessionId);
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          Authorization: `Bearer ${requestToken}`,
+        },
+        body: JSON.stringify(loginParams),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success === false) {
+            setErrMess(data.status_message);
+            dispatch(loginFail());
+            return;
+          } else {
+            requestToken = data.request_token;
+          }
+        })
+        .catch((err) => console.log(err));
 
-    // Store the session ID in local storage
-    localStorage.setItem("session_id", sessionId);
-    if (
-      localStorage.getItem("session_id") !== "undefined" &&
-      localStorage.getItem("session_id") != null
-    ) {
-      dispatch(loginSuccess());
-      navigate("/");
+      // Create a session
+      const sessionResponse = await fetch(
+        `${BASE_URL}/authentication/session/new?${KEY}&request_token=${requestToken}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const sessionData = await sessionResponse.json();
+      const sessionId = sessionData.session_id;
+      setSession(sessionId);
+
+      // Store the session ID in local storage
+      localStorage.setItem("session_id", sessionId);
+      if (
+        localStorage.getItem("session_id") !== "undefined" &&
+        localStorage.getItem("session_id") != null
+      ) {
+        dispatch(loginSuccess());
+        navigate("/");
+      }
     }
   };
 
@@ -107,7 +134,7 @@ const Login = () => {
         <>
           <h2 className="fw-bolder">Login to your account</h2>
           <p className="fw-bolder">Please log in to see more information.</p>
-          <form onSubmit={handleSubmit} className="pt-4">
+          {/* <form onSubmit={handleSubmit} className="pt-4">
             <div>
               <label htmlFor="text" className="form-label">
                 Username:
@@ -139,6 +166,43 @@ const Login = () => {
             <button type="submit" className="mt-3 text-white btn btn-info">
               Login
             </button>
+          </form> */}
+          <form autoComplete="off" onSubmit={handleSubmit}>
+            <h2>Login Form</h2>
+            <TextField
+              label="Username"
+              onChange={handleUsernameChange}
+              required
+              variant="outlined"
+              color="info"
+              type="text"
+              sx={{ mb: 3 }}
+              fullWidth
+              value={username}
+              error={usernameError}
+            />
+            <TextField
+              label="Password"
+              onChange={handlePasswordChange}
+              required
+              variant="outlined"
+              color="info"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              error={passwordError}
+              fullWidth
+              sx={{ mb: 3 }} 
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleTogglePassword} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
+            />
+            <Button variant="outlined" color="info" type="submit">
+              Login
+            </Button>
           </form>
           {session === undefined ? (
             <h5 className="text-danger pt-4">{errMess}</h5>

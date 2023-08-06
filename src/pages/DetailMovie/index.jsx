@@ -84,7 +84,7 @@ const DetailMovie = () => {
         if (index < 7) {
           videoListSrc.push(`${VD_SRC}` + item.key);
         }
-        if (item.type == "Trailer") {
+        if (item.type === "Trailer") {
           trailerLink = `${VD_SRC}` + item.key;
         }
       });
@@ -99,7 +99,7 @@ const DetailMovie = () => {
     let img = [];
     arr.map((item) => {
       item.known_for.map((item1) => {
-        if (item1.id == id && item1.media_type == "movie") {
+        if (item1.id === id && item1.media_type === "movie") {
           people = people.concat(item);
         }
       });
@@ -289,7 +289,7 @@ const DetailMovie = () => {
               <br></br>
               <h5>Budget</h5>
               <p>
-                {data?.budget == 0 ? (
+                {data?.budget === 0 ? (
                   <>Unknown</>
                 ) : (
                   <>{data?.budget && changeMoneyFormat(data?.budget)}</>
@@ -298,7 +298,7 @@ const DetailMovie = () => {
               <br></br>
               <h5>Revenue</h5>
               <p>
-                {data?.revenue == 0 ? (
+                {data?.revenue === 0 ? (
                   <>Unknown</>
                 ) : (
                   <>{data?.revenue && changeMoneyFormat(data?.revenue)}</>
@@ -405,7 +405,7 @@ const DetailMovie = () => {
           <hr></hr>
           <div className="movie px-lg-5 px-sm-3 py-3">
             <h4>Most popular videos</h4>
-            {videoList?.length == 0 ? (
+            {videoList?.length === 0 ? (
               <p>Unknown</p>
             ) : (
               <div
