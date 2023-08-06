@@ -134,41 +134,7 @@ const Login = () => {
         <>
           <h2 className="fw-bolder">Login to your account</h2>
           <p className="fw-bolder">Please log in to see more information.</p>
-          {/* <form onSubmit={handleSubmit} className="pt-4">
-            <div>
-              <label htmlFor="text" className="form-label">
-                Username:
-              </label>
-              <input
-                className="form-control"
-                type="input"
-                id="username"
-                name="username"
-                value={username}
-                onChange={handleUsernameChange}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="form-label">
-                Password:
-              </label>
-              <input
-                className="form-control"
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-            </div>
-            <button type="submit" className="mt-3 text-white btn btn-info">
-              Login
-            </button>
-          </form> */}
           <form autoComplete="off" onSubmit={handleSubmit}>
-            <h2>Login Form</h2>
             <TextField
               label="Username"
               onChange={handleUsernameChange}
