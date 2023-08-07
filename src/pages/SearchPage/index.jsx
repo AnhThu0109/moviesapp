@@ -75,11 +75,15 @@ function SearchPage() {
   };
 
   const fetchData = async (k, p) => {
-    debugger;
     searchType === "movies"
       ? await fetchMoviesKeyword(k, p)
       : await fetchPeopleKeyword(k, p);
   };
+
+  const showMovieName = (arr) => {
+    // debugger;
+    return arr.length > 0 ? ("Some movies: " + arr.map((item) => " " + (item.title !== undefined ? item.title : item.name))) : "Unkown"; 
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -128,9 +132,7 @@ function SearchPage() {
                   <p className="showBriefSearch">
                     {searchType === "movies"
                       ? showBrief(item.overview, 250)
-                      : "Some movies: " +
-                        item.known_for.map((item) => (" " + item.title) 
-                        )}{" "}
+                      : showMovieName(item.known_for)}{" "}
                     <Link to={detailLink[index]} className="movieDetailLink">
                       See Detail.
                     </Link>

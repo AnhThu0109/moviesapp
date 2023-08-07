@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   loadingPopularFalse,
   loadingPopularTrue,
@@ -11,7 +11,6 @@ import { fetchPage } from "../../utils/fetchData";
 import { countPercent } from "../../utils/function";
 import "./style.css";
 import { Image } from "antd";
-import { Skeleton } from "@mui/material";
 
 function Popular() {
   const [data, setData] = useState({});
@@ -81,7 +80,7 @@ function Popular() {
             </div>
             <div className="pointList">
               <button className="rounded-circle p-2 pointBtn text-white">
-                {points[index] == 0 ? (
+                {points[index] === 0 ? (
                   <>NaN</>
                 ) : (
                   <>

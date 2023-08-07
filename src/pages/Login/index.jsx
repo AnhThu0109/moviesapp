@@ -105,7 +105,7 @@ const Login = () => {
         localStorage.getItem("session_id") != null
       ) {
         dispatch(loginSuccess());
-        navigate("/");
+        navigate("/welcome");
       }
     }
   };

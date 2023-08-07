@@ -7,15 +7,14 @@ import {
 } from "../../redux/loadingSlice";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { fetchPage } from "../../utils/fetchData";
-import { showBrief, countPercent } from "../../utils/function";
+import { showBrief } from "../../utils/function";
 import "./style.css";
-import { Image } from "antd";
+import { Badge, Image } from "antd";
 
 function UpComing() {
   const [data, setData] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
-  const [points, setPoints] = useState();
   const containerRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -41,18 +40,16 @@ function UpComing() {
       (a, b) => new Date(a.release_date) - new Date(b.release_date)
     );
     if (json) {
+      console.log("upcoming", json);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];
-      let pointLists = [];
       json.map((item) => {
         imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
-        pointLists.push(countPercent(item.vote_average));
       });
       setImgSrc(imgSrcArr);
       setDetailLink(detailLinkArr);
-      setPoints(pointLists);
     }
   };
 
@@ -74,27 +71,16 @@ function UpComing() {
       >
         {data?.map((item, index) => (
           <div className="film col-3 me-4 position-relative" key={index}>
-            <div>
-              <Link to={detailLink[index]} className="movieLinkHome">
-                <Image src={imgSrc[index]} className="rounded-4" />
-                <h6 className="pt-2 text-center titleFilm">
-                  {showBrief(item.title, 15)}
-                </h6>
-                <p className="text-center">{item.release_date}</p>
-              </Link>
-            </div>
-            <div className="pointList">
-              <button className="rounded-circle p-2 pointBtn text-white">
-                {points[index] === 0 ? (
-                  <>NaN</>
-                ) : (
-                  <>
-                    {points[index]}
-                    <sup>%</sup>
-                  </>
-                )}
-              </button>
-            </div>
+            <Badge.Ribbon text={item.release_date} color="red">
+              <div>
+                <Link to={detailLink[index]} className="movieLinkHome">
+                  <Image src={imgSrc[index]} className="rounded-4" />
+                  <h6 className="pt-2 text-center titleFilm">
+                    {showBrief(item.title, 15)}
+                  </h6>
+                </Link>
+              </div>
+            </Badge.Ribbon>
           </div>
         ))}
       </div>

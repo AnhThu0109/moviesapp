@@ -7,7 +7,6 @@ import { Image } from "antd";
 import { Link } from "react-router-dom";
 import { fetchData } from "../../utils/fetchData";
 import { showBrief, countPercent } from "../../utils/function";
-import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
   loadingTrendingFalse,

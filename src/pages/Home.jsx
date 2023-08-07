@@ -13,7 +13,6 @@ const Home = () => {
   const loadingState = useSelector((state) => state.loading.value);
 
   useEffect(() => {
-    // debugger;
     setIsLoading(true);
     if (
       loadingState.isLoadingBanner === false &&
