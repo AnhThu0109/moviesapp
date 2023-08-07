@@ -7,12 +7,19 @@ import { Carousel } from "antd";
 import "antd/dist/reset.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
+import { Skeleton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import {
+  loadingBannerFalse,
+  loadingBannerTrue,
+} from "../../redux/loadingSlice";
 
 function Banner() {
   const [bgSrc, setBgSrc] = useState([]);
   const [input, setInput] = useState("");
   const [data, setData] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (e, input) => {
     e.preventDefault();
@@ -37,9 +44,13 @@ function Banner() {
   };
 
   useEffect(() => {
-    fetchData().catch((error) => {
-      console.log(error);
-    });
+    dispatch(loadingBannerTrue());
+    fetchData()
+      .then((res) => console.log(res))
+      .then((data) => dispatch(loadingBannerFalse()))
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (

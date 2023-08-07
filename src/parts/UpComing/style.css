@@ -1,0 +1,18 @@
+.trending-film{
+    display: flex;
+}
+
+.titleFilm{
+    word-wrap: break-word !important;
+}
+
+.film .pointList{
+    position: absolute;
+    bottom: 40px;
+    left: 25px;
+    transform: translate(-40px, -25px);
+}
+
+.film .pointBtn{
+    background-color: #003262;
+}

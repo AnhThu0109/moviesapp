@@ -1,74 +1,78 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  loadingPopularFalse,
-  loadingPopularTrue,
+  loadingUpComingFalse,
+  loadingUpComingTrue,
 } from "../../redux/loadingSlice";
 import { POSTER_SRC } from "../../utils/posterSrc";
-import { BG_SRC } from "../../utils/bgSrc";
 import { fetchPage } from "../../utils/fetchData";
-import { countPercent } from "../../utils/function";
+import { showBrief, countPercent } from "../../utils/function";
 import "./style.css";
 import { Image } from "antd";
-import { Skeleton } from "@mui/material";
 
-function Popular() {
-  const [data, setData] = useState({});
+function UpComing() {
+  const [data, setData] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
-  const [bgSrc, setBgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
-  const containerRef = useRef(null);
   const [points, setPoints] = useState();
+  const containerRef = useRef(null);
   const dispatch = useDispatch();
 
-  const showBrief = (str) => {
-    if (str.length > 17) {
-      const numLetters = 17;
-      const shortenedStr = str.slice(0, numLetters) + "...";
-      return shortenedStr;
-    } else return str;
-  };
-
   const getData = async () => {
-    const json = await fetchPage(1, "/movie/popular?", "&language=en-US&page=");
+    let i = 1;
+    let currentDate = new Date();
+    let json = [];
+    while (json?.length < 20) {
+      let data = await fetchPage(
+        i,
+        "/movie/upcoming?",
+        "&language=en-US&page="
+      );
+      data?.results?.filter((item) => {
+        if (new Date(item.release_date) - currentDate > 0) {
+          json.push(item);
+        }
+      });
+      i++;
+    }
+    //Sort date in ascending order
+    json = json.sort(
+      (a, b) => new Date(a.release_date) - new Date(b.release_date)
+    );
     if (json) {
-      console.log(json);
       setData(json);
       let imgSrcArr = [];
-      let bgSrcArr = [];
       let detailLinkArr = [];
       let pointLists = [];
-      json.results.map((item) => {
+      json.map((item) => {
         imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
-        bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
         detailLinkArr.push(`/movies/${item.id}`);
         pointLists.push(countPercent(item.vote_average));
       });
       setImgSrc(imgSrcArr);
-      setBgSrc(bgSrcArr);
       setDetailLink(detailLinkArr);
       setPoints(pointLists);
     }
   };
 
   useEffect(() => {
-    dispatch(loadingPopularTrue());
+    dispatch(loadingUpComingTrue());
     getData()
       .then((res) => console.log(res))
-      .then((data) => dispatch(loadingPopularFalse()))
+      .then((data) => dispatch(loadingUpComingFalse()))
       .catch((error) => console.log(error));
   }, []);
 
   return (
-    <div id="popular">
-      <h2 className="title pt-3 px-3 fw-bolder">What's Popular</h2>
+    <div id="trending">
+      <h2 className="title pt-3 px-3 fw-bolder">Up Coming</h2>
       <div
         className="p-3 trending-film"
         ref={containerRef}
         style={{ overflowX: "scroll", whiteSpace: "nowrap" }}
       >
-        {data?.results?.map((item, index) => (
+        {data?.map((item, index) => (
           <div className="film col-3 me-4 position-relative" key={index}>
             <div>
               <Link to={detailLink[index]} className="movieLinkHome">
@@ -81,7 +85,7 @@ function Popular() {
             </div>
             <div className="pointList">
               <button className="rounded-circle p-2 pointBtn text-white">
-                {points[index] == 0 ? (
+                {points[index] === 0 ? (
                   <>NaN</>
                 ) : (
                   <>
@@ -98,4 +102,4 @@ function Popular() {
   );
 }
 
-export default Popular;
+export default UpComing;
