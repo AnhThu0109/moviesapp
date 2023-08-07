@@ -5,7 +5,7 @@ import { BASE_URL } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "../../redux/loginSlice";
 import "./style.css";
-import { Button, IconButton, Skeleton, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {

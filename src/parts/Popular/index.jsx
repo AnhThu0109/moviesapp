@@ -6,7 +6,6 @@ import {
   loadingPopularTrue,
 } from "../../redux/loadingSlice";
 import { POSTER_SRC } from "../../utils/posterSrc";
-import { BG_SRC } from "../../utils/bgSrc";
 import { fetchPage } from "../../utils/fetchData";
 import { countPercent } from "../../utils/function";
 import "./style.css";
@@ -15,7 +14,6 @@ import { Image } from "antd";
 function Popular() {
   const [data, setData] = useState({});
   const [imgSrc, setImgSrc] = useState([]);
-  const [bgSrc, setBgSrc] = useState([]);
   const [detailLink, setDetailLink] = useState("");
   const containerRef = useRef(null);
   const [points, setPoints] = useState();
@@ -35,17 +33,14 @@ function Popular() {
       console.log(json);
       setData(json);
       let imgSrcArr = [];
-      let bgSrcArr = [];
       let detailLinkArr = [];
       let pointLists = [];
       json.results.map((item) => {
         imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
-        bgSrcArr.push(`${BG_SRC}` + item.backdrop_path);
         detailLinkArr.push(`/movies/${item.id}`);
         pointLists.push(countPercent(item.vote_average));
       });
       setImgSrc(imgSrcArr);
-      setBgSrc(bgSrcArr);
       setDetailLink(detailLinkArr);
       setPoints(pointLists);
     }

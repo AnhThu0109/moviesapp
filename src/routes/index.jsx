@@ -9,17 +9,12 @@ import SearchPage from "../pages/SearchPage";
 import Login from "../pages/Login";
 import AllReviews from "../pages/AllReview";
 import JoinUs from "../pages/JoinUs";
-import Welcome from "../parts/Welcome";
 
 const publicRoutes = [
     {
         element: <Home/>,
         path: "/"
     },
-    // {
-    //     element: <Welcome/>,
-    //     path: "/welcome"
-    // },
     {
         element: <SearchPage/>,
         path: "/search/movies/:keyword"

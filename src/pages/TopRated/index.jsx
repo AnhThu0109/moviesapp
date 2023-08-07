@@ -1,6 +1,6 @@
 import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
-import { Image, Form, Pagination } from "antd";
+import { Image, Pagination } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
