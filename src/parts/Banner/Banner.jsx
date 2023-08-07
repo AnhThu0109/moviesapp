@@ -7,7 +7,6 @@ import { Carousel } from "antd";
 import "antd/dist/reset.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
-import { Skeleton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import {
   loadingBannerFalse,

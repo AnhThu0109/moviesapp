@@ -109,7 +109,9 @@ const PopularPage = () => {
         </>
       ) : (
         <>
-          <h2 className="title pt-3 fw-bolder">Popular Movies</h2>
+          <h2 className="title pt-3 fw-bolder">Popular Movies
+            <img alt="" src="https://cdn-icons-png.flaticon.com/512/599/599502.png" className="titleIcon"></img>
+          </h2>
           <div className="row">
             <div className="col-sm-4 col-lg-3 my-3 sort ms-3 rounded-4">
               <h5>Sort</h5>

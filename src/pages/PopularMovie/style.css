@@ -33,3 +33,8 @@
     height: 100%;
     width: 100%;
 }
+
+.titleIcon{
+    width: 40px;
+    margin: -15px 0 0 10px;
+}

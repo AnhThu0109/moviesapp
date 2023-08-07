@@ -1,3 +1,17 @@
-input#\:r7\:, input#\:r3\:, input#\:r5\: {
+#loginForm input{
     width: inherit !important;
+    height: 23px !important;
+    padding: 10px !important;
+}
+
+#loginForm{
+    width: 60% !important;
+    background-color: white;
+    opacity: 0.97;
+    height: 50%;
+}
+
+#containerLogin {
+    background-image: url("https://wallpapers.com/images/hd/movie-poster-background-q1zm830g0hfww2lk.jpg");
+    height: 100% !important;
 }

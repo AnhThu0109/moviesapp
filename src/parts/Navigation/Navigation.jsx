@@ -18,18 +18,6 @@ function Navigation() {
     setTheme(value ? "dark" : "light");
     setIsChangeTheme(value);
   };
-  // const s = localStorage.getItem("session_id");
-
-  // const userLog = () => {
-  //   let user = "";
-  //   if(s == "undefined" || s == null) {
-  //     user = "Login";
-  //     setText(user);
-  //   } else {
-  //     user = "Logout";
-  //     setText(user);
-  //   }
-  // }
 
   const currentAuthentication = useSelector(
     (state) => state.authentication.value
@@ -69,6 +57,7 @@ function Navigation() {
                   <Dropdown.Item>
                     <Link to="/movies/upcoming" className="movieLink">
                       Up Coming
+                      <img alt='' src="https://cdn-icons-png.flaticon.com/512/2217/2217611.png" className="iconImg"/>
                     </Link>
                   </Dropdown.Item>
                 </DropdownButton>

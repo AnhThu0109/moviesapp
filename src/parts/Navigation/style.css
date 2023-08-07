@@ -55,3 +55,8 @@ a.dropdownList{
     color: white;
     text-decoration: none;
 }
+
+.iconImg{
+    width: 25px;
+    margin: -10px 0 0 10px;
+}
