@@ -99,7 +99,7 @@ const DetailPeople = () => {
             <p>
               <b>Gender</b>
               <br></br>
-              {data?.gender === 2 ? "Male" : "Female"}
+              {data?.gender === 1 ? "Female" : data?.gender === 2 ? "Male" : "Non-binary"}
             </p>
             <p>
               <b>Birthday</b>
