@@ -1,17 +1,29 @@
 #loginForm input{
     width: inherit !important;
     height: 23px !important;
-    padding: 10px !important;
+    padding: 10px 10px 15px !important;
 }
+
 
 #loginForm{
     width: 60% !important;
     background-color: white;
-    opacity: 0.97;
+    opacity: 0.9;
     height: 50%;
+    z-index: 1;
 }
 
 #containerLogin {
     background-image: url("https://wallpapers.com/images/hd/movie-poster-background-q1zm830g0hfww2lk.jpg");
     height: 100% !important;
 }
+
+#loginColor{
+    background-color: #002B53;
+    opacity: 0.6;
+    width: 100%;
+    height: 20%;
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }

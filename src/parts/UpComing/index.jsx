@@ -7,7 +7,7 @@ import {
 } from "../../redux/loadingSlice";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { fetchPage } from "../../utils/fetchData";
-import { showBrief } from "../../utils/function";
+import { getTomorrow, showBrief } from "../../utils/function";
 import "./style.css";
 import { Badge, Image } from "antd";
 
@@ -19,33 +19,19 @@ function UpComing() {
   const dispatch = useDispatch();
 
   const getData = async () => {
-    let i = 1;
-    let currentDate = new Date();
-    let json = [];
-    while (json?.length < 20) {
-      let data = await fetchPage(
-        i,
-        "/movie/upcoming?",
-        "&language=en-US&page="
-      );
-      data?.results?.filter((item) => {
-        if (new Date(item.release_date) - currentDate > 0) {
-          json.push(item);
-        }
-      });
-      i++;
-    }
-    //Sort date in ascending order
-    json = json.sort(
-      (a, b) => new Date(a.release_date) - new Date(b.release_date)
+    const tomorrow = getTomorrow();
+    let json = await fetchPage(
+      1,
+      "/discover/movie?",
+      `&sort_by=primary_release_date.asc&primary_release_date.gte=${tomorrow}&primary_release_date.lte=2023-12-31&page=`
     );
     if (json) {
-      console.log("upcoming", json);
+      json = json.results.filter((item) => item.poster_path != null);
       setData(json);
       let imgSrcArr = [];
       let detailLinkArr = [];
       json.map((item) => {
-        imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
+        imgSrcArr.push(POSTER_SRC + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
       });
       setImgSrc(imgSrcArr);

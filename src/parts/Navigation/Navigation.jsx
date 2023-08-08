@@ -94,7 +94,7 @@ function Navigation() {
       <div>
         <ul className="navbar-nav navList">
           <li className="ms-4 login fw-lighter text-white">
-            <Link to="/signup">Join Us</Link>
+            <Link to="https://www.themoviedb.org/signup">Join Us</Link>
           </li>
           <li>
             <Switch

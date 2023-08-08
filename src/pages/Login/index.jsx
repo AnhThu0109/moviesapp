@@ -120,7 +120,7 @@ const Login = () => {
   };
 
   return (
-    <div className="p-5 d-flex justify-content-center" id="containerLogin">
+    <div className="p-5 d-flex justify-content-center position-relative" id="containerLogin">
       <form
         autoComplete="off"
         onSubmit={handleSubmit}
@@ -169,6 +169,7 @@ const Login = () => {
           <></>
         )}
       </form>
+      <div id="loginColor"></div>
     </div>
   );
 };

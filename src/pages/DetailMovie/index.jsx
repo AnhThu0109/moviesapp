@@ -151,11 +151,9 @@ const DetailMovie = () => {
       console.log("review", allReviews);
       let avatar = "";
       if (allReviews[0]?.author_details?.avatar_path != null) {
-        if (allReviews[0]?.author_details?.avatar_path.includes("http")) {
-          avatar = allReviews[0]?.author_details?.avatar_path?.substring(1);
-        } else {
-          avatar = AVATAR_SRC + allReviews[0]?.author_details?.avatar_path;
-        }
+        allReviews[0]?.author_details?.avatar_path.includes("http")
+          ? (avatar = allReviews[0]?.author_details?.avatar_path?.substring(1))
+          : (avatar = AVATAR_SRC + allReviews[0]?.author_details?.avatar_path);
         setAvatarSrc(avatar);
       }
       if (allReviews[0]?.author_details?.rating != null) {

@@ -150,7 +150,7 @@ const TopRated = () => {
 
       <Pagination
         defaultCurrent={1}
-        total={data?.total_results}
+        total={10000}
         pageSize={20}
         onChange={onChange}
         className="text-center"
