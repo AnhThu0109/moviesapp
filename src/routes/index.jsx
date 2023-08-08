@@ -9,6 +9,7 @@ import SearchPage from "../pages/SearchPage";
 import Login from "../pages/Login";
 import AllReviews from "../pages/AllReview";
 import JoinUs from "../pages/JoinUs";
+import NotFound from "../pages/NotFound";
 
 const publicRoutes = [
     {
@@ -30,6 +31,10 @@ const publicRoutes = [
     {
         element: <JoinUs/>,
         path: "/signup"
+    },
+    {
+        element: <NotFound/>,
+        path: "/*"
     }
 ]
 

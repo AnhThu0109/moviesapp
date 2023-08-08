@@ -62,7 +62,7 @@ function UpComing() {
                 <Link to={detailLink[index]} className="movieLinkHome">
                   <Image src={imgSrc[index]} className="rounded-4" />
                   <h6 className="pt-2 text-center titleFilm">
-                    {item.title}
+                    {showBrief(item.title, 20)}
                   </h6>
                 </Link>
               </div>

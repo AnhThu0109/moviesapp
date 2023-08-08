@@ -4,6 +4,10 @@
   height: 100% !important;
 }
 
+.welcomePage img{
+    height: 80% !important;
+}
+
 @keyframes loader {
     0% {
         width: 0;

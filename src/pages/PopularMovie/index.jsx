@@ -77,7 +77,11 @@ const PopularPage = () => {
       let imgSrcArr = [];
       let detailLinkArr = [];
       json.results.map((item) => {
-        item.poster_path == null ?  imgSrcArr.push("https://img.lovepik.com/element/40021/7866.png_1200.png"): imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
+        item.poster_path == null
+          ? imgSrcArr.push(
+              "https://img.lovepik.com/element/40021/7866.png_1200.png"
+            )
+          : imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
       });
       setImgSrc(imgSrcArr);
@@ -88,7 +92,9 @@ const PopularPage = () => {
   useEffect(() => {
     setIsLoading(true);
     getData(page)
-      .then((data) => {setIsLoading(false)})
+      .then((data) => {
+        setIsLoading(false);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -109,10 +115,15 @@ const PopularPage = () => {
         </>
       ) : (
         <>
-          <h2 className="title pt-3 fw-bolder">Popular Movies
-            <img alt="" src="https://cdn-icons-png.flaticon.com/512/599/599502.png" className="titleIcon"></img>
+          <h2 className="title pt-3 fw-bolder">
+            Popular Movies
+            <img
+              alt=""
+              src="https://cdn-icons-png.flaticon.com/512/599/599502.png"
+              className="titleIcon"
+            ></img>
           </h2>
-          <div className="row">
+          <div className="row justify-content-center">
             <div className="col-sm-4 col-lg-3 my-3 sort ms-3 rounded-4">
               <h5>Sort</h5>
               <hr></hr>
@@ -153,7 +164,6 @@ const PopularPage = () => {
               </div>
             </div>
           </div>
-
           <Pagination
             defaultCurrent={1}
             total={10000}

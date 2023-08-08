@@ -1,17 +1,22 @@
-import "./style.css";
-import { Image, Switch } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../redux/loginSlice";
+import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Badge, Popover, Switch } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { logout } from "../../redux/loginSlice";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Avatar } from "@mui/material";
+import PopoverComponent from "../../utils/common/Popover";
 
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
   const [theme, setTheme] = useState("dark");
+  const [count, setCount] = useState();
   const navigate = useNavigate();
+  const notiExist = localStorage.getItem("noti");
 
   const changeTheme = (value) => {
     console.log(value);
@@ -30,6 +35,11 @@ function Navigation() {
     navigate("/");
   };
 
+  const seeNoti = () => {
+    setCount(0);
+    localStorage.removeItem("noti");
+  };
+
   return (
     <div
       id="navigation"
@@ -38,7 +48,11 @@ function Navigation() {
       <nav className="navbar">
         <div className="container-fluid ms-2">
           <Link to="/" className="movieLink homeNav me-3">
-            <img alt="" className="logoImg" src="https://cdn-icons-png.flaticon.com/512/187/187902.png"></img>
+            <img
+              alt=""
+              className="logoImg"
+              src="https://cdn-icons-png.flaticon.com/512/187/187902.png"
+            ></img>
           </Link>
           <div>
             <ul className="navbar-nav navList">
@@ -57,7 +71,11 @@ function Navigation() {
                   <Dropdown.Item>
                     <Link to="/movies/upcoming" className="movieLink">
                       Up Coming
-                      <img alt='' src="https://cdn-icons-png.flaticon.com/512/2217/2217611.png" className="iconImg"/>
+                      <img
+                        alt=""
+                        src="https://cdn-icons-png.flaticon.com/512/2217/2217611.png"
+                        className="iconImg"
+                      />
                     </Link>
                   </Dropdown.Item>
                 </DropdownButton>
@@ -72,19 +90,12 @@ function Navigation() {
                 </DropdownButton>
               </li>
               <li className="ms-4 login fw-lighter">
-                {currentAuthentication === true ? (
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      logOut();
-                    }}
-                  >
-                    Logout
-                  </Link>
-                ) : (
-                  <Link to="/login">Login</Link>
+                {currentAuthentication === false && (
+                  <>
+                    <Link to="/login">Login</Link>
+                    <UserOutlined className="ms-2" />
+                  </>
                 )}
-                <UserOutlined className="ms-2" />
               </li>
             </ul>
           </div>
@@ -93,9 +104,56 @@ function Navigation() {
       {/* "/signin" */}
       <div>
         <ul className="navbar-nav navList">
-          <li className="ms-4 login fw-lighter text-white">
-            <Link to="https://www.themoviedb.org/signup">Join Us</Link>
-          </li>
+          {currentAuthentication === true ? (
+            <>
+              <li className="ms-4 login fw-lighter text-white">
+                <PopoverComponent
+                  content={
+                    <>
+                      <small>Welcome to our movies web</small>
+                      <img
+                        alt=""
+                        className="iconNotiMess"
+                        src="https://cdn-icons-png.flaticon.com/512/9281/9281532.png"
+                      ></img>
+                    </>
+                  }
+                  title="Notification"
+                  customerCSS="dangerPopover"
+                  object={
+                    <a onClick={seeNoti}>
+                      <Badge count={notiExist ? 1 : 0} size="small">
+                        <NotificationsIcon id="iconNoti"></NotificationsIcon>
+                      </Badge>
+                    </a>
+                  }
+                ></PopoverComponent>
+              </li>
+              <li className="ms-4 login">
+                {currentAuthentication === true && (
+                  <PopoverComponent
+                    content={
+                      <Link to="/" onClick={logOut} className="movieLink">
+                        Logout
+                      </Link>
+                    }
+                    title=""
+                    object={
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="https://cdn-icons-png.flaticon.com/512/4322/4322991.png"
+                        sx={{ width: 30, height: 30 }}
+                      />
+                    }
+                  ></PopoverComponent>
+                )}
+              </li>
+            </>
+          ) : (
+            <li className="ms-4 login fw-lighter text-white">
+              <Link to="https://www.themoviedb.org/signup">Join Us</Link>
+            </li>
+          )}
           <li>
             <Switch
               className="m-3"

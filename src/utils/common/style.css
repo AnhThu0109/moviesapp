@@ -1,0 +1,25 @@
+.dangerPopover .ant-popover-inner-content{
+    padding: 10px;
+    background-color: skyblue;
+    color: rgb(70, 69, 69);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.dangerPopover .ant-popover-title{
+    padding: 0 10px;
+}
+
+.dangerPopover .ant-popover-arrow ::before{
+    background-color: red;
+}
+
+.dangerPopover .ant-popover-inner{
+    padding: 10px 0 0 0;
+}
+
+.iconNotiMess{
+    width: 20px;
+    margin-top: -5px;
+    margin-left: 5px;
+}

@@ -5,7 +5,7 @@ import { BASE_URL } from "../../utils/api";
 import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "../../redux/loginSlice";
 import "./style.css";
-import { Button, IconButton, TextField } from "@mui/material";
+import { Button, IconButton, Skeleton, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {
@@ -16,6 +16,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [session, setSession] = useState(1);
   const [errMess, setErrMess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -111,66 +112,81 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    localStorage.setItem("noti", true);
     await handleLogin()
       .then((res) => console.log(res))
-      .then((data) => console.log(data))
+      .then((data) => setIsLoading(false))
       .catch((error) => {
         console.log(error);
       });
   };
 
   return (
-    <div className="p-5 d-flex justify-content-center position-relative" id="containerLogin">
-      <form
-        autoComplete="off"
-        onSubmit={handleSubmit}
-        id="loginForm"
-        className="p-5 mt-5 rounded-4"
-      >
-        <h2 className="fw-bolder">Login to your account</h2>
-        <p className="fw-bolder">Please log in to see more information.</p>
-        <TextField
-          label="Username"
-          onChange={handleUsernameChange}
-          required
-          variant="outlined"
-          color="info"
-          type="text"
-          sx={{ mb: 3 }}
-          fullWidth
-          value={username}
-          error={usernameError}
-        />
-        <TextField
-          label="Password"
-          onChange={handlePasswordChange}
-          required
-          variant="outlined"
-          color="info"
-          type={showPassword ? "text" : "password"}
-          value={password}
-          error={passwordError}
-          fullWidth
-          sx={{ mb: 3 }}
-          InputProps={{
-            endAdornment: (
-              <IconButton onClick={handleTogglePassword} edge="end">
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            ),
-          }}
-        />
-        <Button variant="outlined" color="info" type="submit">
-          Login
-        </Button>
-        {session === undefined ? (
-          <h5 className="text-danger pt-4">{errMess}</h5>
-        ) : (
-          <></>
-        )}
-      </form>
-      <div id="loginColor"></div>
-    </div>
+    <>
+      {isLoading === true ? (
+        <>
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+        </>
+      ) : (
+        <div
+          className="p-5 d-flex justify-content-center position-relative"
+          id="containerLogin"
+        >
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            id="loginForm"
+            className="p-5 mt-5 rounded-4"
+          >
+            <h2 className="fw-bolder">Login to your account</h2>
+            <p className="fw-bolder">Please log in to see more information.</p>
+            <TextField
+              label="Username"
+              onChange={handleUsernameChange}
+              required
+              variant="outlined"
+              color="info"
+              type="text"
+              sx={{ mb: 3 }}
+              fullWidth
+              value={username}
+              error={usernameError}
+            />
+            <TextField
+              label="Password"
+              onChange={handlePasswordChange}
+              required
+              variant="outlined"
+              color="info"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              error={passwordError}
+              fullWidth
+              sx={{ mb: 3 }}
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleTogglePassword} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
+            />
+            <Button variant="outlined" color="info" type="submit">
+              Login
+            </Button>
+            {session === undefined ? (
+              <h5 className="text-danger pt-4">{errMess}</h5>
+            ) : (
+              <></>
+            )}
+          </form>
+          <div id="loginColor"></div>
+        </div>
+      )}
+    </>
   );
 };
 

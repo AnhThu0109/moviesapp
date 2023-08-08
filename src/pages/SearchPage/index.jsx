@@ -36,13 +36,11 @@ function SearchPage() {
       let posterSrcArr = [];
       let detailLinkArr = [];
       json.results.map((item) => {
-        if (item.poster_path == null) {
-          posterSrcArr.push(
-            "https://img.lovepik.com/element/40021/7866.png_1200.png"
-          );
-        } else {
-          posterSrcArr.push(`${POSTER_SRC}` + item.poster_path);
-        }
+        item.poster_path == null
+          ? posterSrcArr.push(
+              "https://img.lovepik.com/element/40021/7866.png_1200.png"
+            )
+          : posterSrcArr.push(`${POSTER_SRC}` + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
       });
       setPoster(posterSrcArr);
@@ -56,8 +54,10 @@ function SearchPage() {
     );
     let json = await data.json();
     if (json) {
-      const results = json?.results?.filter(item => item.known_for_department === "Acting");
-      json = {...json, results};
+      const results = json?.results?.filter(
+        (item) => item.known_for_department === "Acting"
+      );
+      json = { ...json, results };
       setSearchData(json);
       let posterSrcArr = [];
       let detailLinkArr = [];
@@ -81,9 +81,13 @@ function SearchPage() {
   };
 
   const showMovieName = (arr) => {
-    // debugger;
-    return arr.length > 0 ? ("Some movies: " + arr.map((item) => " " + (item.title !== undefined ? item.title : item.name))) : "Unkown"; 
-  }
+    return arr.length > 0
+      ? "Some movies: " +
+          arr.map(
+            (item) => " " + (item.title !== undefined ? item.title : item.name)
+          )
+      : "Unkown";
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -107,7 +111,11 @@ function SearchPage() {
           <div className="py-3">
             <h3 className="px-sm-3 px-lg-5 py-3">
               We found{" "}
-              <span className="fw-bolder">{searchType === "movies" ? searchData?.total_results : searchData?.results?.length}</span>{" "}
+              <span className="fw-bolder">
+                {searchType === "movies"
+                  ? searchData?.total_results
+                  : searchData?.results?.length}
+              </span>{" "}
               results
             </h3>
             {searchData?.results?.map((item, index) => (

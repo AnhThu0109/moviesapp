@@ -10,7 +10,7 @@
     font-weight: bolder;
 }
 
-.darkTheme .homeNav{
+.darkTheme .homeNav, #iconNoti{
     color: white !important;
 }
 
@@ -19,7 +19,7 @@
     font-weight: bolder;
 }
 
-.lightTheme a, .lightTheme #dropdownMovies{
+.lightTheme a, .lightTheme #dropdownMovies, .lightTheme #iconNoti{
     color: #003262 !important;
 }
 

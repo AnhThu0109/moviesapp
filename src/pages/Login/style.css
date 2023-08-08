@@ -4,12 +4,11 @@
     padding: 10px 10px 15px !important;
 }
 
-
 #loginForm{
-    width: 60% !important;
     background-color: white;
     opacity: 0.9;
-    height: 50%;
+    width: 60% !important;
+    height: fit-content;
     z-index: 1;
 }
 

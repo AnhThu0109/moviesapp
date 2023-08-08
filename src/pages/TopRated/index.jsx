@@ -1,11 +1,11 @@
-import "antd/dist/reset.css";
 import { useEffect, useState } from "react";
-import { Image, Pagination } from "antd";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { POSTER_SRC } from "../../utils/posterSrc";
 import { Link } from "react-router-dom";
 import { fetchPage, fetchPageSort } from "../../utils/fetchData";
+import { POSTER_SRC } from "../../utils/posterSrc";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "antd/dist/reset.css";
+import { Image, Pagination } from "antd";
 
 const TopRated = () => {
   const [data, setData] = useState({});
@@ -74,13 +74,11 @@ const TopRated = () => {
       let imgSrcArr = [];
       let detailLinkArr = [];
       json.results.map((item) => {
-        if (item.poster_path == null) {
-          imgSrcArr.push(
-            "https://img.lovepik.com/element/40021/7866.png_1200.png"
-          );
-        } else {
-          imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
-        }
+        item.poster_path == null
+          ? imgSrcArr.push(
+              "https://img.lovepik.com/element/40021/7866.png_1200.png"
+            )
+          : imgSrcArr.push(`${POSTER_SRC}` + item.poster_path);
         detailLinkArr.push(`/movies/${item.id}`);
       });
       setImgSrc(imgSrcArr);
