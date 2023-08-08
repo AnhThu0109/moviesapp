@@ -33,8 +33,7 @@ const DetailMovie = () => {
   const [videoList, setVideoList] = useState();
   const [trailer, setTrailer] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [peopleList, setPeopleList] = useState();
-  const [peopleOfMovie, setPeople] = useState();
+  const [peopleList, setPeopleList] = useState([]);
   const [profileImg, setProfileImg] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [totalReviews, setTotalReviews] = useState();
@@ -96,40 +95,16 @@ const DetailMovie = () => {
     }
   };
 
-  const findPeople = (id, arr) => {
-    let people = [];
-    let img = [];
-    arr.map((item) => {
-      item.known_for.map((item1) => {
-        if (item1.id === id && item1.media_type === "movie") {
-          people = people.concat(item);
-        }
-      });
-    });
-    people.map((item) => {
-      if (item.profile_path == null) {
-        img.push(
-          "https://media.istockphoto.com/photos/icon-of-a-businessman-avatar-or-profile-pic-picture-id474001892?k=6&m=474001892&s=612x612&w=0&h=6g0M3Q3HF8_uMQpYbkM9XAAoEDym7z9leencMcC4pxo="
-        );
-      } else {
-        img.push(`${POSTER_SRC}` + item.profile_path);
-      }
-    });
-    setPeople(people);
-    setProfileImg(img);
-  };
-
   const fetchPeople = async (id) => {
-    let allPeople = [];
-    for (let i = 1; i <= 500; i++) {
-      const response = await fetch(
-        `${BASE_URL}/person/popular?${KEY}&language=en-US&page=${i}`
-      );
-      const json = await response.json();
-      allPeople = allPeople.concat(json?.results);
+    const img = [];
+    const response = await fetch(`${BASE_URL}/movie/${id}/credits?${KEY}`);
+    let json = await response.json();
+    if (json) {
+      json = json.cast.filter((item) => item.known_for_department === "Acting" && item.profile_path != null);
+      json.map((item) => img.push(`${POSTER_SRC}` + item.profile_path));
+      setProfileImg(img);
+      setPeopleList(json);
     }
-    findPeople(id, allPeople);
-    setPeopleList(allPeople);
   };
 
   const getReview = async (id) => {
@@ -267,19 +242,23 @@ const DetailMovie = () => {
           <div className="p-lg-5 p-sm-3 row billCast">
             <div className="col-9">
               <h4>Top Billed Cast</h4>
-              {peopleOfMovie && peopleOfMovie?.length === 0 ? (
+              {peopleList && peopleList?.length === 0 ? (
                 <>Unknown</>
               ) : (
                 <div
                   className="d-flex peopleList"
                   style={{ overflowX: "scroll" }}
                 >
-                  {peopleOfMovie?.map((item, index) => (
+                  {peopleList?.map((item, index) => (
                     <div className="col-3 me-3 ms-1" key={index}>
                       <Link to={`/people/${item.id}`} className="movieLink">
                         <Image src={profileImg[index]} className="peopleImg" />
                         <h6 className="p-2 mb-3 peopleName text-center">
                           {item.name}
+                          <br/>
+                          <small className="text-black-50">
+                            As {(item.character).split("(")[0]}
+                          </small>
                         </h6>
                       </Link>
                     </div>

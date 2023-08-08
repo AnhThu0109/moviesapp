@@ -65,13 +65,8 @@ const DetailPeople = () => {
           }
         }
       });
-      castArrTime.map((item, index) => {
-        if (item?.release_date === "") {
-          castArrTime.splice(index, 1);
-          castArrTimeNull.push(item);
-        }
-      });
-      console.log("cast", castArrDes);
+      castArrTimeNull = castArrTime.filter(item => item.release_date === "");
+      castArrTime = castArrTime.filter(item => item.release_date !== "");
       setMovieListTime(castArrTime);
       setMovieListTimeNull(castArrTimeNull);
       setMovieList(castArrDes);

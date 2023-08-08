@@ -234,7 +234,7 @@ hr {
   color: grey;
 }
 
-@media screen and (min-width: 993px) {
+/* @media screen and (min-width: 993px) {
   img.ant-image-img.rounded-4.similarMovieImg {
     height: 380px !important;
     width: 285px !important;
@@ -248,10 +248,9 @@ hr {
   }
 }
 
-/* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
   img.ant-image-img.rounded-4.similarMovieImg {
     height: 330px !important;
     width: 250px !important;
   }
-}
+} */

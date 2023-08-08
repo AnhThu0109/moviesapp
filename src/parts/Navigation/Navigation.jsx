@@ -1,5 +1,5 @@
 import "./style.css";
-import { Switch } from "antd";
+import { Image, Switch } from "antd";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,7 +38,7 @@ function Navigation() {
       <nav className="navbar">
         <div className="container-fluid ms-2">
           <Link to="/" className="movieLink homeNav me-3">
-            HOME
+            <img alt="" className="logoImg" src="https://cdn-icons-png.flaticon.com/512/187/187902.png"></img>
           </Link>
           <div>
             <ul className="navbar-nav navList">
