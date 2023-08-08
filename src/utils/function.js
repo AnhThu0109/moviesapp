@@ -42,4 +42,19 @@ const getTomorrow = () => {
   return `${year}-${month}-${day}`;
 };
 
-export { changeMoneyFormat, showBrief, getYear, countLetter, countPercent, getTomorrow };
+const getShortMonth = (dateString) => {
+  const dateParts = dateString.split('-'); // Split the string into parts
+  const month = dateParts[1];
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  return months[parseInt(month, 10) - 1];
+}
+
+const getDay = (dateString) => {
+  const dateParts = dateString.split('-'); // Split the string into parts
+  return dateParts[2];
+}
+
+export { changeMoneyFormat, showBrief, getYear, countLetter, countPercent, getTomorrow, getShortMonth, getDay };

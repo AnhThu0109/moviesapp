@@ -23,7 +23,7 @@ function UpComing() {
     let json = await fetchPage(
       1,
       "/discover/movie?",
-      `&sort_by=primary_release_date.asc&primary_release_date.gte=${tomorrow}&primary_release_date.lte=2023-12-31&page=`
+      `&language=en-US&sort_by=primary_release_date.asc&primary_release_date.gte=${tomorrow}&primary_release_date.lte=2023-12-31&page=`
     );
     if (json) {
       json = json.results.filter((item) => item.poster_path != null);
@@ -62,7 +62,7 @@ function UpComing() {
                 <Link to={detailLink[index]} className="movieLinkHome">
                   <Image src={imgSrc[index]} className="rounded-4" />
                   <h6 className="pt-2 text-center titleFilm">
-                    {showBrief(item.title, 15)}
+                    {item.title}
                   </h6>
                 </Link>
               </div>

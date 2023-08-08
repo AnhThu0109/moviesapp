@@ -1,0 +1,21 @@
+div.upComing {
+    height: 70% !important;
+}
+
+.releaseUpcoming{
+    background-color: red;
+}
+
+img.posterUpcoming, div:has(> img.posterUpcoming){
+    height: 100% !important;
+}
+
+div.film.container-upComing{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.overviewUpcoming{
+    bottom: 10px !important;
+}
