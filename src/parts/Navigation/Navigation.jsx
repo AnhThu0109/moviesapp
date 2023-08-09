@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/loginSlice";
 import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import { Badge, Popover, Switch } from "antd";
+import { Badge, Switch } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Avatar } from "@mui/material";
-import PopoverComponent from "../../utils/common/Popover";
+import { PopoverComponent } from "../../utils/common/Popover";
 
 function Navigation() {
   const [isChangeTheme, setIsChangeTheme] = useState(true);
@@ -108,18 +108,10 @@ function Navigation() {
             <>
               <li className="ms-4 login fw-lighter text-white">
                 <PopoverComponent
-                  content={
-                    <>
-                      <small>Welcome to our movies web</small>
-                      <img
-                        alt=""
-                        className="iconNotiMess"
-                        src="https://cdn-icons-png.flaticon.com/512/9281/9281532.png"
-                      ></img>
-                    </>
-                  }
+                  content={["Welcome to our movies website"]}
                   title="Notification"
                   customerCSS="dangerPopover"
+                  isContent={true}
                   object={
                     <a onClick={seeNoti}>
                       <Badge count={notiExist ? 1 : 0} size="small">
@@ -132,6 +124,7 @@ function Navigation() {
               <li className="ms-4 login">
                 {currentAuthentication === true && (
                   <PopoverComponent
+                    isLogout={true}
                     content={
                       <Link to="/" onClick={logOut} className="movieLink">
                         Logout
