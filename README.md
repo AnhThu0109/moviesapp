@@ -50,7 +50,7 @@ Reviews:<br>
 8. Popular actors<br>
 ![Image 16](https://i.ibb.co/HC1czVg/Screenshot-2023-08-10-at-00-20-51.png)<br>
 
-Search actors name:
+Search actors name:<br>
 ![Image 17](https://i.ibb.co/3dHscGG/Screenshot-2023-08-10-at-00-26-37.png)<br>
 
 9. Detail actor<br>
