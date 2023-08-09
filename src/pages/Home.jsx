@@ -34,7 +34,7 @@ const Home = () => {
           <Skeleton animation={false} />
         </>
       ) : (
-        <>
+        <div className="container">
           <Banner />
           <Trending />
           {/* <div>
@@ -42,7 +42,7 @@ const Home = () => {
           </div> */}
           <Popular />
           <UpComing />
-        </>
+        </div>
       )}
     </>
   );
