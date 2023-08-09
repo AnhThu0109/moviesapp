@@ -20,7 +20,7 @@ In the project directory, you can run:
 ![Image 1](https://ibb.co/KbzyvVp)<br>
 
 2. Menu bar
-![Image 2](https://ibb.co/fFDpMmk)<br>
-![Image 3](https://ibb.co/VvJSjPT)<br>
-![Image 4](https://ibb.co/GPZpSjr)<br>
-![Image 5](https://ibb.co/CV07n3M)<br>
+![Image 2](https://i.ibb.co/BcKsMT5/Screenshot-2023-08-09-at-23-11-04.png)<br>
+![Image 3](https://i.ibb.co/SyfnNqt/Screenshot-2023-08-09-at-23-15-52.png")<br>
+![Image 4](https://i.ibb.co/KythvH8/Screenshot-2023-08-09-at-23-15-37.png)<br>
+![Image 5](https://i.ibb.co/44NTjnY/Screenshot-2023-08-09-at-23-15-01.png)<br>
