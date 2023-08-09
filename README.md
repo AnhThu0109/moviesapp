@@ -44,13 +44,16 @@ In the project directory, you can run:
 ![Image 13](https://i.ibb.co/7k6hB3m/Screenshot-2023-08-10-at-00-13-15.png)<br>
 ![Image 14](https://i.ibb.co/kqt6MqG/Screenshot-2023-08-10-at-00-13-24.png)<br>
 
-Reviews:<br>
+- Trailer:<br>
+![Image 23](https://i.ibb.co/C6VMyf2/Screenshot-2023-08-10-at-00-34-57.png)<br>
+
+- Reviews:<br>
 ![Image 15](https://i.ibb.co/Qd2VPKh/Screenshot-2023-08-10-at-00-17-00.png)<br>
 
 8. Popular actors<br>
 ![Image 16](https://i.ibb.co/HC1czVg/Screenshot-2023-08-10-at-00-20-51.png)<br>
 
-Search actors name:<br>
+- Search actors name:<br>
 ![Image 17](https://i.ibb.co/3dHscGG/Screenshot-2023-08-10-at-00-26-37.png)<br>
 
 9. Detail actor<br>
@@ -62,3 +65,6 @@ Search actors name:<br>
 
 11. Login page<br>
 ![Image 21](https://i.ibb.co/5R9tf7c/Screenshot-2023-08-10-at-00-29-40.png)<br>
+
+12. Loading page after enter valid credential
+![Image 22](https://i.ibb.co/tq6Hm0n/Screenshot-2023-08-10-at-00-33-00.png)<br>
