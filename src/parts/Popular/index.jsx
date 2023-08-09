@@ -7,7 +7,7 @@ import {
 } from "../../redux/loadingSlice";
 import { POSTER_SRC } from "../../utils/posterSrc";
 import { fetchPage } from "../../utils/fetchData";
-import { countPercent } from "../../utils/function";
+import { countPercent, showBrief } from "../../utils/function";
 import "./style.css";
 import { Image } from "antd";
 
@@ -18,15 +18,7 @@ function Popular() {
   const containerRef = useRef(null);
   const [points, setPoints] = useState();
   const dispatch = useDispatch();
-
-  const showBrief = (str) => {
-    if (str.length > 17) {
-      const numLetters = 17;
-      const shortenedStr = str.slice(0, numLetters) + "...";
-      return shortenedStr;
-    } else return str;
-  };
-
+  
   const getData = async () => {
     const json = await fetchPage(1, "/movie/popular?", "&language=en-US&page=");
     if (json) {

@@ -30,16 +30,19 @@ const countPercent = (num) => {
   return ((num / 10) * 100).toFixed(0);
 };
 
+const formatDate = (d) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 const getTomorrow = () => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-
-  const year = tomorrow.getFullYear();
-  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-  const day = String(tomorrow.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
+  return formatDate(tomorrow);
 };
 
 const getShortMonth = (dateString) => {
@@ -57,4 +60,4 @@ const getDay = (dateString) => {
   return dateParts[2];
 }
 
-export { changeMoneyFormat, showBrief, getYear, countLetter, countPercent, getTomorrow, getShortMonth, getDay };
+export { changeMoneyFormat, showBrief, getYear, countLetter, countPercent, getTomorrow, getShortMonth, getDay, formatDate };

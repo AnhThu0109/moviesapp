@@ -7,6 +7,7 @@ import UpComing from "../parts/UpComing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style.css";
 import { Skeleton } from "@mui/material";
+import { LatestTrailer } from "../parts/LatestTrailer";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,9 @@ const Home = () => {
         <>
           <Banner />
           <Trending />
+          {/* <div>
+            <LatestTrailer/>
+          </div> */}
           <Popular />
           <UpComing />
         </>
