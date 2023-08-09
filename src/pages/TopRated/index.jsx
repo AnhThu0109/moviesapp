@@ -6,6 +6,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "antd/dist/reset.css";
 import { Image, Pagination } from "antd";
+import { Skeleton } from "@mui/material";
 
 const TopRated = () => {
   const [data, setData] = useState({});
@@ -17,6 +18,7 @@ const TopRated = () => {
   const [desRelease, setDesRelease] = useState(false);
   const [ascRelease, setAscRelease] = useState(false);
   const [aToZ, setAToZ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (p) => {
     console.log(p);
@@ -86,9 +88,13 @@ const TopRated = () => {
     }
   };
   useEffect(() => {
-    getData(page).catch((error) => {
-      console.log(error);
-    });
+    setIsLoading(true);
+    getData(page)
+      .then((res) => console.log(res))
+      .then((data) => setIsLoading(false))
+      .catch((error) => {
+        console.log(error);
+      });
     setAsc(false);
     setDes(false);
     setDesRelease(false);
@@ -96,65 +102,77 @@ const TopRated = () => {
     setAToZ(false);
   }, [page, des, asc, desRelease, ascRelease, aToZ]);
   return (
-    <div className="px-sm-3 px-lg-5">
-      <h2 className="title pt-3 fw-bolder">
-        Top Rated Movies
-        <img
-          alt=""
-          src="https://cdn-icons-png.flaticon.com/512/4090/4090434.png"
-          className="titleIcon"
-        ></img>
-      </h2>
-      <div className="row">
-        <div className="col-sm-4 col-lg-3 my-3 sort ms-3 rounded-4">
-          <h5>Sort</h5>
-          <hr></hr>
-          <DropdownButton title="Sort Results By" className="sortFilm">
-            <Dropdown.Item>
-              <Link onClick={() => setDes(true)}>Rating Descending</Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link onClick={() => setAsc(true)}>Rating Ascending</Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link onClick={() => setDesRelease(true)}>
-                Release Date Descending
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link onClick={() => setAscRelease(true)}>
-                Release Date Ascending
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link onClick={() => setAToZ(true)}>Title (A-Z)</Link>
-            </Dropdown.Item>
-          </DropdownButton>
-        </div>
-        <div id="popular" className="col">
-          <div className="p-3 row trending-film">
-            {data?.results?.map((item, index) => (
-              <div className="film col-lg-3 col-sm-6 pb-2" key={index}>
-                <Link to={detailLink[index]} className="movieLink">
-                  <Image src={imgSrc[index]} className="rounded-4" />
-                  <h6 className="pt-2 text-center">{item.title}</h6>
-                  <p className="text-center">{item.release_date}</p>
-                </Link>
+    <>
+      {isLoading === false ? (
+        <div className="p-3">
+        <div className="px-sm-3 px-lg-5">
+          <h2 className="title pt-3 fw-bolder">
+            Top Rated Movies
+            <img
+              alt=""
+              src="https://cdn-icons-png.flaticon.com/512/4090/4090434.png"
+              className="titleIcon"
+            ></img>
+          </h2>
+          <div className="row">
+            <div className="col-sm-4 col-lg-3 my-3 sort ms-3 rounded-4">
+              <h5>Sort</h5>
+              <hr></hr>
+              <DropdownButton title="Sort Results By" className="sortFilm">
+                <Dropdown.Item>
+                  <Link onClick={() => setDes(true)}>Rating Descending</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link onClick={() => setAsc(true)}>Rating Ascending</Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link onClick={() => setDesRelease(true)}>
+                    Release Date Descending
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link onClick={() => setAscRelease(true)}>
+                    Release Date Ascending
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link onClick={() => setAToZ(true)}>Title (A-Z)</Link>
+                </Dropdown.Item>
+              </DropdownButton>
+            </div>
+            <div id="popular" className="col">
+              <div className="p-3 row trending-film">
+                {data?.results?.map((item, index) => (
+                  <div className="film col-lg-3 col-sm-6 pb-2" key={index}>
+                    <Link to={detailLink[index]} className="movieLink">
+                      <Image src={imgSrc[index]} className="rounded-4" />
+                      <h6 className="pt-2 text-center">{item.title}</h6>
+                      <p className="text-center">{item.release_date}</p>
+                    </Link>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
 
-      <Pagination
-        defaultCurrent={1}
-        total={10000}
-        pageSize={20}
-        onChange={onChange}
-        className="text-center"
-        showSizeChanger={false}
-      />
-    </div>
+          <Pagination
+            defaultCurrent={1}
+            total={10000}
+            pageSize={20}
+            onChange={onChange}
+            className="text-center"
+            showSizeChanger={false}
+          />
+        </div>
+        </div>
+      ) : (
+        <>
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+        </>
+      )}
+    </>
   );
 };
 

@@ -107,7 +107,7 @@ function SearchPage() {
           <Skeleton animation={false} />
         </>
       ) : (
-        <>
+        <div className="p-3">
           <div className="py-3">
             <h3 className="px-sm-3 px-lg-5 py-3">
               We found{" "}
@@ -158,7 +158,7 @@ function SearchPage() {
             className="text-center"
             showSizeChanger={false}
           />
-        </>
+        </div>
       )}
     </div>
   );

@@ -114,7 +114,7 @@ const PopularPage = () => {
           <Skeleton animation={false} />
         </>
       ) : (
-        <>
+        <div className="p-3">
           <h2 className="title pt-3 fw-bolder">
             Popular Movies
             <img
@@ -172,7 +172,7 @@ const PopularPage = () => {
             className="text-center"
             showSizeChanger={false}
           />
-        </>
+        </div>
       )}
     </div>
   );

@@ -24,3 +24,25 @@ In the project directory, you can run:
 ![Image 3](https://i.ibb.co/D7zCVSQ/Screenshot-2023-08-09-at-23-15-59.png)<br>
 ![Image 4](https://i.ibb.co/KythvH8/Screenshot-2023-08-09-at-23-15-37.png)<br>
 ![Image 5](https://i.ibb.co/44NTjnY/Screenshot-2023-08-09-at-23-15-01.png)<br>
+
+3. Search page<br>
+![Image 6](https://i.ibb.co/z4x212d/Screenshot-2023-08-09-at-23-50-51.png)<br>
+
+4. Popular movies<br>
+![Image 7](https://i.ibb.co/bL4vNtt/Screenshot-2023-08-09-at-23-52-41.png)<br>
+
+5. Top Rated movies<br>
+![Image 8](https://i.ibb.co/gMY07ny/Screenshot-2023-08-09-at-23-53-48.png)<br>
+
+6. Up Coming movies<br>
+![Image 9](https://i.ibb.co/61QMynB/Screenshot-2023-08-10-at-00-02-32.png)<br>
+
+7. Detail movie<br>
+![Image 10](https://i.ibb.co/sRL5q6S/Screenshot-2023-08-10-at-00-11-21.png)<br>
+![Image 11](https://i.ibb.co/hcWvGwd/Screenshot-2023-08-10-at-00-11-54.png)<br>
+![Image 12](https://i.ibb.co/F0csVBg/Screenshot-2023-08-10-at-00-12-44.png)<br>
+![Image 13](https://i.ibb.co/7k6hB3m/Screenshot-2023-08-10-at-00-13-15.png)<br>
+![Image 14](https://i.ibb.co/kqt6MqG/Screenshot-2023-08-10-at-00-13-24.png)<br>
+
+Reviews:<br>
+![Image 14](https://i.ibb.co/kqt6MqG/Screenshot-2023-08-10-at-00-13-24.png)<br>

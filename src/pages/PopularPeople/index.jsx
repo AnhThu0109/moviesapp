@@ -67,7 +67,7 @@ const PopularPeople = () => {
     });
   }, [page]);
   return (
-    <>
+    <div className="p-3">
       <div id="popular">
         <h2 className="title pt-3 px-3 fw-bolder">Popular People</h2>
         <div className="text-center">
@@ -108,7 +108,7 @@ const PopularPeople = () => {
         className="text-center"
         showSizeChanger={false}
       />
-    </>
+    </div>
   );
 };
 

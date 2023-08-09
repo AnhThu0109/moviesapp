@@ -79,6 +79,7 @@ const DetailMovie = () => {
       `/videos?${KEY}&language=en-US`
     );
     if (json) {
+      console.log("video", json)
       let videoListSrc = [];
       let trailerLink = "";
       json.results.map((item, index) => {
