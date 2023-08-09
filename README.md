@@ -1,6 +1,6 @@
 # Movies App:
 
-This project is using ReactJs, Redux, Bootstrap 5, Ant Design, MUI, HTML and JS.
+This project is using ReactJs, Redux, Bootstrap 5, Ant Design, MUI, HTML and JS and API from themoviedb.org
 
 ## Functions:
 
