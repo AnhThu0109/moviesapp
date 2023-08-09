@@ -45,4 +45,20 @@ In the project directory, you can run:
 ![Image 14](https://i.ibb.co/kqt6MqG/Screenshot-2023-08-10-at-00-13-24.png)<br>
 
 Reviews:<br>
-![Image 14](https://i.ibb.co/kqt6MqG/Screenshot-2023-08-10-at-00-13-24.png)<br>
+![Image 15](https://i.ibb.co/Qd2VPKh/Screenshot-2023-08-10-at-00-17-00.png)<br>
+
+8. Popular actors<br>
+![Image 16](https://i.ibb.co/HC1czVg/Screenshot-2023-08-10-at-00-20-51.png)<br>
+
+Search actors name:
+![Image 17](https://i.ibb.co/3dHscGG/Screenshot-2023-08-10-at-00-26-37.png)<br>
+
+9. Detail actor<br>
+![Image 18](https://i.ibb.co/Hn0QKxy/Screenshot-2023-08-10-at-00-23-05.png)<br>
+![Image 19](https://i.ibb.co/rMtNWcM/Screenshot-2023-08-10-at-00-25-03.png)<br>
+
+10. Not Found page <br>
+![Image 20](https://i.ibb.co/rQpvT6s/Screenshot-2023-08-10-at-00-28-11.png)<br>
+
+11. Login page<br>
+![Image 21](https://i.ibb.co/5R9tf7c/Screenshot-2023-08-10-at-00-29-40.png)<br>
