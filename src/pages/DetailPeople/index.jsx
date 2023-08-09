@@ -133,7 +133,7 @@ const DetailPeople = () => {
 
           <div className="col-sm-6 col-lg-8">
             <h1 className="fw-bolder">{data?.name}</h1>
-            <h4 className="fw-bolder">Biology</h4>
+            <h4 className="fw-bolder">Biography</h4>
             <p>{data?.biography ? <>{data?.biography}</> : <>Unknown</>}</p>
             <br></br>
             <h4 className="fw-bolder">Known For</h4>
